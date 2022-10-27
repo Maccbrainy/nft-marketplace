@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    // "module": "commonjs",
+    "forceConsistentCasingInFileNames":true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.cypress-ct.json"
+    }
+  ]
+}
