@@ -96,7 +96,7 @@ const getActiveThemeData = computed(() => {
             </button>
             <div
               v-show="openDropDownMenu"
-              class="absolute m-0 w-40 overflow-hidden max-w-xl h-auto max-h-80 border rounded-lg shadow-lg dark:border-darkTheme-border top-auto right-auto left-0 bottom-10 z-50"
+              class="animate-slide-up absolute w-40 overflow-hidden max-w-xl h-auto max-h-80 border rounded-lg shadow-lg dark:border-darkTheme-border top-auto right-auto left-0 bottom-10 z-50"
             >
               <div
                 tabindex="-1"
