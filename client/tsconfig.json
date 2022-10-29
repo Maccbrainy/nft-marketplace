@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    // "allowJs": true,
     // "module": "commonjs",
     "forceConsistentCasingInFileNames":true
   },
