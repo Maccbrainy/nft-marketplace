@@ -53,13 +53,24 @@ const getActiveOption = computed<OptionType[]>(() => {
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
             @click="$emit('selectionAction', option)"
-            class="text-black dark:text-white hover:bg-gray-200 font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full flex justify-start mx-auto items-center py-3 px-3 cursor-pointer"
+            class="text-black dark:text-white hover:bg-gray-100 font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
           >
-            <span class="w-[36%]"
+            <span v-if="option.icon" class="col-span-1"
               ><component :is="option.icon"></component
             ></span>
-            <span class="w-1/2 flex justify-start">{{ option.name }}</span>
-            <span v-show="option.id === isActiveOption"><CheckIcon /></span>
+            <span
+              :class="{
+                'col-span-4 justify-start': !option.icon,
+                'col-span-3 justify-center': option.icon,
+              }"
+              class="w-full flex"
+              >{{ option.name }}</span
+            >
+            <span
+              class="col-span-1 w-full flex justify-end"
+              v-show="option.id === isActiveOption"
+              ><CheckIcon
+            /></span>
           </div>
         </div>
       </div>

@@ -21,13 +21,13 @@ const themeTypes = ref([
 const isActiveTheme = ref<string>(localStorage.theme);
 
 const activateTheme = () => {
-  let rootDocument = document.documentElement;
+  let rootDocumentClass = document.documentElement.classList;
   if (isActiveTheme.value === "darkTheme") {
-    rootDocument.classList.add("dark");
-    rootDocument.classList.remove("light");
+    rootDocumentClass.add("dark");
+    rootDocumentClass.remove("light");
   } else {
-    rootDocument.classList.remove("dark");
-    rootDocument.classList.add("light");
+    rootDocumentClass.remove("dark");
+    rootDocumentClass.add("light");
   }
 };
 watchEffect(() => {
@@ -37,14 +37,16 @@ watchEffect(() => {
   isActiveTheme.value = localStorage.theme;
   activateTheme();
 });
-const changeTheme = (theme: { id: string }, activateTheme: () => void) => {
+const changeTheme = (theme: { id: string }) => {
   localStorage.theme = theme.id;
   isActiveTheme.value = theme.id;
   activateTheme();
 };
 </script>
 <template>
-  <BaseLayout class="bg-white dark:bg-darkTheme h-screen w-full">
+  <BaseLayout
+    class="bg-white dark:bg-darkTheme h-screen w-full overflow-y-auto"
+  >
     <template #header>
       <nav
         class="sticky w-full max-w-7xl flex justify-between text-gray-700 dark:text-darkTheme-text font-semibold text-xl px-8 mx-auto"
@@ -62,10 +64,10 @@ const changeTheme = (theme: { id: string }, activateTheme: () => void) => {
       <RouterView />
     </template>
     <template #footer>
-      <section class="w-full max-w-7xl relative px-8 mx-auto">
+      <section class="w-full max-w-7xl relative px-8 mx-auto pb-6">
         <div class="border-t dark:border-darkTheme-border w-full pb-4"></div>
         <div
-          class="relative w-full flex justify-between items-center text-gray-500 text-sm dark:text-darkTheme-text"
+          class="relative w-full flex justify-between items-center text-gray-500 text-sm dark:text-darkTheme-text py-1"
         >
           <p>@Cryptop NFT 2022</p>
           <ButtonDropdown
