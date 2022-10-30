@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { RouterLink } from "vue-router";
 // import { EthereumIcon } from "@/components/icons";
 import { ButtonDropdown, ButtonTextInput } from "@/components/buttonui";
 const blockChainNetworks = [
@@ -105,197 +106,110 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
           <div
             class="relative w-full h-auto overflow-hidden border dark:border-darkTheme-border rounded-2xl"
           >
-          
-            <div
-              class="w-[99%] flex flex-row justify-start py-1 pl-8 pr-2.5 rounded-2xl dark:hover:bg-darkTheme-hover cursor-pointer mx-auto my-1.5"
+            <RouterLink
+              :to="{
+                name: 'CollectionPage',
+                params: {
+                  slug: 'Art BLocks x Pace',
+                },
+              }"
             >
-              <div class="w-3/12 flex items-center">
-                <div
-                  class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200"
-                 title="Contract address"></div>
-                <div 
-                  class="text-lg font-semibold pr-2 pl-3" 
-                  title="Art BLocks x Pace">
-                  Art BLocks x Pace
+              <div
+                class="w-[99%] flex flex-row justify-start py-1 pl-8 pr-2.5 rounded-2xl dark:hover:bg-darkTheme-hover cursor-pointer mx-auto my-1.5"
+              >
+                <div class="w-3/12 flex items-center">
+                  <div
+                    class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200"
+                    title="Contract address"
+                  ></div>
+                  <div
+                    class="text-lg font-semibold pr-2 pl-3"
+                    title="Art BLocks x Pace"
+                  >
+                    Art BLocks x Pace
+                  </div>
                 </div>
-              </div>
-              <div class="w-2/12 flex flex-col my-auto" title="400.9 ETH">
-                <div class="flex items-center">
+                <div class="w-2/12 flex flex-col my-auto" title="400.9 ETH">
+                  <div class="flex items-center">
+                    <div class="flex items-end">
+                      <span class="text-2xl font-semibold">400.9</span>
+                      <span class="px-1 text-gray-400 text-sm font-medium"
+                        >ETH</span
+                      >
+                    </div>
+                  </div>
+                  <span class="text-green-500 text-sm font-semibold"
+                    >+45,001.8%</span
+                  >
+                </div>
+                <div class="w-2/12 flex items-center" title="0.45 ETH">
                   <div class="flex items-end">
-                    <span class="text-2xl font-semibold">400.9</span>
+                    <span class="font-semibold text-2xl">0.45</span>
                     <span class="px-1 text-gray-400 text-sm font-medium"
                       >ETH</span
                     >
                   </div>
                 </div>
-                <span class="text-green-500 text-sm font-semibold"
-                  >+45,001.8%</span
-                >
-              </div>
-              <div class="w-2/12 flex items-center" title="0.45 ETH">
-                <div class="flex items-end">
-                  <span class="font-semibold text-2xl">0.45</span>
-                  <span class="px-1 text-gray-400 text-sm font-medium"
-                    >ETH</span
-                  >
-                </div>
-              </div>
-              <div class="relative w-5/12 overflow-hidden">
-                <div class="flex flex-row space-x-4 items-center p-1">
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
+                <div class="relative w-5/12 overflow-hidden">
+                  <div class="flex flex-row space-x-4 items-center p-1">
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
                     <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
                     >
-                      0.104 ETH
+                      <div
+                        class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
+                      >
+                        0.104 ETH
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-
-            <div
-              class="w-[99%] flex flex-row justify-start py-1 pl-8 pr-2.5 rounded-2xl dark:hover:bg-darkTheme-hover cursor-pointer mx-auto my-1.5"
-            >
-              <div class="w-3/12 flex items-center">
-                <div
-                  class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200"
-                 title="Contract address"></div>
-                <div 
-                  class="text-lg font-semibold pr-2 pl-3" 
-                  title="Art BLocks x Pace">
-                  Queen of the Ocean
-                </div>
-              </div>
-              <div class="w-2/12 flex flex-col my-auto" title="810.9 ETH">
-                <div class="flex items-center">
-                  <div class="flex items-end">
-                    <span class="text-2xl font-semibold">810.9</span>
-                    <span class="px-1 text-gray-400 text-sm font-medium"
-                      >ETH</span
-                    >
-                  </div>
-                </div>
-                <span class="text-green-500 text-sm font-semibold"
-                  >+1,021.4%</span
-                >
-              </div>
-              <div class="w-2/12 flex items-center" title="0.20 ETH">
-                <div class="flex items-end">
-                  <span class="font-semibold text-2xl">0.20</span>
-                  <span class="px-1 text-gray-400 text-sm font-medium"
-                    >ETH</span
-                  >
-                </div>
-              </div>
-              <div class="relative w-5/12 overflow-hidden">
-                <div class="flex flex-row space-x-4 items-center p-1">
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.015 ETH
-                    </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.015 ETH
-                    </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.015 ETH
-                    </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.015 ETH
-                    </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.015 ETH
-                    </div>
-                  </div>
-                  <div
-                    class="animate-pulse relative w-24 h-24 min-w-[96px] rounded-xl bg-gray-100 hover:ring hover:ring-offset-0 hover:ring-gray-200 hover:transition-all"
-                  >
-                    <div
-                      class="absolute bg-darkTheme-bgx rounded-xl w-10/12 h-auto text-gray-100 text-xs p-1 left-1.5 bottom-1.5 whitespace-nowrap"
-                    >
-                      0.104 ETH
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
+            </RouterLink>
           </div>
         </div>
       </div>
