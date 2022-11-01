@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import { ref, watchEffect, markRaw } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
 import { DarkThemeIcon, LightThemeIcon } from "./components/icons";
@@ -49,7 +49,7 @@ const changeTheme = (theme: { id: string }) => {
   >
     <template #header>
       <nav
-        class="sticky w-full max-w-7xl flex justify-between text-gray-700 dark:text-darkTheme-text font-semibold text-xl px-8 mx-auto"
+        class="sticky w-full max-w-screen-2xl flex justify-between text-gray-700 dark:text-darkTheme-text font-semibold text-xl px-8 mx-auto"
       >
         <div>Logo</div>
         <div>search Widget</div>
@@ -64,7 +64,7 @@ const changeTheme = (theme: { id: string }) => {
       <RouterView />
     </template>
     <template #footer>
-      <section class="w-full max-w-7xl relative px-8 mx-auto pb-6">
+      <section class="w-full max-w-screen-2xl relative px-8 mx-auto pb-6">
         <div class="border-t dark:border-darkTheme-border w-full pb-4"></div>
         <div
           class="relative w-full flex justify-between items-center text-gray-500 text-sm dark:text-darkTheme-text py-1"

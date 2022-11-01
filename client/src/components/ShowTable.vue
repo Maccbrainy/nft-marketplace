@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
 // import { EthereumIcon } from "@/components/icons";
-import { ButtonDropdown, ButtonTextInput } from "@/components/buttonui";
+import { ButtonDropdown, ButtonInput } from "@/components/buttonui";
 const blockChainNetworks = [
   {
     id: "Ethereum",
@@ -65,9 +65,7 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
 };
 </script>
 <template>
-  <section
-    class="relative w-full max-w-7xl px-8 py-10 text-gray-700 dark:text-darkTheme-text"
-  >
+  <section class="relative w-full py-10 text-gray-700 dark:text-darkTheme-text">
     <div class="flex flex-col">
       <div class="grid grid-flow-row grid-cols-8 gap-4 pb-4">
         <div class="col-span-3">
@@ -76,9 +74,9 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
         <div class="col-span-3">
           <div class="flex flex-row justify-center items-center">
             <span class="whitespace-nowrap mx-2 text-sm">Floor price</span>
-            <ButtonTextInput />
+            <ButtonInput class="py-2" />
             <div class="bg-gray-300 mx-3 h-1 w-3 block"></div>
-            <ButtonTextInput />
+            <ButtonInput class="py-2" />
           </div>
         </div>
         <ButtonDropdown
@@ -108,10 +106,7 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
           >
             <RouterLink
               :to="{
-                name: 'CollectionPage',
-                params: {
-                  slug: 'Art BLocks x Pace',
-                },
+                path: 'Art BLocks x Pace',
               }"
             >
               <div
