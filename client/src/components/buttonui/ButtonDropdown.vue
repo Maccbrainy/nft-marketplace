@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, type PropType } from "vue";
-import { ChevronDownIcon, CheckIcon } from "@/components/icons";
-// import type { OptionType } from "@/types";
+import { ChevronDownIcon, TickCheckIcon } from "@/components/icons";
+import type { OptionType } from "@/types";
 
 const props = defineProps({
   listOfOptions: {
-    // eslint-disable-next-line no-undef
     type: Array as PropType<OptionType[]>,
     required: true
   },
@@ -34,7 +33,7 @@ const getActiveOption = computed<OptionType[]>(() => {
           openDropDownMenu,
         'bg-gray-100': !openDropDownMenu,
       }"
-      class="transition-all flex justify-center text-center space-x-2 items-center dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover hover:text-black dark:hover:text-white rounded-xl py-2 px-2 transform active:scale-95"
+      class="transition-all h-full py-2.5 flex justify-center text-center space-x-2 items-center dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover hover:text-black dark:hover:text-white rounded-xl px-2 transform active:scale-95"
     >
       <span><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
@@ -69,7 +68,7 @@ const getActiveOption = computed<OptionType[]>(() => {
             <span
               class="col-span-1 w-full flex justify-end"
               v-show="option.id === isActiveOption"
-              ><CheckIcon
+              ><TickCheckIcon
             /></span>
           </div>
         </div>

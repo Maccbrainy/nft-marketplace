@@ -1,17 +1,14 @@
 <template>
   <svg
+    class="border-2 border-gray-200 rounded-lg hover:text-gray-500"
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
-    width="24"
-    height="24"
-    xlmns="http://www.w3.org/2000/svg"
-    class="w-4 h-4"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
-      d="M18.5303 7.46967C18.8232 7.76256 18.8232 8.23744 18.5303 8.53033L10 17.0607L5.46967 12.5303C5.17678 12.2374 5.17678 11.7626 5.46967 11.4697C5.76256 11.1768 6.23744 11.1768 6.53033 11.4697L10 14.9393L17.4697 7.46967C17.7626 7.17678 18.2374 7.17678 18.5303 7.46967Z"
-      fill="currentColor"
-    ></path>
+      d="M5 2c-1.654 0-3 1.346-3 3v14c0 1.654 1.346 3 3 3h14c1.654 0 3-1.346 3-3v-14c0-1.654-1.346-3-3-3h-14zm19 3v14c0 2.761-2.238 5-5 5h-14c-2.762 0-5-2.239-5-5v-14c0-2.761 2.238-5 5-5h14c2.762 0 5 2.239 5 5z"
+    />
   </svg>
 </template>
