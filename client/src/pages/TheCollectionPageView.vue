@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { ButtonMiscellenous } from "@/components/buttonui";
 import { ref } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
+import type { ChildrenLinksType } from "@/types";
+import { ButtonMiscellenous } from "@/components/buttonui";
 
-interface ArrayType {
-  id: string;
-  title: string;
-}
 const router = useRouter();
 const route = useRoute();
 
+const collectionDetailLinks = [
+  { id: "TableAssets", title: "items" },
+  { id: "Activity", title: "activity" },
+];
+
 const routerLinkActive = ref(route.name);
-const activateAndUpdateRouter = (link: ArrayType) => {
+const activateAndUpdateRouter = (link: ChildrenLinksType) => {
   routerLinkActive.value = link.id;
   router.replace({
     path: `/${route.params.id}/${link.title}`,
@@ -20,7 +22,7 @@ const activateAndUpdateRouter = (link: ArrayType) => {
 </script>
 <template>
   <section
-    class="relative w-full max-w-screen-2xl px-8 pt-4 pb-20 m-auto dark:text-darkTheme-text"
+    class="relative w-full max-w-screen-2xl px-4 sm:px-6 md:px-7 lg:px-8 pt-4 pb-20 m-auto dark:text-darkTheme-text"
   >
     <div class="relative">
       <div class="rounded-2xl bg-gray-100 w-full h-72 max-h-72 overflow-hidden">
@@ -48,22 +50,20 @@ const activateAndUpdateRouter = (link: ArrayType) => {
           </p>
         </div>
         <div class="flex flex-row pt-12 space-x-3">
-          <!-- <button
-            class="py-3.5"
+          <ButtonMiscellenous
+            class="text-sm rounded-2xl bg-gray-900 hover:bg-black text-darkTheme-text-b"
+            >Create Marketplace</ButtonMiscellenous
           >
-            Create Marketplace
-          </button> -->
-          <ButtonMiscellenous class="text-sm rounded-2xl bg-gray-900 hover:bg-black text-darkTheme-text-b">Create Marketplace</ButtonMiscellenous>
           <div
             class="w-80 flex justify-between items-center border rounded-2xl p-2 relative"
           >
             <span class="px-4 flex w-8/12 flex-wrap text-sm"
               >Place a bid for any NFT from this collection</span
             >
-            <ButtonMiscellenous class="text-xs rounded-xl bg-gray-900 hover:bg-black text-darkTheme-text-b">Place a bid</ButtonMiscellenous>
-            <!-- <button
-              class="h-full"
-            ></button> -->
+            <ButtonMiscellenous
+              class="text-xs rounded-xl bg-gray-900 hover:bg-black text-darkTheme-text-b"
+              >Place a bid</ButtonMiscellenous
+            >
           </div>
         </div>
       </div>
@@ -114,10 +114,7 @@ const activateAndUpdateRouter = (link: ArrayType) => {
         <li
           :class="{ 'text-gray-700': routerLinkActive === link.id }"
           class="capitalize font-semibold cursor-pointer"
-          v-for="(link, index) in [
-            { id: 'TableAssets', title: 'items' },
-            { id: 'Activity', title: 'activity' },
-          ]"
+          v-for="(link, index) in collectionDetailLinks"
           :key="link.id + index"
           @click="activateAndUpdateRouter(link)"
         >
