@@ -3,3 +3,8 @@ export interface OptionType {
   name: string;
   icon?: any;
 }
+
+export interface ChildrenLinksType {
+  id: string;
+  title: string;
+}
