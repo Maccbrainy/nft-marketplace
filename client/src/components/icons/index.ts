@@ -10,3 +10,6 @@ export { default as LikeIcon } from "@/components/icons/LikeIcon.vue";
 export { default as ShareIcon } from "@/components/icons/ShareIcon.vue";
 export { default as RefreshIcon } from "@/components/icons/RefreshIcon.vue";
 export { default as MenuDotsIcon } from "@/components/icons/MenuDotsIcon.vue";
+export { default as OptionViewLargeIcon } from "@/components/icons/OptionViewLargeIcon.vue";
+export { default as OptionViewSmaller } from "@/components/icons/OptionViewSmaller.vue";
+export { default as ShoppingBagIcon } from "@/components/icons/ShoppingBagIcon.vue";
