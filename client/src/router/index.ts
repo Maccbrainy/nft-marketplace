@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TheHomePageView from "../pages/TheHomePageView.vue";
-import TableAssetsTable from "../components/TableAssetsTable.vue";
+import TableFiltersAssets from "../components/TableFiltersAssets.vue";
 import CollectionActivity from "../components/TableActivity.vue";
 import TokenOverView from "../components/TokenOverView.vue";
 import TokenBids from "../components/TokenBids.vue";
@@ -28,12 +28,12 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "TableAssets",
-          component: TableAssetsTable,
+          name: "TableCollectionAssets",
+          component: TableFiltersAssets,
         },
         {
           path: "activity",
-          name: "Activity",
+          name: "CollectionActivity",
           component: CollectionActivity,
         },
       ],
@@ -60,7 +60,7 @@ const router = createRouter({
           component: TokenOverView,
         },
         {
-          path: "bid",
+          path: "bids",
           name: "TokenBids",
           component: TokenBids,
         },
