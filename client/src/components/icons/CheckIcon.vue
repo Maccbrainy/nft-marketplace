@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="border-2 border-gray-200 rounded-lg hover:text-gray-500"
+    class="border-2 border-gray-200 dark:border-darkTheme-border rounded-md hover:text-gray-500"
     xmlns="http://www.w3.org/2000/svg"
     width="18"
     height="18"
