@@ -6,11 +6,11 @@ import type { OptionType } from "@/types";
 const props = defineProps({
   listOfOptions: {
     type: Array as PropType<OptionType[]>,
-    required: true
+    required: true,
   },
   isActiveOption: {
     type: String,
-    required: true
+    required: true,
   },
 });
 
@@ -18,10 +18,16 @@ const openDropDownMenu = ref<Boolean>(false);
 // eslint-disable-next-line no-undef
 const getActiveOption = computed<OptionType[]>(() => {
   return props.listOfOptions.filter(
-    (theme) => theme.id === props.isActiveOption
+    (option) => option.id === props.isActiveOption
   );
 });
 </script>
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
+<style scoped></style>
 <template>
   <div class="relative">
     <button
@@ -33,19 +39,20 @@ const getActiveOption = computed<OptionType[]>(() => {
           openDropDownMenu,
         'bg-gray-100': !openDropDownMenu,
       }"
-      class="transition-all h-full py-2.5 flex justify-center text-center space-x-2 items-center dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover hover:text-black dark:hover:text-white rounded-xl px-2 transform active:scale-95"
+      class="transition-all w-full h-full outline-none py-3 whitespace-nowrap flex justify-center text-center space-x-2 items-center dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover hover:text-black dark:hover:text-white rounded-xl px-2 transform active:scale-95"
     >
       <span><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
-      <span><ChevronDownIcon /></span>
+      <span><ChevronDownIcon class="h-4 w-4" /></span>
     </button>
     <div
       v-show="openDropDownMenu"
-      class="animate-slide-up absolute w-40 overflow-hidden max-w-xl h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-0 bottom-12 z-50"
+      v-bind="$attrs"
+      class="animate-slide-up absolute w-max min-w-[11rem] overflow-y-auto max-w-xl h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
     >
       <div
         tabindex="-1"
-        class="relative bg-white dark:bg-darkTheme-bgx dark:backdrop-blur-lg"
+        class="relative bg-white backdrop-blur-md dark:bg-darkTheme-bgx"
       >
         <div class="relative w-full p-2">
           <div
@@ -62,11 +69,11 @@ const getActiveOption = computed<OptionType[]>(() => {
                 'col-span-4 justify-start': !option.icon,
                 'col-span-3 justify-center': option.icon,
               }"
-              class="w-full flex"
+              class="w-full flex whitespace-nowrap"
               >{{ option.name }}</span
             >
             <span
-              class="col-span-1 w-full flex justify-end"
+              class="col-span-1 w-full flex justify-end items-center"
               v-show="option.id === isActiveOption"
               ><TickCheckIcon
             /></span>

@@ -1,3 +1,3 @@
 <template>
-    <div>This is the token bids</div>
+    <div>Token bids</div>
 </template>

@@ -2,8 +2,16 @@
 import { RouterView } from "vue-router";
 import { ref, watchEffect, markRaw } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
-import { DarkThemeIcon, LightThemeIcon } from "./components/icons";
-import { ButtonDropdown } from "@/components/buttonui";
+import {
+  DarkThemeIcon,
+  LightThemeIcon,
+  ShoppingBagIcon,
+} from "./components/icons";
+import {
+  ButtonDropdown,
+  ButtonInput,
+  ButtonMiscellenous,
+} from "@/components/buttonui";
 
 const themeTypes = ref([
   {
@@ -49,15 +57,27 @@ const changeTheme = (theme: { id: string }) => {
   >
     <template #header>
       <nav
-        class="sticky w-full max-w-screen-2xl flex justify-between text-gray-700 dark:text-darkTheme-text font-semibold text-xl px-4 sm:px-6 md:px-7 lg:px-8 mx-auto"
+        class="relative w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div>Logo</div>
-        <div>search Widget</div>
-        <ul class="flex gap-20">
+        <ButtonInput
+          class="max-w-md"
+          input-type="search"
+          place-holdertext="Search Web3"
+        />
+        <ul class="flex items-center gap-10">
           <li>Explore</li>
           <li>Create</li>
         </ul>
-        <div>Connect wallet</div>
+        <div class="flex items-center gap-8">
+          <ButtonMiscellenous
+            class="text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
+            >Connect wallet</ButtonMiscellenous
+          >
+          <ShoppingBagIcon
+            class="dark:text-darkTheme-text-b cursor-pointer font-bold"
+          />
+        </div>
       </nav>
     </template>
     <template #default>

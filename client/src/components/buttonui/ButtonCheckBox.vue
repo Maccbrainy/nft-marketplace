@@ -34,7 +34,7 @@ const check = (propertyOptionId: string, checked: boolean) => {
 <template>
   <ul class="py-1">
     <li
-      class="px-2 py-2.5 block hover:bg-gray-100 rounded-xl"
+      class="px-2 py-2.5 block hover:bg-gray-100 dark:hover:bg-transparent rounded-xl"
       v-for="propertyOption in propertyOptions"
       v-bind:key="propertyOption.id"
     >
@@ -44,7 +44,9 @@ const check = (propertyOptionId: string, checked: boolean) => {
         v-bind:fieldId="propertyOption.id"
         v-bind:label="propertyOption.id"
       >
-        <span class="text-sm text-gray-400 font-semibold">{{
+        <span 
+          class="transition-all text-sm text-gray-400 dark:text-darkTheme-text dark:hover:text-darkTheme-text-b font-medium">
+        {{
           propertyOption.name
         }}</span>
       </ButtonCheckBoxInput>

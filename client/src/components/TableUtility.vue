@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ButtonMiscellenous } from "./buttonui";
+
 const tokenLastestBidsData = [
   {
     name: "Playboypunk.eth",
@@ -32,7 +34,7 @@ const imageUrl = `data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGlu
 </script>
 <template>
   <div
-    class="w-full h-auto flex flex-col gap-7 border dark:border-darkTheme-border rounded-2xl py-5 px-7 mt-4 text-base font-medium"
+    class="w-full h-auto flex flex-col gap-7 border dark:border-darkTheme-border rounded-2xl py-5 px-5 lmin:px-7 mt-4 text-base font-medium"
   >
     <div
       v-for="(data, index) in tokenLastestBidsData"
@@ -41,7 +43,7 @@ const imageUrl = `data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGlu
     >
       <div class="flex flex-row items-center gap-3">
         <div
-          class="flex justify-center items-center h-10 w-10 bg-gray-50 dark:bg-darkTheme-bg rounded-full overflow-hidden"
+          class="flex justify-center items-center h-10 w-10 min-w-[40px] bg-gray-50 dark:bg-darkTheme-bg rounded-full overflow-hidden"
         >
           <img
             class="h-10 w-10 rounded-full object-cover object-center cursor-pointer"
@@ -49,26 +51,27 @@ const imageUrl = `data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGlu
           />
         </div>
         <div class="flex flex-col">
-          <span class="cursor-pointer">{{ data.name }}</span>
+          <span class="cursor-pointer truncate">{{ data.name }}</span>
           <ul
-            class="flex text-xs text-gray-400 dark:text-darkTheme-text font-normal list-inside list-disc gap-2"
+            class="flex xs:flex-wrap-reverse text-xs text-gray-400 dark:text-darkTheme-text font-normal list-inside list-disc gap-2"
           >
-            <li>
-              <span class="-ml-2">{{ data.timeSignature }}</span>
+            <li class="marker:hidden">
+              <span class="-ml-1 whitespace-nowrap">{{ data.timeSignature }}</span>
             </li>
             <li v-if="data.expirationDate">
-              <span class="-ml-2">Expires in {{ data.expirationDate }}</span>
+              <span class="-ml-1 truncate">Expires in {{ data.expirationDate }}</span>
             </li>
             <li>
-              <span class="-ml-2">{{ data.type }}</span>
+              <span class="-ml-1 truncate">{{ data.type }}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="flex flex-col items-end">
-        <span>{{ `${data.price} ${data.currency}` }}</span>
+        <span class="whitespace-nowrap">{{ `${data.price} ${data.currency}` }}</span>
         <span class="text-gray-400 dark:text-darkTheme-text text-xs">${{ data.dollarEquivalent }}</span>
       </div>
     </div>
+    <ButtonMiscellenous class="bg-gray-100 rounded-2xl hover:bg-gray-200 py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover">See all</ButtonMiscellenous>
   </div>
 </template>
