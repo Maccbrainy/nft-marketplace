@@ -4,7 +4,7 @@ export { default as LightThemeIcon } from "@/components/icons/LightThemeIcon.vue
 export { default as CheckIcon } from "@/components/icons/CheckIcon.vue";
 export { default as TickCheckIcon } from "@/components/icons/TickCheckIcon.vue";
 export { default as CheckedBoxIcon } from "@/components/icons/CheckedBoxIcon.vue";
-export { default as EthereumIcon } from "@/components/icons/EthereumIcon.vue";
+export { default as FilterIcon } from "@/components/icons/FilterIcon.vue";
 export { default as AddToCartIcon } from "@/components/icons/AddToCartIcon.vue";
 export { default as LikeIcon } from "@/components/icons/LikeIcon.vue";
 export { default as ShareIcon } from "@/components/icons/ShareIcon.vue";
