@@ -1,0 +1,6 @@
+export { default as TableActivity } from "@/components/tables/TableActivity.vue"
+export { default as TableAssetsCard } from "@/components/tables/TableAssetsCard.vue"
+export { default as TableAssetsSideBar } from "@/components/tables/TableAssetsSideBar.vue"
+export { default as TableCollections } from "@/components/tables/TableCollections.vue"
+export { default as TableFiltersAssets } from "@/components/tables/TableFiltersAssets.vue"
+export { default as TableUtility } from "@/components/tables/TableUtility.vue"
