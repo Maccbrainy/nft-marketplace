@@ -53,24 +53,25 @@ const changeTheme = (theme: { id: string }) => {
 </script>
 <template>
   <BaseLayout
-    class="bg-white dark:bg-darkTheme h-screen w-full overflow-y-auto"
+    class="bg-white dark:bg-darkTheme min-h-screen w-full overflow-y-auto"
   >
     <template #header>
       <nav
         class="relative w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
-        <div>Logo</div>
+        <div><RouterLink to="/">Logo</RouterLink></div>
         <ButtonInput
-          class="max-w-md"
+          class="min-w-[320px] max-w-md"
           input-type="search"
           place-holdertext="Search Web3"
         />
         <ul class="flex items-center gap-10">
-          <li>Explore</li>
-          <li>Create</li>
+          <li class="cursor-pointer">Explore</li>
+          <li><RouterLink to="/create/erc-721">Create</RouterLink></li>
         </ul>
         <div class="flex items-center gap-8">
           <ButtonMiscellenous
+            :has-list-content="false"
             class="text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
             >Connect wallet</ButtonMiscellenous
           >
@@ -93,7 +94,7 @@ const changeTheme = (theme: { id: string }) => {
         >
           <p>@Cryptop NFT 2022</p>
           <ButtonDropdown
-            class="bottom-12"
+            class="bottom-14"
             @selection-action="changeTheme"
             :listOfOptions="themeTypes"
             :isActiveOption="isActiveTheme"
