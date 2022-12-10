@@ -43,7 +43,7 @@ export default {
     >
       <span><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
-      <span><ChevronDownIcon class="h-4 w-4" /></span>
+      <span><ChevronDownIcon class="h-6 w-6" /></span>
     </button>
     <div
       v-show="openDropDownMenu"
@@ -59,7 +59,7 @@ export default {
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
             @click="$emit('selectionAction', option)"
-            class="text-black dark:text-white hover:bg-gray-100 font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
+            class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
           >
             <span v-if="option.icon" class="col-span-1"
               ><component :is="option.icon"></component

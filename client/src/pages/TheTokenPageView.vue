@@ -2,9 +2,8 @@
 import { ref } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
 import type { ChildrenLinksType } from "@/types";
-
-import TableAssetsCard from "@/components/TableAssetsCard.vue";
-import TokenPriceDetailCard from "@/components/TokenPriceDetailCard.vue";
+import { TableAssetsCard } from "@/components/tables";
+import { TokenPriceDetailCard } from "@/components/tokens";
 
 const router = useRouter();
 const route = useRoute();
@@ -14,10 +13,10 @@ const tokenDetailTabLinks = [
     id: "TokenOverView",
     title: "overview",
   },
-  {
-    id: "PropertiesToken",
-    title: "properties",
-  },
+  // {
+  //   id: "PropertiesToken",
+  //   title: "properties",
+  // },
   {
     id: "TokenBids",
     title: "bids",
@@ -54,7 +53,7 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
           <TokenPriceDetailCard class="lmin:hidden w-full mt-8" />
           <div class="w-auto px-8 mt-8">
             <ul
-              class="w-full h-12 bg-gray-100 dark:bg-darkTheme-bg rounded-2xl flex justify-between items-center text-gray-500 dark:text-darkTheme-text font-semibold text-base p-1.5"
+              class="relative w-full h-12 bg-gray-100 dark:bg-darkTheme-bg rounded-2xl flex justify-between items-center text-gray-500 dark:text-darkTheme-text font-semibold text-base p-1.5"
             >
               <li
                 v-for="(link, index) in tokenDetailTabLinks"
@@ -64,7 +63,7 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
                   'bg-white dark:bg-darkTheme rounded-xl text-gray-700 dark:text-darkTheme-text-b':
                     routerLinkActive === link.id,
                 }"
-                class="transition-all px-4 py-2 cursor-pointer capitalize dark:hover:text-darkTheme-text-b"
+                class="transition-all duration-300 px-4 py-2 cursor-pointer capitalize dark:hover:text-darkTheme-text-b"
               >
                 {{ link.title }}
               </li>

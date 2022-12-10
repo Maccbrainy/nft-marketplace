@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Welcome from "../components/WelcomeHero.vue";
-import TableCollections from "../components/TableCollections.vue";
+import { TableCollections } from "../components/tables";
 </script>
 <template>
   <section

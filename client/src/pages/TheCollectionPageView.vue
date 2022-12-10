@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
 import type { ChildrenLinksType } from "@/types";
 import { ButtonMiscellenous } from "@/components/buttonui";
+import { MenuDotsIcon, ShareIcon } from "@/components/icons";
 
 const router = useRouter();
 const route = useRoute();
@@ -12,6 +13,11 @@ const collectionDetailLinks = [
   { id: "CollectionActivity", title: "activity" },
 ];
 
+const collectionMenuList = [
+  { id: "Claim ownership", name: "Claim ownership", icon: false },
+  { id: "Report page", name: "Report page", icon: false },
+];
+
 const routerLinkActive = ref(route.name);
 const activateAndUpdateRouter = (link: ChildrenLinksType) => {
   routerLinkActive.value = link.id;
@@ -19,6 +25,9 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
     path: `/${route.params.id}/${link.title}`,
   });
 };
+const collectionMenuAction = (option: { id: string }) => {
+  console.log(`${option.id}`);
+}
 </script>
 <template>
   <section
@@ -53,8 +62,9 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua
           </p>
         </div>
-        <div class="flex flex-row pt-12 space-x-3">
+        <div class="flex flex-row flex-wrap pt-12 space-x-3">
           <ButtonMiscellenous
+            :has-list-content="false"
             class="text-sm rounded-2xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
             >Create Marketplace</ButtonMiscellenous
           >
@@ -65,10 +75,23 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
               >Place a bid for any NFT from this collection</span
             >
             <ButtonMiscellenous
+              :has-list-content="false"
               class="text-xs rounded-xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
               >Place a bid</ButtonMiscellenous
             >
           </div>
+          <ButtonMiscellenous 
+            :has-list-content="false"
+            class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
+            ><ShareIcon
+          /></ButtonMiscellenous>
+          <ButtonMiscellenous
+            @selection-action="collectionMenuAction"
+            :list-of-options="collectionMenuList"
+            :hasListContent="true"
+            class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
+            ><MenuDotsIcon
+          /></ButtonMiscellenous>
         </div>
       </div>
       <div

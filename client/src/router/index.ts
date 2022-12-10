@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TheHomePageView from "../pages/TheHomePageView.vue";
-import TableFiltersAssets from "../components/TableFiltersAssets.vue";
-import CollectionActivity from "../components/TableActivity.vue";
-import TokenOverView from "../components/TokenOverView.vue";
-import TokenBids from "../components/TokenBids.vue";
-import TokenHistory from "../components/TokenHistory.vue";
+import { TheHomePageView } from "../pages";
+import { TableFiltersAssets, TableActivity } from "../components/tables";
+import { TokenOverView, TokenBids, TokenHistory } from "../components/tokens";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,12 +31,12 @@ const router = createRouter({
         {
           path: "activity",
           name: "CollectionActivity",
-          component: CollectionActivity,
+          component: TableActivity,
         },
       ],
     },
     {
-      path: "/create",
+      path: "/create/:slug?",
       name: "CreatePage",
       // route level code-splitting
       // this generates a separate chunk (TheCreatePageView.[hash].js) for this route
