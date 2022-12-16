@@ -77,52 +77,52 @@ const checkMarketHandler = () => {
   <ul
     class="flex flex-col space-y-4 divide-y dark:divide-darkTheme-border text-gray-700 dark:text-darkTheme-text-b font-semibold text-lg"
   >
-    <ButtonDropdownClassic>
+    <button-dropdown-classic>
       <template #title>Status</template>
       <template #content>
         <div>
-          <ButtonCheckBox
+          <button-check-box
             v-model:optionChecked="checkedProperty"
             v-on:change="checkStatusHandler"
             :propertyOptions="listOptions"
-          ></ButtonCheckBox>
+          ></button-check-box>
         </div>
       </template>
-    </ButtonDropdownClassic>
-    <ButtonDropdownClassic>
+    </button-dropdown-classic>
+    <button-dropdown-classic>
       <template #title>Price</template>
       <template #content>
         <div class="w-full flex flex-col space-y-3.5 font-medium">
           <div
             class="flex justify-between gap-2 items-center text-sm text-gray-400 dark:text-darkTheme-text"
           >
-            <ButtonInput input-type="number" place-holdertext="Min"/>
+            <button-input input-type="number" place-holdertext="Min"/>
             <span>to</span>
-            <ButtonInput input-type="number" place-holdertext="Max"/>
-            <ButtonDropdown
+            <button-input input-type="number" place-holdertext="Max"/>
+            <button-dropdown
               class="right-0"
               @selection-action="changeTokenCurrency"
               :list-of-options="tokenCurrencies"
               :is-active-option="isActiveTokenCurrency"
             />
           </div>
-          <ButtonMiscellenous
+          <button-miscellenous
             :has-list-content="false"
             class="bg-gray-100 rounded-xl hover:bg-gray-200 dark:bg-darkTheme-bg py-3 text-gray-700 dark:text-darkTheme-text dark:hover:text-darkTheme-text-b text-sm font-semibold dark:hover:bg-darkTheme-hover"
-            >Apply</ButtonMiscellenous
+            >Apply</button-miscellenous
           >
         </div>
       </template>
-    </ButtonDropdownClassic>
-    <ButtonDropdownClassic>
+    </button-dropdown-classic>
+    <button-dropdown-classic>
       <template #title>Marketplace</template>
       <template #content>
-        <ButtonCheckBox
+        <button-check-box
           v-model:optionChecked="checkedMarket"
           v-on:change="checkMarketHandler"
           :propertyOptions="listOfMarketPlaces"
-        ></ButtonCheckBox>
+        ></button-check-box>
       </template>
-    </ButtonDropdownClassic>
+    </button-dropdown-classic>
   </ul>
 </template>

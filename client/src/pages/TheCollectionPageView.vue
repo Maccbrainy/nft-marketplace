@@ -25,9 +25,13 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
     path: `/${route.params.id}/${link.title}`,
   });
 };
+
+const isActiveMenuAction = ref<string>(collectionMenuList[0].id);
 const collectionMenuAction = (option: { id: string }) => {
+  isActiveMenuAction.value = option.id;
   console.log(`${option.id}`);
-}
+};
+
 </script>
 <template>
   <section
@@ -80,18 +84,22 @@ const collectionMenuAction = (option: { id: string }) => {
               >Place a bid</ButtonMiscellenous
             >
           </div>
-          <ButtonMiscellenous 
+          <ButtonMiscellenous
             :has-list-content="false"
             class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
-            ><ShareIcon
-          /></ButtonMiscellenous>
+          >
+            <ShareIcon />
+          </ButtonMiscellenous>
           <ButtonMiscellenous
             @selection-action="collectionMenuAction"
             :list-of-options="collectionMenuList"
-            :hasListContent="true"
+            :is-active-option="isActiveMenuAction"
+            :has-list-content="true"
+            :compute-list-content="false"
             class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
-            ><MenuDotsIcon
-          /></ButtonMiscellenous>
+          >
+            <MenuDotsIcon />
+          </ButtonMiscellenous>
         </div>
       </div>
       <div

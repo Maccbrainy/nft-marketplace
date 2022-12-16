@@ -85,13 +85,13 @@ const activeViewOptionHandler = (viewOptionId: string) => {
 <template>
   <div class="relative w-full flex flex-col py-6">
     <div
-      class="flex flex-row gap-3 text-sm font-semibold text-gray-700 dark:text-darkTheme-text"
+      class="flex flex-row items-center gap-3 text-sm font-semibold text-gray-700 dark:text-darkTheme-text"
     >
       <ButtonMiscellenous
         title="Filters"
         v-on:click="hideAndShowFilter = !hideAndShowFilter"
         :has-list-content="false"
-        class="inline-flex flex-initial items-center rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-3"
+        class="inline-flex flex-initial items-center rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-2.5"
         ><ChevronDownIcon
           v-show="!hideAndShowFilter"
           class="transform rotate-90 -translate-x-1"
@@ -102,7 +102,7 @@ const activeViewOptionHandler = (viewOptionId: string) => {
       <ButtonMiscellenous 
         title="Refresh collection"
         :has-list-content="false"
-        class="flex-initial rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-3"
+        class="flex-initial rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-2.5"
         ><RefreshIcon
       /></ButtonMiscellenous>
       <ButtonInput
@@ -118,14 +118,14 @@ const activeViewOptionHandler = (viewOptionId: string) => {
         ></ButtonDropdown>
       </div>
       <div
-        class="relative flex flex-initial items-center gap-2 p-1.5 rounded-2xl bg-gray-100 dark:bg-darkTheme-bg"
+        class="relative flex flex-initial items-center gap-2 p-1 rounded-2xl bg-gray-100 dark:bg-darkTheme-bg"
       >
         <div
           :class="{
             'translate-x-[112%]': activeViewOption == 'smallerViewOption',
             'left-1.5': activeViewOption == 'largerViewOption'
           }"
-          class="absolute bg-white dark:bg-darkTheme rounded-xl py-5 px-7 transition-all duration-300"
+          class="absolute bg-white dark:bg-darkTheme rounded-xl py-[18px] px-7 transition-all duration-300"
         ></div>
         <span
           v-for="viewOption in viewOptionsSettings"

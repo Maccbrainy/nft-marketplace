@@ -122,7 +122,7 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
           >
             <RouterLink
               :to="{
-                path: 'Art BLocks x Pace',
+                path: '/collection/Art BLocks x Pace',
               }"
               class="sf:w-full lmax:w-1/2 lmax:inline-flex sf:border-none lg:border-none border-solid border-transparent border-x-8 border-t-8"
             >
