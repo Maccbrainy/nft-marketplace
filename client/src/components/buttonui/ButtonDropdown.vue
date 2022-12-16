@@ -12,6 +12,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isCreateNftPage: Boolean
 });
 
 const openDropDownMenu = ref<Boolean>(false);
@@ -27,7 +28,6 @@ export default {
   inheritAttrs: false,
 };
 </script>
-<style scoped></style>
 <template>
   <div class="relative">
     <button
@@ -36,30 +36,31 @@ export default {
       @click="openDropDownMenu = !openDropDownMenu"
       :class="{
         'text-black bg-gray-200 dark:text-white dark:bg-darkTheme-hover':
-          openDropDownMenu,
-        'bg-gray-100': !openDropDownMenu,
+          openDropDownMenu && !isCreateNftPage,
+        'bg-gray-100': !openDropDownMenu && !isCreateNftPage,
+        'dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover': !isCreateNftPage
       }"
-      class="transition-all w-full h-full outline-none py-3 whitespace-nowrap flex justify-center text-center space-x-2 items-center dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover hover:text-black dark:hover:text-white rounded-xl px-2 transform active:scale-95"
+      class="transition-all w-full h-full outline-none py-3 whitespace-nowrap flex justify-center space-x-2 items-center hover:text-black dark:hover:text-white rounded-xl px-2 transform active:scale-95"
     >
-      <span><component :is="option.icon"></component></span>
+      <span v-if="option.icon"><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
-      <span><ChevronDownIcon class="h-6 w-6" /></span>
+      <span><ChevronDownIcon class="h-5 w-5" /></span>
     </button>
     <div
       v-show="openDropDownMenu"
       v-bind="$attrs"
-      class="animate-slide-up absolute w-max min-w-[11rem] overflow-y-auto max-w-xl h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
+      class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
     >
       <div
         tabindex="-1"
-        class="relative bg-white backdrop-blur-md dark:bg-darkTheme-bgx"
+        class="relative bg-[#ffffffdd] backdrop-blur-md dark:bg-darkTheme-bgx"
       >
         <div class="relative w-full p-2">
           <div
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
             @click="$emit('selectionAction', option)"
-            class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
+            class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 items-center gap-2 mx-auto py-3 px-3 cursor-pointer"
           >
             <span v-if="option.icon" class="col-span-1"
               ><component :is="option.icon"></component
@@ -67,7 +68,7 @@ export default {
             <span
               :class="{
                 'col-span-4 justify-start': !option.icon,
-                'col-span-3 justify-center': option.icon,
+                'col-span-3 justify-start': option.icon,
               }"
               class="w-full flex whitespace-nowrap"
               >{{ option.name }}</span
