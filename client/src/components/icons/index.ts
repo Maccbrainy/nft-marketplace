@@ -1,4 +1,8 @@
 export { default as DarkThemeIcon } from "@/components/icons/DarkThemeIcon.vue";
+export { default as PolygonIcon } from "@/components/icons/PolygonIcon.vue";
+export { default as SolanaIcon } from "@/components/icons/SolanaIcon.vue";
+export { default as EthereumIcon } from "@/components/icons/EthereumIcon.vue";
+export { default as WethIcon } from "@/components/icons/WethIcon.vue";
 export { default as ChevronDownIcon } from "@/components/icons/ChevronDownIcon.vue";
 export { default as LightThemeIcon } from "@/components/icons/LightThemeIcon.vue";
 export { default as CheckIcon } from "@/components/icons/CheckIcon.vue";
