@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { markRaw, ref, computed, watchEffect, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useCryptoCurrencyVsUSDCurrentPrice } from "@/api/useCryptoCurrencyVsUSDCurrentPrice";
 import {
   ButtonMiscellenous,
   ButtonToggle,
   ButtonInput,
+  ButtonDropdown,
 } from "@/components/buttonui";
+import { ChevronDownIcon, EthereumIcon, WethIcon } from "@/components/icons";
+const { name } = useRoute();
 const pricingSettingsData = [
   {
     id: "fixedPrice",
@@ -17,15 +22,123 @@ const pricingSettingsData = [
     icon: "icon",
   },
 ];
+const tokenCurrencies = [
+  {
+    id: "ethereum",
+    name: "ETH",
+    icon: markRaw(EthereumIcon),
+  },
+  {
+    id: "weth",
+    name: "wETH",
+    icon: markRaw(WethIcon),
+  },
+];
+const dateOfListExpiration = [
+  {
+    id: "No expiration",
+    name: "No expiration",
+    icon: false,
+  },
+  {
+    id: "1-day",
+    name: "1 day",
+    icon: false,
+  },
+  {
+    id: "7-days",
+    name: "7 days",
+    icon: false,
+  },
+  {
+    id: "1-month",
+    name: "1 month",
+    icon: false,
+  },
+  {
+    id: "3-months",
+    name: "3 months",
+    icon: false,
+  },
+  {
+    id: "Pick-a-date",
+    name: "Pick a date",
+    icon: false,
+  },
+];
+
+const onClickButtonMiscellenous = ref<boolean>(false);
+const isFocused = ref<boolean>(false);
+const getFocused = (focused: boolean) => {
+  isFocused.value = focused;
+};
+
 const showAdvanceSettings = ref(false);
 const showMarketPriceSettings = ref(true);
-const priceSettingVariantId = ref<string>("fixedPrice");
+const priceSettingVariantId = ref<string>(pricingSettingsData[0].id);
+
+const isActiveTokenCurrency = ref<string>(tokenCurrencies[0].id);
+const isActiveTokenCurrencyName = ref<string>(tokenCurrencies[0].name);
 
 const putOnMarketplaceHandler = (payload: boolean) => {
   showMarketPriceSettings.value = payload;
 };
+const isERC1155 = computed(() => (name == "CreatePageERC1155" ? true : false));
 const pricingSettings = (priceSettingDataId: string) => {
+  if (isERC1155.value && priceSettingDataId == pricingSettingsData[1].id)
+    return;
   priceSettingVariantId.value = priceSettingDataId;
+};
+
+const changeTokenCurrency = (token: { id: string; name: string }) => {
+  isActiveTokenCurrency.value = token.id;
+  isActiveTokenCurrencyName.value = token.name;
+  console.log("Token selected", token.id);
+};
+
+const priceOfATokenCurrencyInUSD = ref<number>();
+const priceOfNewNFT = ref<number>();
+const priceOfNewNFTServiceFee = computed(
+  () => priceOfNewNFT.value && priceOfNewNFT.value * 0.01
+);
+const priceToBeReceivedForNewNFT = computed(
+  () =>
+    priceOfNewNFTServiceFee.value &&
+    priceOfNewNFT.value &&
+    priceOfNewNFT.value - priceOfNewNFTServiceFee.value
+);
+
+watchEffect(async () => {
+  const { currentPrice, errorFetch } = await useCryptoCurrencyVsUSDCurrentPrice(
+    isActiveTokenCurrency.value
+  );
+  priceOfATokenCurrencyInUSD.value = currentPrice.value;
+  console.log("errorFetch:", errorFetch.value);
+});
+watch(
+  [priceSettingVariantId, showMarketPriceSettings],
+  (
+    [newPriceSettingVariantId, newShowMarketPriceSettings],
+    [oldPriceSettingVariantId, oldShowMarketPriceSettings]
+  ) => {
+    if (
+      newPriceSettingVariantId != oldPriceSettingVariantId ||
+      newShowMarketPriceSettings != oldShowMarketPriceSettings
+    ) {
+      priceOfNewNFT.value = undefined;
+    }
+  }
+);
+const priceOfNewNFToUSD = computed(
+  () =>
+    priceToBeReceivedForNewNFT.value &&
+    priceOfATokenCurrencyInUSD.value &&
+    priceOfATokenCurrencyInUSD.value * priceToBeReceivedForNewNFT.value
+);
+const isActiveDateOfListExpiration = ref<string>(dateOfListExpiration[4].id);
+const changeDateOfListingExpiration = (date: { id: string }) => {
+  isActiveDateOfListExpiration.value = date.id;
+  console.log("isActiveDateOfListExpiration.value", date.id);
 };
 
 const unlockOncePurchasedHandler = (payload: boolean) => {
@@ -44,7 +157,13 @@ const freeMintingHandler = (payload: boolean) => {
       class="relative w-full h-auto flex flex-col space-y-3 justify-start max-w-4xl font-medium py-10"
     >
       <h1 class="text-5xl text-gray-800 font-semibold">Create New NFT</h1>
-      <h4 class="text-base text-gray-400">Single Edition on Ethereum</h4>
+      <h4 class="text-base text-gray-400">
+        {{
+          name === "CreatePageERC1155"
+            ? "Multiple Edition on Ethereum"
+            : "Single Edition on Ethereum"
+        }}
+      </h4>
       <div
         class="flex flex-row gap-8 justify-between items-start pt-5 text-gray-400"
       >
@@ -97,7 +216,7 @@ const freeMintingHandler = (payload: boolean) => {
               ></button-toggle>
             </div>
             <div
-              v-show="showMarketPriceSettings"
+              v-if="showMarketPriceSettings"
               class="relative flex flex-col gap-8"
             >
               <div
@@ -107,9 +226,15 @@ const freeMintingHandler = (payload: boolean) => {
                   v-for="(priceSetting, index) in pricingSettingsData"
                   :key="priceSetting.id + index"
                   @click="pricingSettings(priceSetting.id)"
-                  :title="priceSetting.title"
+                  :title="
+                    isERC1155 && pricingSettingsData[1].id == priceSetting.id
+                      ? `${priceSetting.title} not supported in multiple edition`
+                      : priceSetting.title
+                  "
                   :class="{
                     'border-black': priceSettingVariantId == priceSetting.id,
+                    'bg-gray-200 cursor-not-allowed':
+                      isERC1155 && pricingSettingsData[1].id == priceSetting.id,
                   }"
                   class="w-full flex border rounded-xl py-8 cursor-pointer"
                 >
@@ -124,26 +249,89 @@ const freeMintingHandler = (payload: boolean) => {
                   v-show="priceSettingVariantId == pricingSettingsData[0].id"
                   class="flex flex-col gap-6"
                 >
-                  <div class="flex flex-col space-y-3">
+                  <div class="flex flex-col space-y-4">
                     <span class="text-gray-800">Price</span>
-                    <button-input
-                      class="text-sm"
-                      inputType="number"
-                      stepValue="0.00000001"
-                      placeHoldertext="Enter price for one piece"
-                    ></button-input>
-                    <div class="w-full border rounded-2xl h-20"></div>
+                    <div
+                      :class="{
+                        'focus:bg-white border focus:border-gray-300 hover:dark:border-darkTheme-hover focus:dark:border-darkTheme-border focus:dark:bg-darkTheme':
+                          isFocused,
+                        'bg-gray-100 dark:bg-darkTheme-bg border border-transparent hover:border-gray-300':
+                          !isFocused,
+                      }"
+                      class="w-full flex flex-row justify-between flex-nowrap items-center rounded-xl"
+                    >
+                      <button-input
+                        v-model:input-value="priceOfNewNFT"
+                        v-on:input-focused="getFocused"
+                        class="text-sm w-full"
+                        input-type="number"
+                        step-value="0.00000001"
+                        place-holder-text="Enter price for one piece"
+                        :is-create-nft-page="true"
+                      ></button-input>
+                      <button-dropdown
+                        class="right-0 w-full"
+                        @selection-action="changeTokenCurrency"
+                        :list-of-options="tokenCurrencies"
+                        :is-active-option="isActiveTokenCurrency"
+                        :is-create-nft-page="true"
+                      />
+                    </div>
+                    <div
+                      class="w-full flex justify-center flex-col space-y-3 divide-y border rounded-2xl h-24 p-4 text-sm font-normal"
+                    >
+                      <div
+                        class="w-full flex flex-row items-center justify-between"
+                      >
+                        <span>Service fee</span>
+                        <div class="flex flex-row items-center gap-2">
+                          <span>{{ priceOfNewNFTServiceFee }}</span>
+                          <span>{{
+                            priceOfNewNFT && isActiveTokenCurrencyName
+                          }}</span>
+                          <span class="text-gray-800 font-semibold">1%</span>
+                        </div>
+                      </div>
+                      <div
+                        class="w-full flex flex-row items-center justify-between pt-3"
+                      >
+                        <span>You will recieve</span>
+                        <div class="flex flex-row items-center gap-2">
+                          <span v-show="priceOfNewNFT">{{
+                            `$${priceOfNewNFToUSD?.toLocaleString()}`
+                          }}</span>
+                          <span class="text-gray-800 font-semibold">{{
+                            priceToBeReceivedForNewNFT
+                          }}</span>
+                          <span class="text-gray-800 font-semibold">{{
+                            priceOfNewNFT ? isActiveTokenCurrencyName : `-`
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="flex flex-col space-y-2">
                     <span class="text-gray-800"
                       >Date of listing expiration</span
                     >
-                    <button-input
-                      class="text-sm"
-                      inputType="number"
-                      stepValue="0.00000001"
-                      placeHoldertext="Enter price for one piece"
-                    ></button-input>
+                    <button-miscellenous
+                      v-on:click="
+                        onClickButtonMiscellenous = !onClickButtonMiscellenous
+                      "
+                      class="border w-full rounded-xl py-2.5"
+                      @selection-action="changeDateOfListingExpiration"
+                      :list-of-options="dateOfListExpiration"
+                      :is-active-option="isActiveDateOfListExpiration"
+                      :has-list-content="true"
+                      :compute-list-content="true"
+                    >
+                      <chevron-down-icon
+                        :class="{
+                          'transition-all rotate-180':
+                            onClickButtonMiscellenous,
+                        }"
+                      />
+                    </button-miscellenous>
                   </div>
                 </div>
                 <div
@@ -247,6 +435,7 @@ const freeMintingHandler = (payload: boolean) => {
               v-on:click="showAdvanceSettings = !showAdvanceSettings"
               class="w-full text-gray-800 border rounded-xl py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover mt-2 text-sm"
               :has-list-content="false"
+              :list-of-options="[]"
               >{{ showAdvanceSettings ? `Hide` : `Show` }} advanced
               settings</button-miscellenous
             >
@@ -292,6 +481,7 @@ const freeMintingHandler = (payload: boolean) => {
           <button-miscellenous
             class="bg-black text-white border rounded-xl py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover mt-2 text-sm"
             :has-list-content="false"
+            :list-of-options="[]"
             >Create item</button-miscellenous
           >
         </div>
