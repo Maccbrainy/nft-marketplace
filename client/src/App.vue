@@ -67,7 +67,7 @@ const changeTheme = (theme: { id: string }) => {
         />
         <ul class="flex items-center gap-10">
           <li class="cursor-pointer">Explore</li>
-          <li><RouterLink to="/create/erc-721">Create</RouterLink></li>
+          <li><RouterLink to="/create">Create</RouterLink></li>
         </ul>
         <div class="flex items-center gap-8">
           <ButtonMiscellenous
