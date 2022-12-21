@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import {
-  // TheBlockchainOptionsAndErcTypesPageView,
-  // TheCreatePageView,
-  TheHomePageView,
-} from "../pages";
+import { TheHomePageView } from "../pages";
 import { TableFiltersAssets, TableActivity } from "../components/tables";
 import { TokenOverView, TokenBids, TokenHistory } from "../components/tokens";
+import ConnectWallet from "@/components/ConnectWallet.vue";
+import StatusMessages from "@/components/StatusMessages.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -15,6 +14,25 @@ const router = createRouter({
       component: TheHomePageView,
       meta: {
         title: "Cryptop NFT Market Place",
+        requiresWalletAuth: false,
+      },
+    },
+    {
+      path: "/status",
+      name: "StatusMessagePage",
+      component: StatusMessages,
+      meta: {
+        title: "Choose blockchain",
+        requiresWalletAuth: false,
+      },
+    },
+    {
+      path: "/connect",
+      name: "ConnectWalletPage",
+      component: ConnectWallet,
+      meta: {
+        title: "Choose Wallet",
+        requiresWalletAuth: false,
       },
     },
     {
@@ -24,6 +42,7 @@ const router = createRouter({
       // this generates a separate chunk (TheCollectionPageView.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../pages/TheCollectionPageView.vue"),
+      meta: { requiresWalletAuth: false },
       props: true,
       children: [
         {
@@ -41,7 +60,7 @@ const router = createRouter({
     {
       path: "/create/:createSlug?",
       redirect: {
-        name: "ChooseBlockchainPage"
+        name: "ChooseBlockchainPage",
       },
       props: true,
       children: [
@@ -50,12 +69,14 @@ const router = createRouter({
           name: "ChooseBlockchainPage",
           component: () =>
             import("../pages/TheBlockchainOptionsAndErcTypesPageView.vue"),
+          meta: { requiresWalletAuth: false },
         },
         {
           path: "start/:startSlug",
           name: "ChooseERCTypesPage",
           component: () =>
             import("../pages/TheBlockchainOptionsAndErcTypesPageView.vue"),
+          meta: { requiresWalletAuth: true },
           props: (route) => ({
             routeName: route.name,
             startSlug: route.params.startSlug,
@@ -65,11 +86,13 @@ const router = createRouter({
           path: "erc-721",
           name: "CreatePageERC721",
           component: () => import("../pages/TheCreatePageView.vue"),
+          meta: { requiresWalletAuth: true },
         },
         {
           path: "erc-1155",
           name: "CreatePageERC1155",
           component: () => import("../pages/TheCreatePageView.vue"),
+          meta: { requiresWalletAuth: true },
         },
       ],
     },
@@ -80,6 +103,7 @@ const router = createRouter({
       // this generates a separate chunk (TheTokenPageView.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../pages/TheTokenPageView.vue"),
+      meta: { requiresWalletAuth: false },
       children: [
         {
           path: "",
@@ -99,6 +123,22 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+router.beforeEach((to) => {
+  const wallet = JSON.parse(
+    localStorage.getItem("marketPlace:ISCONNECTED") || "[]"
+  );
+  console.log("isWalletConnected", wallet);
+  
+  if (to.meta.requiresWalletAuth && wallet.length == 0) {
+    return {
+      name: "StatusMessagePage",
+      // query: {
+      //   redirect: to.fullPath,
+      // },
+    };
+  }
 });
 
 export default router;
