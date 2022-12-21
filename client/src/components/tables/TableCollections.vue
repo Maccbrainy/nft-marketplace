@@ -127,9 +127,11 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
               class="sf:w-full lmax:w-1/2 lmax:inline-flex sf:border-none lg:border-none border-solid border-transparent border-x-8 border-t-8"
             >
               <div
-                class="w-[99%] lmax:w-full lmax:border lmax:overflow-hidden lmax:dark:border-darkTheme-border flex lmax:flex-col flex-row justify-start lmax:p-5 sf:p-4 lmax:gap-5 py-1 pl-8 pr-2.5 rounded-2xl dark:hover:bg-darkTheme-hover cursor-pointer lg:mx-auto my-1.5"
+                class="w-[99%] lmax:w-full lmax:border lmax:overflow-hidden lmax:dark:border-darkTheme-border flex lmax:flex-col flex-row justify-start lmax:p-5 sf:p-4 lmax:gap-5 py-1 pl-8 pr-2.5 rounded-2xl hover:bg-gray-50 dark:hover:bg-darkTheme-hover cursor-pointer lg:mx-auto my-1.5"
               >
-                <div class="w-3/12 lmax:w-10/12 flex items-center dark:text-darkTheme-text-b">
+                <div
+                  class="w-3/12 lmax:w-10/12 flex items-center dark:text-darkTheme-text-b"
+                >
                   <div
                     class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200 dark:bg-darkTheme-bg-0.08"
                     title="Contract address"
