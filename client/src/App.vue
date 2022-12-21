@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterView } from "vue-router";
-import { ref, watchEffect, markRaw } from "vue";
+import { RouterLink, RouterView, useRouter } from "vue-router";
+import { ref, markRaw, inject } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
 import {
   DarkThemeIcon,
@@ -12,7 +12,8 @@ import {
   ButtonInput,
   ButtonMiscellenous,
 } from "@/components/buttonui";
-
+const { isActiveThemeSkin, changeThemeSkin } = inject<any>("provider");
+const router = useRouter();
 const themeTypes = ref([
   {
     id: "lightTheme",
@@ -25,30 +26,10 @@ const themeTypes = ref([
     icon: markRaw(DarkThemeIcon),
   },
 ]);
-
-const isActiveTheme = ref<string>(localStorage.theme);
-
-const activateTheme = () => {
-  let rootDocumentClass = document.documentElement.classList;
-  if (isActiveTheme.value === "darkTheme") {
-    rootDocumentClass.add("dark");
-    rootDocumentClass.remove("light");
-  } else {
-    rootDocumentClass.remove("dark");
-    rootDocumentClass.add("light");
-  }
-};
-watchEffect(() => {
-  if (!localStorage.theme) {
-    localStorage.theme = "lightTheme";
-  }
-  isActiveTheme.value = localStorage.theme;
-  activateTheme();
-});
-const changeTheme = (theme: { id: string }) => {
-  localStorage.theme = theme.id;
-  isActiveTheme.value = theme.id;
-  activateTheme();
+const chooseHowToConnect = () => {
+  router.push({
+    name: "ConnectWalletPage",
+  });
 };
 </script>
 <template>
@@ -57,6 +38,7 @@ const changeTheme = (theme: { id: string }) => {
   >
     <template #header>
       <nav
+        v-show="$route.name != 'ConnectWalletPage'"
         class="relative w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div><RouterLink to="/">Logo</RouterLink></div>
@@ -71,6 +53,7 @@ const changeTheme = (theme: { id: string }) => {
         </ul>
         <div class="flex items-center gap-8">
           <ButtonMiscellenous
+            v-on:click="chooseHowToConnect"
             :has-list-content="false"
             class="text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
             >Connect wallet</ButtonMiscellenous
@@ -86,6 +69,7 @@ const changeTheme = (theme: { id: string }) => {
     </template>
     <template #footer>
       <section
+        v-show="$route.name != 'ConnectWalletPage'"
         class="w-full max-w-screen-2xl relative px-4 sm:px-6 md:px-7 lg:px-8 mx-auto pb-6"
       >
         <div class="border-t dark:border-darkTheme-border w-full pb-4"></div>
@@ -95,9 +79,9 @@ const changeTheme = (theme: { id: string }) => {
           <p>@Cryptop NFT 2022</p>
           <ButtonDropdown
             class="bottom-14"
-            @selection-action="changeTheme"
+            @selection-action="changeThemeSkin"
             :listOfOptions="themeTypes"
-            :isActiveOption="isActiveTheme"
+            :isActiveOption="isActiveThemeSkin"
           ></ButtonDropdown>
           <p>All right reserved</p>
         </div>
