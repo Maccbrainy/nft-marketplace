@@ -134,9 +134,9 @@ router.beforeEach((to) => {
   if (to.meta.requiresWalletAuth && wallet.length == 0) {
     return {
       name: "StatusMessagePage",
-      // query: {
-      //   redirect: to.fullPath,
-      // },
+      query: {
+        redirect: to.fullPath,
+      },
     };
   }
 });
