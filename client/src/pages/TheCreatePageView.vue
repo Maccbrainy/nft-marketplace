@@ -1,15 +1,23 @@
 <script setup lang="ts">
-import { markRaw, ref, computed, watchEffect, watch } from "vue";
+import { markRaw, ref, computed, watchEffect, watch, inject } from "vue";
 import { useRoute } from "vue-router";
 import { useCryptoCurrencyVsUSDCurrentPrice } from "@/api/useCryptoCurrencyVsUSDCurrentPrice";
+import { shortenAddress } from "@/utils";
 import {
   ButtonMiscellenous,
   ButtonToggle,
   ButtonInput,
   ButtonDropdown,
 } from "@/components/buttonui";
-import { ChevronDownIcon, EthereumIcon, WethIcon } from "@/components/icons";
+import {
+  ChevronDownIcon,
+  EthereumIcon,
+  PolygonIcon,
+  WethIcon,
+} from "@/components/icons";
 const { name } = useRoute();
+const { blockchainNetwork, wallet } = inject<any>("provider");
+
 const pricingSettingsData = [
   {
     id: "fixedPrice",
@@ -66,6 +74,7 @@ const dateOfListExpiration = [
     icon: false,
   },
 ];
+const blockchainNetworks = ["ethereum", "polygon", "solana"];
 
 const onClickButtonMiscellenous = ref<boolean>(false);
 const isFocused = ref<boolean>(false);
@@ -157,11 +166,11 @@ const freeMintingHandler = (payload: boolean) => {
       class="relative w-full h-auto flex flex-col space-y-3 justify-start max-w-4xl font-medium py-10"
     >
       <h1 class="text-5xl text-gray-800 font-semibold">Create New NFT</h1>
-      <h4 class="text-base text-gray-400">
+      <h4 class="text-base text-gray-400 capitalize">
         {{
           name === "CreatePageERC1155"
-            ? "Multiple Edition on Ethereum"
-            : "Single Edition on Ethereum"
+            ? `Multiple Edition on ${blockchainNetwork}`
+            : `Single Edition on ${blockchainNetwork}`
         }}
       </h4>
       <div
@@ -170,22 +179,31 @@ const freeMintingHandler = (payload: boolean) => {
         <div class="w-full flex flex-col space-y-8 justify-start items-start">
           <div class="relative w-full">
             <h1 class="text-gray-800">Choosen Wallet</h1>
-            <div
+            <div v-if="wallet.length > 0"
               class="flex flex-row justify-between items-center border rounded-2xl p-2 mt-3"
             >
-              <div class="flex justify-start items-center gap-4">
-                <div class="flex bg-gray-200 rounded-full w-16 h-16">
-                  <span class="text-center text-xs m-auto">Chain Icon</span>
+              <div class="flex justify-start items-center gap-4 py-3">
+                <div>
+                  <span v-if="wallet[0].networkName == blockchainNetworks[0]"
+                    ><ethereum-icon class="w-10 h-10"
+                  /></span>
+                  <span v-if="wallet[0].networkName == blockchainNetworks[1]"
+                    ><polygon-icon class="w-10 h-10"
+                  /></span>
                 </div>
                 <div class="flex flex-col">
-                  <span class="text-gray-800">0x46...381E</span>
-                  <span class="text-xs">Ethereum</span>
+                  <span class="text-gray-800">{{
+                    shortenAddress(wallet[0].current_account)
+                  }}</span>
+                  <span class="text-xs capitalize">{{
+                    wallet[0].networkName
+                  }}</span>
                 </div>
               </div>
               <div
                 class="text-green-600 text-xs py-0.5 px-1.5 bg-green-50 rounded-md"
               >
-                <span>Connected</span>
+                <span>{{ wallet[0].is_connected && "Connected" }}</span>
               </div>
             </div>
           </div>
