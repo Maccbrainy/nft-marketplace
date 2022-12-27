@@ -70,7 +70,7 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
 };
 </script>
 <template>
-  <section class="relative w-full py-10 text-gray-700 dark:text-darkTheme-text">
+  <div class="relative w-full py-10 text-gray-700 dark:text-darkTheme-text">
     <div class="flex flex-col">
       <div
         class="grid xs:grid-cols-1 xs:grid-flow-row grid-cols-3 md:grid-rows-2 lg:grid-rows-none lg:grid-flow-row lg:grid-cols-8 gap-4 pb-4"
@@ -250,5 +250,5 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
