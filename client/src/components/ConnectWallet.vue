@@ -88,7 +88,7 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
             <div class="relative flex flex-col gap-2">
               <h1 class="text-xs text-gray-500">Popular</h1>
               <div
-                v-on:click="connectWallet(wallet)"
+                v-on:click="connectWallet(wallet, $route.query.redirect)"
                 class="w-full border rounded-xl p-3 text-lg font-medium cursor-pointer"
                 v-for="wallet in listOfBlockchainWallets"
                 :key="wallet"
