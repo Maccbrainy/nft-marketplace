@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { markRaw } from "vue";
+import { inject, markRaw } from "vue";
 import { useRouter } from "vue-router";
 import { EthereumIcon, PolygonIcon } from "@/components/icons";
+
 defineProps({
   routeName: String,
   startSlug: String,
 });
 const router = useRouter();
+const { selectBlockchain } = inject<any>("provider");
 
 const blockchainOptions = [
   {
@@ -46,6 +48,7 @@ const chooseBlockchain = (blockchain: { id: string }) => {
   router.push({
     path: `/create/start/${blockchainId}`,
   });
+  selectBlockchain(blockchainId)
 };
 const chooseERCType = (erc: { id: string }) => {
   let ercId = erc.id;
