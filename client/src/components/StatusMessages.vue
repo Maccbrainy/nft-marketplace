@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import router from "@/router";
 import { inject } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { ButtonMiscellenous } from "./buttonui";
-const { blockchainNetwork } = inject<any>("provider");
-const chooseHowToConnect = () => {
-  router.push({
-    name: "ConnectWalletPage",
-  });
-};
-console.log("Check redirect path:", router);
+const route = useRoute();
+const router = useRouter()
+const { blockchainNetwork, chooseHowToConnectWallet } = inject<any>("provider");
+
+console.log("Check route redirect path:", route);
+console.log("Check route redirect path:", router);
+// console.log("Check router redirect path:", router);
 </script>
 <template>
   <section
@@ -21,7 +21,7 @@ console.log("Check redirect path:", router);
       }}
     </p>
     <button-miscellenous
-      v-on:click="chooseHowToConnect"
+      v-on:click="chooseHowToConnectWallet($route.redirectedFrom?.path)"
       class="bg-gray-100 rounded-xl hover:bg-gray-200 py-2.5 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover text-sm"
       :has-list-content="false"
       :compute-list-content="false"

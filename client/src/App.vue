@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRouter } from "vue-router";
+import { RouterLink, RouterView } from "vue-router";
 import { ref, markRaw, inject } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
 import {
@@ -12,8 +12,7 @@ import {
   ButtonInput,
   ButtonMiscellenous,
 } from "@/components/buttonui";
-const { isActiveThemeSkin, changeThemeSkin } = inject<any>("provider");
-const router = useRouter();
+const { isActiveThemeSkin, changeThemeSkin, chooseHowToConnectWallet } = inject<any>("provider");
 const themeTypes = ref([
   {
     id: "lightTheme",
@@ -26,11 +25,6 @@ const themeTypes = ref([
     icon: markRaw(DarkThemeIcon),
   },
 ]);
-const chooseHowToConnect = () => {
-  router.push({
-    name: "ConnectWalletPage",
-  });
-};
 </script>
 <template>
   <BaseLayout
@@ -53,7 +47,7 @@ const chooseHowToConnect = () => {
         </ul>
         <div class="flex items-center gap-8">
           <ButtonMiscellenous
-            v-on:click="chooseHowToConnect"
+            v-on:click="chooseHowToConnectWallet($route.redirectedFrom?.path)"
             :has-list-content="false"
             class="text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
             >Connect wallet</ButtonMiscellenous
