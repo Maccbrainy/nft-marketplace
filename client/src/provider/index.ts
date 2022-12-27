@@ -1,10 +1,20 @@
 import { ref, watchEffect } from "vue";
 import router from "../router";
+interface WalletSchema {
+  name: string,
+  is_connected: boolean,
+  is_metamask: boolean,
+  selected_address: string,
+  current_account: string,
+  networkVersion: string,
+  networkName: string
 
+}
 export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
     const currentAccount = ref<string>("");
+    const wallet = ref<WalletSchema[]>([]);
 
     /**Begins: Change App Theme background and colors */
     const isActiveThemeSkin = ref<string>(localStorage.theme);
@@ -24,37 +34,67 @@ export default {
       activateThemeSkin();
     };
     /**Ends: Change App Theme background and colors */
+    const chooseHowToConnectWallet = (routeRedirect: string) => {
+      router.push({
+        name: "ConnectWalletPage",
+        query: {
+          redirect: routeRedirect
+        }
+      });
+      console.log("routeRedirect:", routeRedirect);
+    }
 
     const blockchainNetwork = ref<string>("ethereum");
     const selectBlockchain = (blockchainId: string) => {
       blockchainNetwork.value = blockchainId;
     };
 
-    const connectWallet = async (wallet: string) => {
+    const connectWallet = async (
+      walletModel: string,
+      routeRedirect: string
+    ) => {
+      // const redirectedPath = routeRedirect || router.back()
       try {
-        if (!ethereum && wallet == "MetaMask")
+        if (!ethereum && walletModel == "MetaMask")
           return alert("Please install MetaMask");
-        console.log("ethereum1:", ethereum);
+        if (walletModel == "WalletConnect") 
+          return alert("WalletConnect coming soon!")
+        if (walletModel == "Install Phantom")
+          return alert("Phantom coming soon!");
 
-        const account = await ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        currentAccount.value = account[0];
-        console.log("ethereum2:", ethereum);
-        localStorage.setItem(
-          "marketPlace:ISCONNECTED",
-          JSON.stringify([
-            {
-              name: ethereum.networkVersion,
-              is_connected: true,
-              is_metamask: ethereum.isMetaMask,
-              selected_address: ethereum.selectedAddress,
-              current_account: currentAccount.value,
-              networkVersion: ethereum.networkVersion,
-            },
-          ])
+        if (
+          blockchainNetwork.value == "ethereum" &&
+          walletModel == "MetaMask"
+        ) {
+          const account = await ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          currentAccount.value = account[0];
+          localStorage.setItem(
+            "marketPlace:ISCONNECTED",
+            JSON.stringify([
+              {
+                name: ethereum.networkVersion,
+                is_connected: true,
+                is_metamask: ethereum.isMetaMask,
+                selected_address: ethereum.selectedAddress,
+                current_account: currentAccount.value,
+                networkVersion: ethereum.networkVersion,
+                networkName: blockchainNetwork.value
+              },
+            ])
+          );
+        }
+        wallet.value = JSON.parse(
+          localStorage.getItem("marketPlace:ISCONNECTED") || "[]"
         );
-        window.location.reload();
+        if (routeRedirect) {
+          router.push({
+            path: routeRedirect
+          })
+        } else {
+          router.go(-1);
+        }
       } catch (error) {
         console.log(error);
         throw new Error("No Ethereum Object");
@@ -65,7 +105,9 @@ export default {
       try {
         currentAccount.value = "";
         localStorage.removeItem("marketPlace:ISCONNECTED");
-        window.location.reload();
+        router.push({
+          name: router.currentRoute.value.name || undefined 
+        })
       } catch (error) {
         console.log(error);
         throw new Error("No Ethereum Object");
@@ -87,7 +129,9 @@ export default {
       blockchainNetwork,
       currentAccount,
       connectWallet,
-      disconnectWallet
+      disconnectWallet,
+      wallet,
+      chooseHowToConnectWallet
     });
   },
 };
