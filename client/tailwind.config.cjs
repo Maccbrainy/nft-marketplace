@@ -25,6 +25,7 @@ module.exports = {
         lmin: { min: "991px" },
         lmax: { max: "1023px" },
         mf: { max: "990px" },
+        mmf: { max: "768px"},
         sf: { max: "639px" },
         xs: { max: "511px" },
         // xxs: { max: "410px" },
