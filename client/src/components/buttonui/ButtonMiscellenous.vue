@@ -41,7 +41,7 @@ export default {
       'bg-gray-100 dark:bg-darkTheme-hover dark:text-darkTheme-text-b':
         openDropDownMenu && hasListContent,
     }"
-    class="relative h-full outline-none transition-all px-5 transform active:scale-95 whitespace-nowrap z-20"
+    class="relative h-full outline-none transition-all px-5 transform active:scale-95 whitespace-nowrap"
   >
     <div
       :class="{
