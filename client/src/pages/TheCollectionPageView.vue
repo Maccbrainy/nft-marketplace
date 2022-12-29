@@ -31,24 +31,19 @@ const collectionMenuAction = (option: { id: string }) => {
   isActiveMenuAction.value = option.id;
   console.log(`${option.id}`);
 };
-
 </script>
 <template>
-  <section
-    class="relative w-full max-w-screen-2xl min-h-screen px-4 sm:px-6 md:px-7 lg:px-8 pb-10 m-auto dark:text-darkTheme-text"
-  >
-    <div class="relative">
-      <div
-        class="rounded-2xl bg-gray-100 dark:bg-darkTheme-bg w-full h-72 max-h-72 overflow-hidden"
-      >
-        <img
-          class="w-full h-full object-center object-cover min-h-full min-w-full"
-          src="https://rarible.mypinata.cloud/ipfs/QmRVx1g2ncnsxZ2o86MYcxGLC7ypnuVHfhi5MCtTbPjEg6"
-        />
-      </div>
-      <div
-        class="absolute bg-gray-400 h-28 w-28 rounded-3xl z-10 left-8 -bottom-6 ring-4 ring-offset-0 ring-white dark:ring-darkTheme"
-      ></div>
+  <div class="relative">
+    <div
+      class="relative rounded-2xl bg-gray-100 dark:bg-darkTheme-bg w-full h-72 max-h-72"
+    >
+      <img
+        class="w-full h-full object-center object-cover min-h-full min-w-full rounded-2xl"
+        src="https://rarible.mypinata.cloud/ipfs/QmRVx1g2ncnsxZ2o86MYcxGLC7ypnuVHfhi5MCtTbPjEg6"
+      />
+    <div
+        class="absolute -bottom-5 bg-gray-400 h-28 w-28 rounded-3xl z-10 left-8 ring-4 ring-offset-0 ring-white dark:ring-darkTheme"
+    ></div>
     </div>
     <div class="w-full flex flex-row justify-between pt-12">
       <div class="flex flex-col">
@@ -161,5 +156,5 @@ const collectionMenuAction = (option: { id: string }) => {
       </ul>
       <RouterView />
     </div>
-  </section>
+  </div>
 </template>
