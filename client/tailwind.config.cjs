@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       animation: {
         "slide-up": "slideIn 300ms ease-in-out",
+        "slide-in-right": "slideInX 300ms ease-in-out",
       },
       keyframes: {
         slideIn: {
@@ -19,11 +20,21 @@ module.exports = {
             opacity: "1"
           },
         },
+        slideInX: {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
       },
       screens: {
-        // lf: { max: "1240px" },
-        lmin: { min: "991px" },
+        lf: { max: "1260px" },
         lmax: { max: "1023px" },
+        lmin: { min: "991px" },
         mf: { max: "990px" },
         mmf: { max: "768px"},
         sf: { max: "639px" },
