@@ -28,7 +28,7 @@ export default {
         rootDocumentClass.add("light");
       }
     };
-    const changeThemeSkin = (theme: { id: string }) => {
+    const changeThemeSkinCallback = (theme: { id: string }) => {
       localStorage.theme = theme.id;
       isActiveThemeSkin.value = theme.id;
       activateThemeSkin();
@@ -113,6 +113,23 @@ export default {
         throw new Error("No Ethereum Object");
       }
     }
+    const teleportModalOpenMenuBar = ref<boolean>(false);
+    const teleportModalCallback = (modal: {
+      name: string;
+      open_modal: boolean;
+    }) => {
+      if (modal.name == "isMenuBar") {
+        teleportModalOpenMenuBar.value = modal.open_modal;
+        console.log("Teleport:", modal.name, teleportModalOpenMenuBar.value);
+      }
+    }
+
+
+    const showMarketplaceCartBag = ref(false);
+    const showMarketplaceCartBagCallback = () => {
+      showMarketplaceCartBag.value = !showMarketplaceCartBag.value
+    }
+
 
     watchEffect(() => {
       if (!localStorage.theme) {
@@ -123,7 +140,7 @@ export default {
     });
 
     app.provide("provider", {
-      changeThemeSkin,
+      changeThemeSkinCallback,
       isActiveThemeSkin,
       selectBlockchain,
       blockchainNetwork,
@@ -131,7 +148,11 @@ export default {
       connectWallet,
       disconnectWallet,
       wallet,
-      chooseHowToConnectWallet
+      chooseHowToConnectWallet,
+      teleportModalCallback,
+      teleportModalOpenMenuBar,
+      showMarketplaceCartBagCallback,
+      showMarketplaceCartBag
     });
   },
 };
