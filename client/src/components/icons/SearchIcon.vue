@@ -5,9 +5,8 @@ import { CloseIcon } from "../icons";
 const showSearchBar = ref(false);
 </script>
 <template>
-  <button class="lmin:hidden">
+  <button v-on:click="showSearchBar = !showSearchBar" class="lmin:hidden">
     <svg
-      v-on:click="showSearchBar = !showSearchBar"
       viewBox="0 0 25 24"
       fill="none"
       width="24"
@@ -26,10 +25,9 @@ const showSearchBar = ref(false);
   <teleport to="body">
     <div
       v-if="showSearchBar"
-      class="absolute animate-slide-up w-full max-w-screen-2xl top-0 border bg-white flex flex-row justify-center items-center gap-4 z-30 py-4 px-4 sm:px-6 md:px-7 lg:px-8 mx-auto"
+      class="absolute animate-slide-up w-full max-w-screen-2xl top-0 bg-white flex flex-row justify-center items-center gap-4 z-30 py-4 px-4 sm:px-6 md:px-7 lg:px-8 mx-auto"
     >
       <ButtonInput
-        v-on:focus="true"
         class="w-full"
         input-type="search"
         place-holdertext="Search Web3"
