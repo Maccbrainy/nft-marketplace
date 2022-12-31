@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRoute } from "vue-router";
-import { ref, markRaw, inject, computed } from "vue";
+import { RouterLink, RouterView } from "vue-router";
+import { ref, markRaw, inject } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
 import {
   CloseIcon,
@@ -25,7 +25,6 @@ const {
   showMarketplaceCartBag,
   matchedRoutesComposable
 } = inject<any>("provider");
-const route = useRoute();
 const themeTypes = ref([
   {
     id: "lightTheme",
@@ -48,7 +47,7 @@ const matchedRoutes = computed<boolean>(
   <BaseLayout class="bg-white dark:bg-darkTheme w-full min-h-screen">
     <template #header>
       <nav
-        v-show="route.name != 'ConnectWalletPage'"
+        v-show="$route.name != 'ConnectWalletPage'"
         class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div class="flex flex-row items-center space-x-8">
@@ -91,7 +90,7 @@ const matchedRoutes = computed<boolean>(
       <section
         :class="{
           'pt-20 px-4 sm:px-6 md:px-7 lg:px-8 pb-10':
-            route.name != 'ConnectWalletPage',
+            $route.name != 'ConnectWalletPage',
         }"
         class="relative w-full max-w-screen-2xl min-h-screen flex gap-4 m-auto dark:text-darkTheme-text-b"
       >
@@ -109,7 +108,7 @@ const matchedRoutes = computed<boolean>(
     </template>
     <template #footer>
       <section
-        v-show="route.name != 'ConnectWalletPage'"
+        v-show="$route.name != 'ConnectWalletPage'"
         class="w-full max-w-screen-2xl relative px-4 sm:px-6 md:px-7 lg:px-8 mx-auto pb-8"
       >
         <div class="border-t dark:border-darkTheme-border w-full pb-4"></div>
