@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, computed } from "vue";
 import router from "../router";
 interface WalletSchema {
   name: string,
@@ -130,6 +130,12 @@ export default {
       showMarketplaceCartBag.value = !showMarketplaceCartBag.value
     }
 
+    const matchedRoutesComposable = computed<boolean>(
+      () =>
+        router.currentRoute.value.matched[0].path == "/collection/:id/:slug?" ||
+        router.currentRoute.value.name == "HomePage"
+    );
+
 
     watchEffect(() => {
       if (!localStorage.theme) {
@@ -152,7 +158,8 @@ export default {
       teleportModalCallback,
       teleportModalOpenMenuBar,
       showMarketplaceCartBagCallback,
-      showMarketplaceCartBag
+      showMarketplaceCartBag,
+      matchedRoutesComposable
     });
   },
 };

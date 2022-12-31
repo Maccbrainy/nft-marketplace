@@ -22,7 +22,8 @@ const {
   chooseHowToConnectWallet,
   teleportModalCallback,
   showMarketplaceCartBagCallback,
-  showMarketplaceCartBag
+  showMarketplaceCartBag,
+  matchedRoutesComposable
 } = inject<any>("provider");
 const route = useRoute();
 const themeTypes = ref([
@@ -102,35 +103,7 @@ const matchedRoutes = computed<boolean>(
         >
           <RouterView />
         </div>
-        <div
-          :class="{
-            'sticky top-20 sf:top-0 mb-5 border dark:border-darkTheme-border lf:fixed lf:z-30 lf:right-0 sm:shadow-2xl lf:border-none sm:mr-5':
-              showMarketplaceCartBag && matchedRoutes,
-            hidden: !showMarketplaceCartBag,
-            'fixed z-30 dark:border-darkTheme-border right-0 shadow-2xl mr-5':
-              showMarketplaceCartBag && !matchedRoutes,
-          }" class="w-full h-full sf:pt-3 sm:w-[28%] sm:min-w-[320px] sm:h-[85vh] sm:rounded-2xl overflow-y-auto dark:text-white animate-slide-in-right"
-        >
-          <div class="relative w-full h-full flex flex-col gap-8 p-6 bg-white dark:bg-darkTheme">
-            <close-icon
-              @click="showMarketplaceCartBagCallback"
-              class="absolute right-3 top-3"
-            />
-            <div class="flex flex-col gap-2.5">
-              <h1 class="font-semibold text-2xl pr-4">
-                So much space for NFTs!
-              </h1>
-              <p class="text-base text-gray-500 dark:text-darkTheme-text">
-                Add NFTs to your bag to check out and get hold of them.
-              </p>
-            </div>
-            <ButtonMiscellenous
-              :has-list-content="false"
-              class="w-full flex justify-center bg-gray-100 hover:bg-gray-200 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover items-center h-12 text-base text-gray-800 dark:text-white font-semibold rounded-2xl py-3"
-              >Explore Ethereum NFTs</ButtonMiscellenous
-            >
-          </div>
-        </div>
+        <marketplace-cart-bag />
       </section>
       <teleport-modal />
     </template>
