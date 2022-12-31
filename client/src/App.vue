@@ -2,8 +2,8 @@
 import { RouterLink, RouterView } from "vue-router";
 import { ref, markRaw, inject } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
+import MarketplaceCartBag from "./components/MarketplaceCartBag.vue";
 import {
-  CloseIcon,
   DarkThemeIcon,
   LightThemeIcon,
   MenuBarIcon,
@@ -37,11 +37,6 @@ const themeTypes = ref([
     icon: markRaw(DarkThemeIcon),
   },
 ]);
-const matchedRoutes = computed<boolean>(
-  () =>
-    route.matched[0].path == "/collection/:id/:slug?" ||
-    route.name == "HomePage"
-);
 </script>
 <template>
   <BaseLayout class="bg-white dark:bg-darkTheme w-full min-h-screen">
@@ -96,8 +91,8 @@ const matchedRoutes = computed<boolean>(
       >
         <div
           :class="{
-            'w-[72%] lf:w-full': showMarketplaceCartBag && matchedRoutes,
-            'w-full': !showMarketplaceCartBag || !matchedRoutes,
+            'w-[72%] lf:w-full': showMarketplaceCartBag && matchedRoutesComposable,
+            'w-full': !showMarketplaceCartBag || !matchedRoutesComposable,
           }"
         >
           <RouterView />
