@@ -12,7 +12,7 @@ const showSearchBar = ref(false);
       width="24"
       height="24"
       xlmns="http://www.w3.org/2000/svg"
-      class="w-[34px] h-[34px] cursor-pointer"
+      class="w-[34px] h-[34px] dark:text-white cursor-pointer"
     >
       <path
         fill-rule="evenodd"

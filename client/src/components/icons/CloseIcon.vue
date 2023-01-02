@@ -1,5 +1,7 @@
 <template>
-  <button class="hover:bg-gray-100 dark:hover:bg-darkTheme-hover rounded-2xl p-2.5 transition-all duration-300 active:scale-95">
+  <button
+    class="hover:bg-gray-100 dark:text-darkTheme-text-b dark:hover:bg-darkTheme-hover rounded-2xl p-2.5 transition-all duration-300 active:scale-95"
+  >
     <svg
       viewBox="0 0 24 24"
       fill="none"
