@@ -43,41 +43,41 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
 <template>
   <section class="relative max-h-screen">
     <div
-      class="relative w-full h-full flex flex-row justify-start items-start space-x-28 text-gray-800"
+      class="relative w-full h-full flex flex-row justify-start items-start sm:space-x-10 md:space-x-16 lg:space-x-28 text-gray-800 dark:text-white"
     >
-      <div class="relative w-[30%]">
-        <div class="absolute left-5 pt-10 text-white">
-          <RouterLink to="/">Logo</RouterLink>
+      <div class="relative sm:w-[30%]">
+        <div class="absolute left-5 pt-8 sm:pt-10">
+          <RouterLink to="/" class="text-white text-xl font-bold">Dencil</RouterLink>
         </div>
-        <div class="w-full h-screen min-w-[320px]">
+        <div class="sf:hidden h-screen max-w-[380px]">
           <img
             :src="imageSrc"
             class="w-full h-full flex-auto object-cover object-center"
           />
         </div>
       </div>
-      <div class="relative w-[70%]">
-        <div class="min-w-[448px] max-w-md flex flex-col py-10 gap-8">
+      <div class="relative w-full flex sm:w-[70%] sf:pt-10">
+        <div class="max-w-sm flex flex-col py-10 gap-8 sf:px-5">
           <div class="flex flex-col gap-5">
             <h1 class="text-4xl font-semibold">Connect wallet</h1>
-            <p class="text-lg text-gray-500">
+            <p class="text-lg text-gray-500 dark:text-darkTheme-text">
               Choose how you want to connect. There are several wallet
               providers.
             </p>
           </div>
           <div class="relative flex flex-col gap-4">
             <div
-              class="relative flex flex-row gap-8 items-center border-b pb-3"
+              class="relative flex flex-row gap-8 items-center border-b dark:border-darkTheme-border pb-3"
             >
               <div
                 v-for="blockchain in blockchainOptions"
                 :key="blockchain.id"
                 v-on:click="selectBlockchain(blockchain.id)"
                 :class="{
-                  'text-gray-800': blockchain.id == blockchainNetwork,
-                  'text-gray-400': blockchain.id != blockchainNetwork,
+                  'text-gray-800 dark:text-white': blockchain.id == blockchainNetwork,
+                  'text-gray-500 dark:text-darkTheme-text': blockchain.id != blockchainNetwork,
                 }"
-                class="text-base font-medium hover:text-gray-800 cursor-pointer"
+                class="text-base font-medium hover:text-gray-800 dark:hover:text-white cursor-pointer"
               >
                 {{ blockchain.name }}
               </div>
@@ -86,10 +86,10 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
               ></div>
             </div>
             <div class="relative flex flex-col gap-2">
-              <h1 class="text-xs text-gray-500">Popular</h1>
+              <h1 class="text-xs text-gray-500 dark:text-darkTheme-text">Popular</h1>
               <div
                 v-on:click="connectWallet(wallet, $route.query.redirect)"
-                class="w-full border rounded-xl p-3 text-lg font-medium cursor-pointer"
+                class="w-full transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer"
                 v-for="wallet in listOfBlockchainWallets"
                 :key="wallet"
               >
