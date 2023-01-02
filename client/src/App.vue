@@ -20,8 +20,6 @@ const {
   isActiveThemeSkin,
   changeThemeSkinCallback,
   chooseHowToConnectWallet,
-  teleportModalCallback,
-  showMarketplaceCartBagCallback,
   showMarketplaceCartBag,
   matchedRoutesComposable
 } = inject<any>("provider");
@@ -65,19 +63,8 @@ const themeTypes = ref([
             class="mmf:hidden text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
             >Connect wallet</ButtonMiscellenous
           >
-          <ShoppingBagIcon
-            @click="showMarketplaceCartBagCallback"
-            class="dark:text-darkTheme-text-b cursor-pointer font-bold"
-          />
-          <menu-bar-icon
-            @click="
-              teleportModalCallback({
-                name: 'isMenuBar',
-                open_modal: true,
-              })
-            "
-            class="md:hidden"
-          />
+          <shopping-bag-icon />
+          <menu-bar-icon />
         </div>
       </nav>
     </template>
