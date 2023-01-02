@@ -14,7 +14,9 @@ export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
     const currentAccount = ref<string>("");
-    const wallet = ref<WalletSchema[]>([]);
+    const wallet = ref<WalletSchema[]>(
+      JSON.parse(localStorage.getItem("marketPlace:ISCONNECTED") || "[]")
+    );
 
     /**Begins: Change App Theme background and colors */
     const isActiveThemeSkin = ref<string>(localStorage.theme);
