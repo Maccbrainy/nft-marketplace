@@ -12,6 +12,7 @@ const modalName = computed<string>(() =>
 );
 const menuBarRef = ref<any>(null);
 watchEffect(() => {
+  teleportModalOpenMenuBar.value;
   const closeTeleportModal = (event: { target: any }) => {
     if (menuBarRef.value && menuBarRef.value.contains(event.target)) {
       return;
