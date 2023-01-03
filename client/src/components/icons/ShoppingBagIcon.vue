@@ -4,7 +4,7 @@ import { inject } from "vue";
 const { showMarketplaceCartBagCallback } = inject<any>("provider");
 </script>
 <template>
-  <button v-on:click="showMarketplaceCartBagCallback">
+  <button v-on:click="showMarketplaceCartBagCallback" class="outline-none">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
