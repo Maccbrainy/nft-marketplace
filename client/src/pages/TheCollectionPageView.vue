@@ -22,7 +22,7 @@ const routerLinkActive = ref(route.name);
 const activateAndUpdateRouter = (link: ChildrenLinksType) => {
   routerLinkActive.value = link.id;
   router.replace({
-    path: `/${route.params.id}/${link.title}`,
+    path: `/collection/${route.params.id}/${link.title}`,
   });
 };
 
