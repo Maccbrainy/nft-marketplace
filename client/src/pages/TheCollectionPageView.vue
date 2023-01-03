@@ -41,14 +41,14 @@ const collectionMenuAction = (option: { id: string }) => {
         class="w-full h-full object-center object-cover min-h-full min-w-full rounded-2xl"
         src="https://rarible.mypinata.cloud/ipfs/QmRVx1g2ncnsxZ2o86MYcxGLC7ypnuVHfhi5MCtTbPjEg6"
       />
-    <div
+      <div
         class="absolute -bottom-5 bg-gray-400 h-28 w-28 rounded-3xl z-10 left-8 ring-4 ring-offset-0 ring-white dark:ring-darkTheme"
-    ></div>
+      ></div>
     </div>
-    <div class="w-full flex flex-row justify-between pt-12">
-      <div class="flex flex-col">
+    <div class="relative w-full flex flex-col pt-12">
+      <div class="relative flex flex-row mmf:flex-col justify-between gap-10">
         <div
-          class="w-9/12 flex flex-col space-y-2 text-gray-400 dark:text-darkTheme-text"
+          class="relative w-9/12 flex flex-col space-y-2 text-gray-400 dark:text-darkTheme-text"
         >
           <h1
             class="text-4xl text-gray-800 dark:text-darkTheme-text-b font-medium"
@@ -61,80 +61,84 @@ const collectionMenuAction = (option: { id: string }) => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua
           </p>
         </div>
-        <div class="flex flex-row flex-wrap pt-12 space-x-3">
-          <ButtonMiscellenous
-            :has-list-content="false"
-            class="text-sm rounded-2xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
-            >Create Marketplace</ButtonMiscellenous
-          >
-          <div
-            class="w-80 flex justify-between items-center border dark:border-darkTheme-border rounded-2xl p-2 relative"
-          >
-            <span class="px-4 flex w-8/12 flex-wrap text-sm"
-              >Place a bid for any NFT from this collection</span
-            >
-            <ButtonMiscellenous
-              :has-list-content="false"
-              class="text-xs rounded-xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
-              >Place a bid</ButtonMiscellenous
-            >
+        <div
+          class="w-80 mmf:w-full border dark:border-darkTheme-border text-gray-400 dark:text-darkTheme-text rounded-3xl h-auto p-5"
+        >
+          <div class="flex flex-col space-y-3">
+            <div class="flex flex-row justify-between items-center">
+              <span>Floor</span>
+              <span class="font-medium dark:text-darkTheme-text-b"
+                >1.2454 ETH</span
+              >
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <span>Volume</span>
+              <span class="font-medium dark:text-darkTheme-text-b"
+                >55.587 ETH</span
+              >
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <span>Items</span>
+              <span class="font-medium dark:text-darkTheme-text-b">100K</span>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <span>Owners</span>
+              <span class="font-medium dark:text-darkTheme-text-b">34.5K</span>
+            </div>
+            <hr class="dark:border-darkTheme-border" />
+            <div class="flex flex-row justify-between items-center">
+              <span>Blockchain</span>
+              <span class="font-medium dark:text-darkTheme-text-b"
+                >Ethereum</span
+              >
+            </div>
+            <div class="flex flex-row justify-between items-center">
+              <span>Address</span>
+              <span class="font-medium dark:text-darkTheme-text-b"
+                >0x34d...86e1c</span
+              >
+            </div>
           </div>
-          <ButtonMiscellenous
-            :has-list-content="false"
-            class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
-          >
-            <ShareIcon />
-          </ButtonMiscellenous>
-          <ButtonMiscellenous
-            @selection-action="collectionMenuAction"
-            :list-of-options="collectionMenuList"
-            :is-active-option="isActiveMenuAction"
-            :has-list-content="true"
-            :compute-list-content="false"
-            class="rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
-          >
-            <MenuDotsIcon />
-          </ButtonMiscellenous>
         </div>
       </div>
       <div
-        class="border dark:border-darkTheme-border text-gray-400 dark:text-darkTheme-text rounded-3xl h-auto w-80 p-5"
+        class="relative flex flex-row items-center mmf:justify-center flex-wrap lmax:py-6 lmax:translate-y-0 -translate-y-16 gap-3"
       >
-        <div class="flex flex-col space-y-3">
-          <div class="flex flex-row justify-between items-center">
-            <span>Floor</span>
-            <span class="font-medium dark:text-darkTheme-text-b"
-              >1.2454 ETH</span
-            >
-          </div>
-          <div class="flex flex-row justify-between items-center">
-            <span>Volume</span>
-            <span class="font-medium dark:text-darkTheme-text-b"
-              >55.587 ETH</span
-            >
-          </div>
-
-          <div class="flex flex-row justify-between items-center">
-            <span>Items</span>
-            <span class="font-medium dark:text-darkTheme-text-b">100K</span>
-          </div>
-
-          <div class="flex flex-row justify-between items-center">
-            <span>Owners</span>
-            <span class="font-medium dark:text-darkTheme-text-b">34.5K</span>
-          </div>
-          <hr class="dark:border-darkTheme-border" />
-          <div class="flex flex-row justify-between items-center">
-            <span>Blockchain</span>
-            <span class="font-medium dark:text-darkTheme-text-b">Ethereum</span>
-          </div>
-          <div class="flex flex-row justify-between items-center">
-            <span>Address</span>
-            <span class="font-medium dark:text-darkTheme-text-b"
-              >0x34d...86e1c</span
-            >
-          </div>
+        <ButtonMiscellenous
+          :has-list-content="false"
+          class="text-sm rounded-2xl py-3 bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
+          >Create Marketplace</ButtonMiscellenous
+        >
+        <div
+          class="w-80 flex justify-between border dark:border-darkTheme-border rounded-2xl p-2 relative"
+        >
+          <span class="px-4 flex w-8/12 flex-wrap text-xs"
+            >Place a bid for any NFT from this collection</span
+          >
+          <ButtonMiscellenous
+            :has-list-content="false"
+            class="text-xs py-2 rounded-xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
+            >Place a bid</ButtonMiscellenous
+          >
         </div>
+        <ButtonMiscellenous
+          :has-list-content="false"
+          class="rounded-2xl py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
+        >
+          <ShareIcon />
+        </ButtonMiscellenous>
+        <ButtonMiscellenous
+          @selection-action="collectionMenuAction"
+          :list-of-options="collectionMenuList"
+          :is-active-option="isActiveMenuAction"
+          :has-list-content="true"
+          :compute-list-content="false"
+          class="rounded-2xl py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
+        >
+          <MenuDotsIcon />
+        </ButtonMiscellenous>
       </div>
     </div>
     <div class="relative">

@@ -85,7 +85,7 @@ const activeViewOptionHandler = (viewOptionId: string) => {
 <template>
   <div class="relative w-full flex flex-col py-6">
     <div
-      class="flex flex-row items-center gap-3 text-sm font-semibold text-gray-700 dark:text-darkTheme-text"
+      class="flex flex-row items-center flex-wrap gap-3 text-sm font-semibold text-gray-700 dark:text-darkTheme-text"
     >
       <ButtonMiscellenous
         title="Filters"
