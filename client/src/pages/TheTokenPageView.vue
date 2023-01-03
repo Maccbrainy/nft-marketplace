@@ -72,7 +72,7 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
       </div>
     </div>
     <div class="mf:hidden w-[37%] mf:w-full lmin:min-w-[420px]">
-      <TokenPriceDetailCard class="sticky top-16"/>
+      <TokenPriceDetailCard class="sticky top-16" />
     </div>
   </div>
   <div class="relative w-full pt-10">
