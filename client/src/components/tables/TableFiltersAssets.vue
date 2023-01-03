@@ -131,7 +131,7 @@ const activeViewOptionHandler = (viewOptionId: string) => {
           v-for="viewOption in viewOptionsSettings"
           :key="viewOption.id"
           :title="viewOption.name"
-          v-on:click="activeViewOptionHandler(viewOption.id)"
+          v-on:click="activeViewOptionCallback(viewOption.id)"
           class="dark:text-darkTheme-text-b py-1.5 px-4 cursor-pointer z-10"
           ><component :is="viewOption.icon"></component></span>
       </div>
