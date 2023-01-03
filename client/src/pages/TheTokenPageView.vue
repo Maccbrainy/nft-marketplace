@@ -82,10 +82,26 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
       More from this collection
     </h1>
     <ul class="w-full flex flex-row flex-nowrap overflow-hidden pt-8">
-      <TableAssetsCard class="min-w-[240px] max-w-xs" />
-      <TableAssetsCard class="min-w-[240px] max-w-xs" />
-      <TableAssetsCard class="min-w-[240px] max-w-xs" />
-      <TableAssetsCard class="min-w-[240px] max-w-xs" />
+      <TableAssetsCard
+        :filterIsHidden="false"
+        :viewOptionSize="'largerViewOption'"
+        class="min-w-[240px] max-w-xs"
+      />
+      <TableAssetsCard
+        :filterIsHidden="false"
+        :viewOptionSize="'largerViewOption'"
+        class="min-w-[240px] max-w-xs"
+      />
+      <TableAssetsCard
+        :filterIsHidden="false"
+        :viewOptionSize="'largerViewOption'"
+        class="min-w-[240px] max-w-xs"
+      />
+      <TableAssetsCard
+        :filterIsHidden="false"
+        :viewOptionSize="'largerViewOption'"
+        class="min-w-[240px] max-w-xs"
+      />
     </ul>
   </div>
 </template>
