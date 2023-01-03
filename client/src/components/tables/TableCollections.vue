@@ -2,6 +2,7 @@
 import { ref, inject } from "vue";
 import { RouterLink } from "vue-router";
 import { ButtonDropdown, ButtonInput, ButtonMiscellenous } from "../buttonui";
+import { AddToCartIcon, ChevronDownIcon } from "../icons";
 
 const { showMarketplaceCartBag } = inject<any>("provider");
 
@@ -60,6 +61,8 @@ const timeDurations = [
     icon: false,
   },
 ];
+const showAddToCartButton = ref<boolean>(false);
+const showTableNavigationButton = ref<boolean>(false);
 const isActiveBlockChain = ref<string>("Ethereum");
 const isActiveTime = ref<string>("Day");
 const changeBlockChainNetwork = (blockChainNetwork: { id: string }) => {
@@ -467,11 +470,15 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
                 </div>
                 <div class="relative w-5/12 lmax:w-full overflow-hidden">
                   <div
-                    class="flex flex-row space-x-4 items-center lmax:ml-1 lg:p-1"
+                    v-on:mouseover="showTableNavigationButton = true"
+                    v-on:mouseout="showTableNavigationButton = false"
+                    class="relative w-full h-auto flex flex-row space-x-4 items-center lmax:ml-1 lg:p-1"
                   >
                     <div
                       class="animate-pulse relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
                     >
+                        <chevron-down-icon class="rotate-[270deg]" />
+                      </span>
                       <div
                         class="absolute bg-darkTheme-bgx rounded-xl w-[95%] mx-0.5 h-auto text-gray-100 text-xs p-1 bottom-1.5 whitespace-nowrap text-center space-x-1"
                       >
@@ -745,6 +752,8 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
                     </div>
 
                     <div
+                      v-on:mouseover="showAddToCartButton = true"
+                      v-on:mouseout="showAddToCartButton = false"
                       class="animate-pulse relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
                     >
                       <div
@@ -999,10 +1008,13 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
                     </div>
 
                     <div
-                      class="animate-pulse relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
+                      v-on:mouseenter="showAddToCartButton = true"
+                      v-on:mouseleave="showAddToCartButton = false"
+                      class="relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
                     >
                       <div
-                        class="absolute bg-darkTheme-bgx rounded-xl w-[95%] mx-0.5 h-auto text-gray-100 text-xs p-1 bottom-1.5 whitespace-nowrap text-center space-x-1"
+                        v-show="showAddToCartButton"
+                        class="absolute border dark:border-darkTheme-border rounded-full bg-gray-200 dark:bg-darkTheme-bg p-1 right-0 m-1"
                       >
                         <span>ico</span>
                         <span>0.104 ETH</span>
