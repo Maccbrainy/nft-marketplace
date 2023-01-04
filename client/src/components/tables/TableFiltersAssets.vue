@@ -76,7 +76,7 @@ const changeSortType = (sortType: { id: string }) => {
   isActiveSortType.value = sortType.id;
   console.log("Change sorting type:", isActiveSortType.value);
 };
-const activeViewOptionHandler = (viewOptionId: string) => {
+const activeViewOptionCallback = (viewOptionId: string) => {
   let viewOption = viewOptionId;
   if (activeViewOption.value == viewOption) return;
   activeViewOption.value = viewOption;
