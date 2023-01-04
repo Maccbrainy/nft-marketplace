@@ -44,7 +44,7 @@ const themeTypes = ref([
         class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div class="flex flex-row items-center space-x-8">
-          <RouterLink to="/">Logo</RouterLink>
+          <RouterLink to="/" class="text-black dark:text-white text-xl font-bold">Dencil</RouterLink>
           <ButtonInput
             class="mf:hidden min-w-[320px] max-w-md"
             input-type="search"
@@ -78,7 +78,7 @@ const themeTypes = ref([
       >
         <div
           :class="{
-            'w-[72%] lf:w-full': showMarketplaceCartBag && matchedRoutesComposable,
+            'w-[75%] lf:w-full': showMarketplaceCartBag && matchedRoutesComposable,
             'w-full': !showMarketplaceCartBag || !matchedRoutesComposable,
           }"
         >
@@ -95,9 +95,9 @@ const themeTypes = ref([
       >
         <div class="border-t dark:border-darkTheme-border w-full pb-4"></div>
         <div
-          class="relative w-full flex justify-between items-center text-gray-500 text-sm dark:text-darkTheme-text py-1"
+          class="relative w-full flex justify-between items-center gap-3 text-gray-500 text-sm dark:text-darkTheme-text py-1"
         >
-          <p>@Cryptop NFT 2022</p>
+          <p>@Dencil NFT 2022</p>
           <ButtonDropdown
             class="bottom-14"
             @selection-action="changeThemeSkinCallback"

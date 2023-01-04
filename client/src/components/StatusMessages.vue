@@ -12,7 +12,7 @@ console.log("Check route redirect path:", router);
 </script>
 <template>
   <section
-    class="relative min-h-[72vh] max-h-screen flex flex-col justify-center items-center gap-4 min-w-[320px] max-w-xs text-gray-800 font-medium m-auto"
+    class="relative min-h-[72vh] max-h-screen flex flex-col justify-center items-center gap-4 min-w-[320px] max-w-xs text-gray-800 dark:text-white font-medium m-auto"
   >
     <h1 class="text-2xl">Connect wallet</h1>
     <p class="text-center text-gray-400 dark:text-darkTheme-text font-normal">
