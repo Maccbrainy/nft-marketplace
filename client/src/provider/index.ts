@@ -13,6 +13,7 @@ interface WalletSchema {
 export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
+    const isLargeScreen = useMediaQuery("(min-width: 991px)");
     const currentAccount = ref<string>("");
     const wallet = ref<WalletSchema[]>(
       JSON.parse(localStorage.getItem("marketPlace:ISCONNECTED") || "[]")
@@ -116,6 +117,7 @@ export default {
       }
     }
     const teleportModalOpenMenuBar = ref<boolean>(false);
+    const teleportModalTableAssetsFilters = ref<boolean>(false);
     const teleportModalCallback = (modal: {
       name: string;
       open_modal: boolean;
@@ -123,6 +125,10 @@ export default {
       if (modal.name == "isMenuBar") {
         teleportModalOpenMenuBar.value = modal.open_modal;
         console.log("Teleport:", modal.name, teleportModalOpenMenuBar.value);
+      }
+      if (modal.name == "isTableAssetFilters") {
+        teleportModalTableAssetsFilters.value = modal.open_modal;
+        console.log("Teleport:", modal.name, teleportModalTableAssetsFilters.value);
       }
     }
 
@@ -148,6 +154,7 @@ export default {
     });
 
     app.provide("provider", {
+      isLargeScreen,
       changeThemeSkinCallback,
       isActiveThemeSkin,
       selectBlockchain,
@@ -159,6 +166,7 @@ export default {
       chooseHowToConnectWallet,
       teleportModalCallback,
       teleportModalOpenMenuBar,
+      teleportModalTableAssetsFilters,
       showMarketplaceCartBagCallback,
       showMarketplaceCartBag,
       matchedRoutesComposable

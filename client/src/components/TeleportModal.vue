@@ -2,17 +2,25 @@
 import { inject, watchEffect, computed, ref } from "vue";
 import { CloseIcon } from "./icons";
 import { ButtonMiscellenous } from "./buttonui";
+import { TableAssetsSideBar } from "./tables";
 const {
-  teleportModalOpenMenuBar,
   teleportModalCallback,
+  teleportModalOpenMenuBar,
+  teleportModalTableAssetsFilters,
   chooseHowToConnectWallet,
+  isLargeScreen
 } = inject<any>("provider");
 const modalName = computed<string>(() =>
-  teleportModalOpenMenuBar.value ? "isMenuBar" : "empty"
+  teleportModalOpenMenuBar.value
+    ? "isMenuBar"
+    : teleportModalTableAssetsFilters.value
+    ? "isTableAssetFilters"
+    : ""
 );
-const menuBarRef = ref<any>(null);
+const modalMenuRef = ref<any>(null);
 watchEffect(() => {
   teleportModalOpenMenuBar.value;
+  teleportModalTableAssetsFilters.value;
   const closeTeleportModal = (event: { target: any }) => {
     if (menuBarRef.value && menuBarRef.value.contains(event.target)) {
       return;
@@ -28,7 +36,7 @@ watchEffect(() => {
 <template>
   <teleport to="body">
     <section
-      v-if="teleportModalOpenMenuBar"
+      v-if="teleportModalOpenMenuBar || teleportModalTableAssetsFilters"
       class="fixed w-full sm:backdrop-blur-lg h-screen top-0 right-0 left-0 z-30"
     >
       <div class="relative w-full h-full flex justify-end">
@@ -48,6 +56,10 @@ watchEffect(() => {
               >Connect wallet</button-miscellenous
             >
           </div>
+          <TableAssetsSideBar
+            v-if="!isLargeScreen"
+            class="pt-12 px-6 xs:px-7"
+          />
         </div>
         <close-icon
           @click="teleportModalCallback({ name: modalName, open_modal: false })"
