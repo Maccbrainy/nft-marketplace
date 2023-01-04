@@ -11,13 +11,13 @@ const {
 <template>
   <div
     :class="{
-      'sticky top-20 sf:top-0 mb-5 border dark:border-darkTheme-border lf:fixed lf:z-30 lf:right-0 lf:border-none sm:mr-5':
+      'sticky top-20 sf:top-0 mb-5 border dark:border-darkTheme-border lf:fixed lf:z-30 lf:right-0 lf:border-none':
         showMarketplaceCartBag && matchedRoutesComposable,
       hidden: !showMarketplaceCartBag,
-      'fixed z-30 dark:border-darkTheme-border right-0 mr-5':
+      'fixed z-30 dark:border-darkTheme-border right-0':
         showMarketplaceCartBag && !matchedRoutesComposable,
     }"
-    class="w-full h-full sf:pt-3 sm:w-[28%] sm:min-w-[320px] sm:h-[85vh] lf:shadow-2xl sm:rounded-2xl overflow-y-auto dark:text-white animate-slide-in-right"
+    class="w-full h-full sf:pt-3 sm:w-[25%] sm:min-w-[300px] sm:h-[85vh] lf:shadow-2xl sm:rounded-2xl overflow-y-auto dark:text-white animate-slide-in-right"
   >
     <div
       class="relative w-full h-full flex flex-col gap-8 p-6 bg-white dark:bg-darkTheme"
