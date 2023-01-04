@@ -106,10 +106,10 @@ const collectionMenuAction = (option: { id: string }) => {
       <div
         class="relative flex flex-row items-center mmf:justify-center flex-wrap lmax:py-6 lmax:translate-y-0 -translate-y-16 gap-3"
       >
-        <ButtonMiscellenous
+        <button-miscellenous
           :has-list-content="false"
           class="text-sm rounded-2xl py-3 bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
-          >Create Marketplace</ButtonMiscellenous
+          >Create Marketplace</button-miscellenous
         >
         <div
           class="w-80 flex justify-between border dark:border-darkTheme-border rounded-2xl p-2 relative"
@@ -117,19 +117,19 @@ const collectionMenuAction = (option: { id: string }) => {
           <span class="px-4 flex w-8/12 flex-wrap text-xs"
             >Place a bid for any NFT from this collection</span
           >
-          <ButtonMiscellenous
+          <button-miscellenous
             :has-list-content="false"
             class="text-xs py-2 rounded-xl bg-gray-900 font-medium dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
-            >Place a bid</ButtonMiscellenous
+            >Place a bid</button-miscellenous
           >
         </div>
-        <ButtonMiscellenous
+        <button-miscellenous
           :has-list-content="false"
           class="rounded-2xl py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
         >
-          <ShareIcon />
-        </ButtonMiscellenous>
-        <ButtonMiscellenous
+          <share-icon />
+        </button-miscellenous>
+        <button-miscellenous
           @selection-action="collectionMenuAction"
           :list-of-options="collectionMenuList"
           :is-active-option="isActiveMenuAction"
@@ -138,7 +138,7 @@ const collectionMenuAction = (option: { id: string }) => {
           class="rounded-2xl py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
         >
           <MenuDotsIcon />
-        </ButtonMiscellenous>
+        </button-miscellenous>
       </div>
     </div>
     <div class="relative">
@@ -158,7 +158,7 @@ const collectionMenuAction = (option: { id: string }) => {
           {{ link.title }}
         </li>
       </ul>
-      <RouterView />
+      <router-view />
     </div>
   </div>
 </template>
