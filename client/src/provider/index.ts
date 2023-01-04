@@ -1,5 +1,7 @@
 import { ref, watchEffect, computed } from "vue";
 import router from "../router";
+import { useMediaQuery } from "@vueuse/core";
+
 interface WalletSchema {
   name: string,
   is_connected: boolean,
