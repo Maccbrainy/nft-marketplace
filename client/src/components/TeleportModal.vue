@@ -22,7 +22,7 @@ watchEffect(() => {
   teleportModalOpenMenuBar.value;
   teleportModalTableAssetsFilters.value;
   const closeTeleportModal = (event: { target: any }) => {
-    if (menuBarRef.value && menuBarRef.value.contains(event.target)) {
+    if (modalMenuRef.value && modalMenuRef.value.contains(event.target)) {
       return;
     }
     document.removeEventListener("mousedown", closeTeleportModal);
@@ -41,7 +41,7 @@ watchEffect(() => {
     >
       <div class="relative w-full h-full flex justify-end">
         <div
-          ref="menuBarRef"
+          ref="modalMenuRef"
           class="relative w-full sm:w-1/2 animate-slide-in-right bg-white dark:bg-darkTheme dark:text-white sm:m-5 sm:rounded-2xl shadow-2xl overflow-y-auto"
         >
           <div class="flex flex-col py-6 px-6 gap-8">
