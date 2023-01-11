@@ -60,7 +60,7 @@ watchEffect(() => {
             >
           </div>
           <TableAssetsSideBar
-            v-if="!isLargeScreen"
+            v-show="!isLargeScreen && teleportModalTableAssetsFilters"
             class="pt-12 px-6 xs:px-7"
           />
         </div>
