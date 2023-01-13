@@ -13,7 +13,7 @@ const router = createRouter({
       name: "HomePage",
       component: TheHomePageView,
       meta: {
-        title: "Cryptop NFT Market Place",
+        title: "Cryptop NFT Marketplace",
         requiresWalletAuth: false,
       },
     },
@@ -140,5 +140,8 @@ router.beforeEach((to) => {
     };
   }
 });
+router.afterEach((to) => {
+  document.title = (to.meta.title as string) || "Cryptop NFT";
+})
 
 export default router;
