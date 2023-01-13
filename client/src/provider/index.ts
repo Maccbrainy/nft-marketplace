@@ -15,6 +15,11 @@ interface WalletSchema {
 export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
+
+    const teleportModalOpenProfileMenuBar = ref<boolean>(false);
+    const teleportModalOpenMenuBar = ref<boolean>(false);
+    const teleportModalTableAssetsFilters = ref<boolean>(false);
+
     const isLargeScreen = useMediaQuery("(min-width: 991px)");
     const currentAccount = ref<string>("");
     const wallet = ref<WalletSchema[]>(
@@ -109,28 +114,34 @@ export default {
     const disconnectWallet = async () => {
       try {
         currentAccount.value = "";
+        teleportModalOpenProfileMenuBar.value = false;
         localStorage.removeItem("marketPlace:ISCONNECTED");
         router.push({
           name: router.currentRoute.value.name || undefined 
         })
+        // window.location.reload()
       } catch (error) {
         console.log(error);
         throw new Error("No Ethereum Object");
       }
     }
-    const teleportModalOpenMenuBar = ref<boolean>(false);
-    const teleportModalTableAssetsFilters = ref<boolean>(false);
+
     const teleportModalCallback = (modal: {
       name: string;
       open_modal: boolean;
     }) => {
-      if (modal.name == "isMenuBar") {
-        teleportModalOpenMenuBar.value = modal.open_modal;
-        console.log("Teleport:", modal.name, teleportModalOpenMenuBar.value);
+      const { name, open_modal } = modal;
+      if (name == "isMenuBar") {
+        teleportModalOpenMenuBar.value = open_modal;
+        console.log("Teleport:", name, teleportModalOpenMenuBar.value);
       }
-      if (modal.name == "isTableAssetFilters") {
-        teleportModalTableAssetsFilters.value = modal.open_modal;
-        console.log("Teleport:", modal.name, teleportModalTableAssetsFilters.value);
+      if (name == "isTableAssetFilters") {
+        teleportModalTableAssetsFilters.value = open_modal;
+        console.log("Teleport:", name, teleportModalTableAssetsFilters.value);
+      }
+      if (name == "isProfileMenuBar") {
+        teleportModalOpenProfileMenuBar.value = open_modal;
+        console.log("Teleport:", name, teleportModalOpenProfileMenuBar.value);
       }
     }
 
@@ -168,6 +179,7 @@ export default {
       chooseHowToConnectWallet,
       teleportModalCallback,
       teleportModalOpenMenuBar,
+      teleportModalOpenProfileMenuBar,
       teleportModalTableAssetsFilters,
       showMarketplaceCartBagCallback,
       showMarketplaceCartBag,

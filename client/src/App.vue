@@ -21,7 +21,9 @@ const {
   changeThemeSkinCallback,
   chooseHowToConnectWallet,
   showMarketplaceCartBag,
-  matchedRoutesComposable
+  matchedRoutesComposable,
+  wallet,
+  teleportModalCallback,
 } = inject<any>("provider");
 const themeTypes = ref([
   {
@@ -39,12 +41,14 @@ const themeTypes = ref([
 <template>
   <BaseLayout class="bg-white dark:bg-darkTheme w-full min-h-screen">
     <template #header>
-      <nav
+      <nav 
         v-show="$route.name != 'ConnectWalletPage'"
-        class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-gray-700 dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
+        class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-black dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div class="flex flex-row items-center space-x-8">
-          <RouterLink to="/" class="text-black dark:text-white text-xl font-bold">Dencil</RouterLink>
+          <RouterLink to="/" class="dark:text-white text-xl font-bold"
+            >DencilX</RouterLink
+          >
           <ButtonInput
             class="mf:hidden min-w-[320px] max-w-md"
             input-type="search"
@@ -56,11 +60,22 @@ const themeTypes = ref([
           <li class="cursor-pointer">Explore</li>
           <li><RouterLink to="/create">Create</RouterLink></li>
         </ul>
-        <div class="flex items-center gap-8">
+        <div class="flex justify-center items-center gap-5">
+          <div
+            v-if="wallet.length > 0 && wallet[0].is_connected"
+            @click="
+              teleportModalCallback({
+                name: 'isProfileMenuBar',
+                open_modal: true,
+              })
+            "
+            class="w-10 h-10 rounded-full bg-gray-200 cursor-pointer"
+          ></div>
           <ButtonMiscellenous
             v-on:click="chooseHowToConnectWallet($route.redirectedFrom?.path)"
             :has-list-content="false"
-            class="mmf:hidden text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
+            class="mmf:hidden font-semibold text-xs rounded-2xl py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-black text-darkTheme-text-b"
+            v-else
             >Connect wallet</ButtonMiscellenous
           >
           <shopping-bag-icon />
@@ -78,7 +93,8 @@ const themeTypes = ref([
       >
         <div
           :class="{
-            'w-[75%] lf:w-full': showMarketplaceCartBag && matchedRoutesComposable,
+            'w-[75%] lf:w-full':
+              showMarketplaceCartBag && matchedRoutesComposable,
             'w-full': !showMarketplaceCartBag || !matchedRoutesComposable,
           }"
         >
@@ -97,7 +113,7 @@ const themeTypes = ref([
         <div
           class="relative w-full flex justify-between items-center gap-3 text-gray-500 text-sm dark:text-darkTheme-text py-1"
         >
-          <p>@Dencil NFT 2022</p>
+          <p>@DencilX NFT 2022</p>
           <ButtonDropdown
             class="bottom-14"
             @selection-action="changeThemeSkinCallback"
