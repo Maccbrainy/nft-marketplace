@@ -22,7 +22,7 @@ const {
   chooseHowToConnectWallet,
   showMarketplaceCartBag,
   matchedRoutesComposable,
-  wallet,
+  currentAccount,
   teleportModalCallback,
 } = inject<any>("provider");
 const themeTypes = ref([
@@ -62,7 +62,7 @@ const themeTypes = ref([
         </ul>
         <div class="flex justify-center items-center gap-5">
           <div
-            v-if="wallet.length > 0 && wallet[0].is_connected"
+            v-if="currentAccount"
             @click="
               teleportModalCallback({
                 name: 'isProfileMenuBar',

@@ -21,9 +21,13 @@ export default {
     const teleportModalTableAssetsFilters = ref<boolean>(false);
 
     const isLargeScreen = useMediaQuery("(min-width: 991px)");
-    const currentAccount = ref<string>("");
+    
     const wallet = ref<WalletSchema[]>(
       JSON.parse(localStorage.getItem("marketPlace:ISCONNECTED") || "[]")
+    );
+
+    const currentAccount = ref<string>(
+      wallet.value.length > 0 ? wallet.value[0].current_account : ""
     );
 
     /**Begins: Change App Theme background and colors */
