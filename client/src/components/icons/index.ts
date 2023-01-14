@@ -1,4 +1,5 @@
 export { default as DarkThemeIcon } from "@/components/icons/DarkThemeIcon.vue";
+export { default as ArrowRightIcon } from "@/components/icons/ArrowRightIcon.vue";
 export { default as MenuBarIcon } from "@/components/icons/MenuBarIcon.vue";
 export { default as LogOutIcon } from "@/components/icons/LogOutIcon.vue";
 export { default as CloseIcon } from "@/components/icons/CloseIcon.vue";
