@@ -57,13 +57,13 @@ watchEffect(() => {
       <div class="relative w-full h-full flex justify-end">
         <div
           ref="modalMenuRef"
-          class="relative w-full sm:w-1/2 lmin:w-3/12 animate-slide-in-right bg-white dark:bg-darkTheme dark:text-white sm:m-5 sm:rounded-2xl shadow-2xl overflow-y-auto"
+          class="relative w-full sm:w-1/2 lmin:w-3/12 animate-slide-in-right bg-white dark:bg-darkTheme dark:text-white sm:m-5 sm:rounded-2xl shadow-2xl dark:shadow-2xl overflow-y-auto"
         >
           <div
             v-show="teleportModalOpenMenuBar || teleportModalOpenProfileMenuBar"
             class="w-full h-full flex flex-col py-6 px-6 gap-8"
           >
-            <div v-show="teleportModalOpenMenuBar" class="flex flex-col">
+            <div v-show="teleportModalOpenMenuBar" class="flex flex-col gap-6">
               <ul class="flex flex-col text-2xl font-semibold gap-2">
                 <li>Explore</li>
                 <li><RouterLink to="/create">Create</RouterLink></li>
@@ -74,7 +74,7 @@ watchEffect(() => {
                   chooseHowToConnectWallet($route.redirectedFrom?.path)
                 "
                 :has-list-content="false"
-                class="text-base font-medium rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-gray-700 hover:bg-black text-darkTheme-text-b"
+                class="font-semibold text-xs rounded-2xl py-3 bg-gray-900 dark:bg-white dark:text-black hover:bg-black text-darkTheme-text-b"
                 >Connect wallet</button-miscellenous
               >
             </div>
