@@ -28,6 +28,19 @@ export default {
   inheritAttrs: false,
 };
 </script>
+<style scoped>
+/* .dropdown__menu::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.dropdown__menu::-webkit-scrollbar-thumb {
+  background: rgb(50, 50, 50);
+  border-radius: 10px;
+} 
+.dropdown__menu::-webkit-scrollbar-track {
+  background: transparent;
+}  */
+</style>
 <template>
   <div class="relative">
     <button
@@ -49,7 +62,7 @@ export default {
     <div
       v-show="openDropDownMenu"
       v-bind="$attrs"
-      class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
+      class="dropdown__menu animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
     >
       <div
         tabindex="-1"
