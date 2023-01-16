@@ -14,6 +14,7 @@ const props = defineProps({
   },
   isCreateNftPage: Boolean
 });
+const emit = defineEmits(["selectionAction"]);
 
 const openDropDownMenu = ref<Boolean>(false);
 // eslint-disable-next-line no-undef
@@ -22,6 +23,10 @@ const getActiveOption = computed<OptionType[]>(() => {
     (option) => option.id === props.isActiveOption
   );
 });
+const selectionActionCallback = (option: OptionType) => {
+  emit("selectionAction", option);
+  openDropDownMenu.value = false
+}
 </script>
 <script lang="ts">
 export default {
@@ -62,7 +67,7 @@ export default {
     <div
       v-show="openDropDownMenu"
       v-bind="$attrs"
-      class="dropdown__menu animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-50"
+      class="dropdown__menu animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-30"
     >
       <div
         tabindex="-1"
@@ -72,7 +77,7 @@ export default {
           <div
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
-            @click="$emit('selectionAction', option)"
+            @click="selectionActionCallback(option)"
             class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 items-center gap-2 mx-auto py-3 px-3 cursor-pointer"
           >
             <span v-if="option.icon" class="col-span-1"
