@@ -104,7 +104,7 @@ const collectionMenuAction = (option: { id: string }) => {
         </div>
       </div>
       <div
-        class="relative flex flex-row items-center mmf:justify-center flex-wrap lmax:py-6 lmax:translate-y-0 -translate-y-16 gap-3"
+        class="relative flex flex-row items-center mmf:justify-center flex-wrap pt-6 lmax:mt-0 -mt-16 gap-3"
       >
         <button-miscellenous
           :has-list-content="false"
@@ -141,7 +141,7 @@ const collectionMenuAction = (option: { id: string }) => {
         </button-miscellenous>
       </div>
     </div>
-    <div class="relative">
+    <div class="relative pt-8">
       <ul
         class="w-full flex justify-start items-center space-x-5 py-2 border-b text-gray-400 dark:text-darkTheme-text dark:border-b-darkTheme-border"
       >

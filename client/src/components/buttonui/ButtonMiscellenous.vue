@@ -19,12 +19,18 @@ const props = defineProps({
     required: false,
   },
 });
+const emit = defineEmits(["selectionAction"]);
+
 const openDropDownMenu = ref<Boolean>(false);
 const getActiveOption = computed<OptionType[]>(() => {
   return props.listOfOptions.filter(
     (option) => option.id === props.isActiveOption
   );
 });
+const selectionActionCallback = (option: OptionType) => {
+  emit("selectionAction", option);
+  openDropDownMenu.value = false;
+};
 </script>
 <script lang="ts">
 export default {
@@ -32,43 +38,45 @@ export default {
 };
 </script>
 <template>
-  <button
-    @click="openDropDownMenu = !openDropDownMenu"
-    v-for="(option, index) in getActiveOption"
-    :key="computeListContent ? option.id + index : 0"
-    v-bind="$attrs"
-    :class="{
-      'bg-gray-100 dark:bg-darkTheme-hover dark:text-darkTheme-text-b':
-        openDropDownMenu && hasListContent,
-    }"
-    class="relative h-full outline-none transition-all px-5 transform active:scale-95 whitespace-nowrap"
-  >
-    <div
+  <div class="relative">
+    <button
+      @click="openDropDownMenu = !openDropDownMenu"
+      v-for="(option, index) in getActiveOption"
+      :key="computeListContent ? option.id + index : 0"
+      v-bind="$attrs"
       :class="{
-        'justify-between': computeListContent,
-        'justify-center': !computeListContent,
+        'bg-gray-100 dark:bg-darkTheme-hover dark:text-darkTheme-text-b':
+          openDropDownMenu && hasListContent,
       }"
-      class="w-full flex flex-row items-center outline-none"
+      class="relative h-full outline-none transition-all px-5 transform active:scale-95 whitespace-nowrap"
     >
-      <span v-show="option.icon && computeListContent"
-        ><component :is="option.icon"></component
-      ></span>
-      <span v-show="computeListContent">{{ option.name }}</span>
-      <slot></slot>
-    </div>
+      <div
+        :class="{
+          'justify-between': computeListContent,
+          'justify-center': !computeListContent,
+        }"
+        class="w-full flex flex-row items-center outline-none"
+      >
+        <span v-show="option.icon && computeListContent"
+          ><component :is="option.icon"></component
+        ></span>
+        <span v-show="computeListContent">{{ option.name }}</span>
+        <slot></slot>
+      </div>
+    </button>
     <div
       v-if="openDropDownMenu && hasListContent"
-      class="animate-slide-up absolute w-max min-w-[11rem] overflow-y-auto max-w-xl h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border right-0 mt-5"
+      class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto right-0 mt-1.5 z-20"
     >
       <div
         tabindex="-1"
-        class="relative bg-white backdrop-blur-md dark:bg-darkTheme-bgx z-20"
+        class="relative bg-[#ffffffdd] backdrop-blur-md dark:bg-darkTheme-bgx"
       >
         <div class="relative w-full p-2">
           <div
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
-            @click="$emit('selectionAction', option)"
+            @click="selectionActionCallback(option)"
             class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
           >
             <span v-show="option.icon" class="col-span-1"
@@ -86,5 +94,5 @@ export default {
         </div>
       </div>
     </div>
-  </button>
+  </div>
 </template>
