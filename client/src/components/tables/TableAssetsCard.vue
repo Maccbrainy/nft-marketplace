@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { AddToCartIcon, MenuDotsIcon } from "../icons";
 defineProps({
@@ -7,9 +7,10 @@ defineProps({
   viewOptionSize: String,
 });
 const { showMarketplaceCartBag } = inject<any>("provider");
+const showBuyAndAddToCardButton = ref<boolean>(false);
 </script>
 <template>
-  <RouterLink
+  <div
     :class="{
       'sm:w-6/12 md:w-4/12 lg:w-3/12':
         filterIsHidden &&
@@ -45,21 +46,24 @@ const { showMarketplaceCartBag } = inject<any>("provider");
         showMarketplaceCartBag,
     }"
     class="w-full h-auto border-solid border-transparent border-x-8 border-t-8 mt-1.5"
-    :to="{
-      path: '/token/0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b:9875',
-    }"
   >
-    <li class="transition-all transform hover:-translate-y-1">
+    <li v-on:mouseenter="showBuyAndAddToCardButton = true" v-on:mouseleave="showBuyAndAddToCardButton = false" class="transition-all transform hover:-translate-y-1">
       <div
         class="border dark:border-darkTheme-border rounded-xl hover:ring-4 hover:ring-offset-0 hover:ring-gray-100 dark:ring-darkTheme-bg cursor-pointer"
       >
         <div class="w-full p-2 flex flex-col gap-1">
           <div class="relative w-full flex justify-center items-end">
-            <img
-              class="w-full h-full min-h-[180px] object-center object-cover bg-gray-100 dark:bg-darkTheme-bg rounded-lg"
-              src="https://assets.raribleuserdata.com/prod/v1/image/t_image_big/aHR0cHM6Ly9jbG9uZXgtYXNzZXRzLnJ0Zmt0LmNvbS9pbWFnZXMvOTg3NS5wbmc="
-            />
-            <div
+            <router-link
+              :to="{
+                path: '/token/0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b:9875',
+              }"
+            >
+              <img
+                class="w-full h-full min-h-[180px] object-center object-cover bg-gray-100 dark:bg-darkTheme-bg rounded-lg"
+                src="https://assets.raribleuserdata.com/prod/v1/image/t_image_big/aHR0cHM6Ly9jbG9uZXgtYXNzZXRzLnJ0Zmt0LmNvbS9pbWFnZXMvOTg3NS5wbmc="
+              />
+            </router-link>
+            <div v-show="showBuyAndAddToCardButton"
               class="absolute flex flex-row justify-around bottom-2 gap-4 z-10 text-white text-xs font-medium"
             >
               <div
@@ -87,11 +91,14 @@ const { showMarketplaceCartBag } = inject<any>("provider");
               >
                 Clone X
               </h2>
-              <div
+              <router-link
                 class="text-base font-semibold text-gray-700 dark:text-darkTheme-text-b truncate"
+                :to="{
+                  path: '/token/0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b:9875',
+                }"
               >
                 Clone X #123432
-              </div>
+              </router-link>
             </div>
             <button
               v-show="viewOptionSize === 'smallerViewOption'"
@@ -144,5 +151,5 @@ const { showMarketplaceCartBag } = inject<any>("provider");
         </div>
       </div>
     </li>
-  </RouterLink>
+  </div>
 </template>

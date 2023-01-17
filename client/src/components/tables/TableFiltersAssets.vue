@@ -96,10 +96,19 @@ const hideTableAssetsSideBarFiltersCallback = () => {
   teleportModalCallback({ name: "isTableAssetFilters", open_modal: true });
 };
 </script>
+<style scoped>
+.hide-horizontal__scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-horizontal__scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
 <template>
   <div class="relative w-full flex flex-col py-6">
     <div
-      class="flex flex-row items-center flex-wrap gap-3 text-sm font-semibold text-gray-700 dark:text-darkTheme-text"
+      class="flex flex-row items-center flex-wrap gap-3 text-sm font-semibold text-black dark:text-white"
     >
       <button-miscellenous
         title="Filters"
@@ -157,18 +166,16 @@ const hideTableAssetsSideBarFiltersCallback = () => {
       </div>
     </div>
     <div
-      class="relative w-full flex justify-start items-start flex-row gap-3 pt-6"
+      class="relative w-full h-full flex justify-start items-start flex-row gap-3 pt-6"
     >
       <div
         v-if="isLargeScreen"
         :class="{
           'lmin:hidden': hideTableAssetsSideBarFilters,
         }"
-        class="mf:hidden w-3/12 h-full min-w-[288px] border dark:border-darkTheme-border rounded-xl py-2 px-6 mt-3.5"
+        class="sticky top-20 mf:hidden w-3/12 h-[85vh] overflow-x-auto hide-horizontal__scrollbar min-w-[288px] border dark:border-darkTheme-border rounded-xl py-2 px-6 mt-3.5"
       >
-        <div class="sticky top-0">
-          <TableAssetsSideBar />
-        </div>
+        <TableAssetsSideBar />
       </div>
       <div
         :class="{
