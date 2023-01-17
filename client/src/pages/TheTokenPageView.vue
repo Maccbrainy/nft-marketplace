@@ -4,10 +4,14 @@ import { RouterView, useRoute, useRouter } from "vue-router";
 import type { ChildrenLinksType } from "@/types";
 import { TableAssetsCard } from "@/components/tables";
 import { TokenPriceDetailCard } from "@/components/tokens";
+import { ChevronDownIcon, ArrowRightIcon } from "@/components/icons";
 
 const router = useRouter();
 const route = useRoute();
-
+const moreFromThisCollectionRef = ref<any>(null);
+const showTableNavigationButton = ref<boolean>(false);
+const scrollByVisibility = ref<number>(0);
+const scrollByVisibilityPercentage = ref<number>(0);
 const tokenDetailTabLinks = [
   {
     id: "TokenOverView",
@@ -34,7 +38,36 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
     path: `/token/${route.params.tokenId}/${link.title}`,
   });
 };
+const scrollBarCallback = (direction: string) => {
+  const { offsetWidth, scrollWidth, children } =
+    moreFromThisCollectionRef.value;
+  const collectionItemWidth = children[0].offsetWidth;
+
+  const scrollByIndex =
+    direction == "forward" ? collectionItemWidth : -collectionItemWidth;
+  moreFromThisCollectionRef.value.scrollBy({
+    top: 0,
+    left: scrollByIndex,
+    behavior: "smooth",
+  });
+  scrollByVisibility.value += scrollByIndex;
+
+  const progressiveScrollWidthTrackingLength =
+    offsetWidth + scrollByVisibility.value;
+
+  scrollByVisibilityPercentage.value =
+    (progressiveScrollWidthTrackingLength * 100) / scrollWidth;
+};
 </script>
+<style scoped>
+.hide-horizontal__scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-horizontal__scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
 <template>
   <div class="relative w-full flex sf:flex-col justify-between gap-8 pt-6">
     <div class="w-[63%] mf:w-full h-auto py-5">
@@ -81,27 +114,94 @@ const activateLinkAndUpdateRouter = (link: ChildrenLinksType) => {
     >
       More from this collection
     </h1>
-    <ul class="w-full flex flex-row flex-nowrap overflow-hidden pt-8">
-      <TableAssetsCard
-        :filterIsHidden="false"
-        :viewOptionSize="'largerViewOption'"
-        class="min-w-[240px] max-w-xs"
-      />
-      <TableAssetsCard
-        :filterIsHidden="false"
-        :viewOptionSize="'largerViewOption'"
-        class="min-w-[240px] max-w-xs"
-      />
-      <TableAssetsCard
-        :filterIsHidden="false"
-        :viewOptionSize="'largerViewOption'"
-        class="min-w-[240px] max-w-xs"
-      />
-      <TableAssetsCard
-        :filterIsHidden="false"
-        :viewOptionSize="'largerViewOption'"
-        class="min-w-[240px] max-w-xs"
-      />
-    </ul>
+    <div
+      class="w-full relative overflow-hidden pt-8"
+      v-on:mouseover="showTableNavigationButton = true"
+      v-on:mouseout="showTableNavigationButton = false"
+    >
+      <div
+        @click="scrollBarCallback('forward')"
+        v-show="showTableNavigationButton && scrollByVisibilityPercentage < 100"
+        class="absolute h-full flex right-0 z-10 items-center"
+      >
+        <span
+          class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+        >
+          <chevron-down-icon class="rotate-[270deg]" />
+        </span>
+        <div
+          class="bg-gradient-to-l from-white dark:from-darkTheme w-4 h-full"
+        ></div>
+      </div>
+      <div
+        @click="scrollBarCallback('backward')"
+        v-show="showTableNavigationButton && scrollByVisibility > 0"
+        class="absolute h-full flex left-0 z-10 items-center"
+      >
+        <div
+          class="bg-gradient-to-r from-white dark:from-darkTheme w-4 h-full"
+        ></div>
+        <span
+          class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+        >
+          <chevron-down-icon class="rotate-[90deg]" />
+        </span>
+      </div>
+      <ul
+        ref="moreFromThisCollectionRef"
+        class="hide-horizontal__scrollbar w-full flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory"
+      >
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <TableAssetsCard
+          :filterIsHidden="false"
+          :viewOptionSize="'largerViewOption'"
+          class="min-w-[240px] max-w-xs"
+        />
+        <div
+          class="relative min-w-[240px] max-w-xs flex justify-center items-center"
+        >
+          <router-link
+            :to="{
+              path: '/collection/Art BLocks x Pace',
+            }"
+            ><ArrowRightIcon
+          /></router-link>
+        </div>
+      </ul>
+    </div>
   </div>
 </template>
