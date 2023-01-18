@@ -45,6 +45,13 @@ export default {
 .dropdown__menu::-webkit-scrollbar-track {
   background: transparent;
 }  */
+.hide-horizontal__scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-horizontal__scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 </style>
 <template>
   <div class="relative">
