@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, type PropType } from "vue";
+import { ref, computed, type PropType, watchEffect } from "vue";
 import { ChevronDownIcon, TickCheckIcon } from "@/components/icons";
 import type { OptionType } from "@/types";
 
@@ -17,6 +17,7 @@ const props = defineProps({
 const emit = defineEmits(["selectionAction"]);
 
 const openDropDownMenu = ref<Boolean>(false);
+const dropDownMenuRef = ref<any>(null)
 // eslint-disable-next-line no-undef
 const getActiveOption = computed<OptionType[]>(() => {
   return props.listOfOptions.filter(
@@ -27,6 +28,19 @@ const selectionActionCallback = (option: OptionType) => {
   emit("selectionAction", option);
   openDropDownMenu.value = false
 }
+watchEffect(() => {
+  openDropDownMenu.value;
+  const catchOutsideClickAndCloseMenu = (event: { target: any }) => {
+    if (dropDownMenuRef.value && dropDownMenuRef.value.contains(event.target)) {
+      return;
+    }
+    document.removeEventListener("mousedown", catchOutsideClickAndCloseMenu);
+    document.removeEventListener("touchstart", catchOutsideClickAndCloseMenu);
+    openDropDownMenu.value = false
+  };
+  document.addEventListener("mousedown", catchOutsideClickAndCloseMenu);
+  document.addEventListener("touchstart", catchOutsideClickAndCloseMenu);
+})
 </script>
 <script lang="ts">
 export default {
@@ -74,7 +88,8 @@ export default {
     <div
       v-show="openDropDownMenu"
       v-bind="$attrs"
-      class="dropdown__menu animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-30"
+      ref="dropDownMenuRef"
+      class="hide-horizontal__scrollbar animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-30"
     >
       <div
         tabindex="-1"
