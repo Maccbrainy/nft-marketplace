@@ -3,6 +3,7 @@ export { default as ArrowRightIcon } from "@/components/icons/ArrowRightIcon.vue
 export { default as MenuBarIcon } from "@/components/icons/MenuBarIcon.vue";
 export { default as LogOutIcon } from "@/components/icons/LogOutIcon.vue";
 export { default as CloseIcon } from "@/components/icons/CloseIcon.vue";
+export { default as CancelIcon } from "@/components/icons/CancelIcon.vue";
 export { default as SearchIcon } from "@/components/icons/SearchIcon.vue";
 export { default as PolygonIcon } from "@/components/icons/PolygonIcon.vue";
 export { default as SolanaIcon } from "@/components/icons/SolanaIcon.vue";
