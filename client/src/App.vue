@@ -74,7 +74,7 @@ const themeTypes = ref([
           <ButtonMiscellenous
             v-on:click="chooseHowToConnectWallet($route.redirectedFrom?.path)"
             :has-list-content="false"
-            class="mmf:hidden font-semibold text-xs rounded-2xl py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-black text-darkTheme-text-b"
+            class="mmf:hidden font-semibold text-xs rounded-2xl py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-black"
             v-else
             >Connect wallet</ButtonMiscellenous
           >
@@ -93,7 +93,7 @@ const themeTypes = ref([
       >
         <div
           :class="{
-            'w-[75%] lf:w-full':
+            'w-[71%] lf:w-full':
               showMarketplaceCartBag && matchedRoutesComposable,
             'w-full': !showMarketplaceCartBag || !matchedRoutesComposable,
           }"

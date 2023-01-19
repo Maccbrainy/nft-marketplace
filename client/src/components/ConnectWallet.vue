@@ -88,12 +88,12 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
             <div class="relative flex flex-col gap-2">
               <h1 class="text-xs text-gray-500 dark:text-darkTheme-text">Popular</h1>
               <div
-                v-on:click="connectWallet(wallet, $route.query.redirect)"
+                v-on:click="connectWallet(dappWallet, $route.query.redirect)"
                 class="w-full transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer"
-                v-for="wallet in listOfBlockchainWallets"
-                :key="wallet"
+                v-for="dappWallet in listOfBlockchainWallets"
+                :key="dappWallet"
               >
-                {{ wallet}}
+                {{ dappWallet}}
               </div>
             </div>
           </div>
