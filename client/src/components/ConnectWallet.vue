@@ -47,7 +47,7 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
     >
       <div class="relative sm:w-[30%]">
         <div class="absolute left-5 pt-8 sm:pt-10">
-          <RouterLink to="/" class="text-white text-xl font-bold">Dencil</RouterLink>
+          <RouterLink to="/" class="text-white text-xl font-bold">InterestQQ</RouterLink>
         </div>
         <div class="sf:hidden h-screen max-w-[380px]">
           <img
@@ -89,7 +89,7 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
               <h1 class="text-xs text-gray-500 dark:text-darkTheme-text">Popular</h1>
               <div
                 v-on:click="connectWallet(dappWallet, $route.query.redirect)"
-                class="w-full transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer"
+                class="w-full transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer transform active:scale-95"
                 v-for="dappWallet in listOfBlockchainWallets"
                 :key="dappWallet"
               >

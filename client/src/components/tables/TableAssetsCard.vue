@@ -2,12 +2,22 @@
 import { inject, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { AddToCartIcon, MenuDotsIcon } from "../icons";
+import { ButtonMiscellenous } from "../buttonui";
 defineProps({
   filterIsHidden: Boolean,
   viewOptionSize: String,
 });
+const collectionMenuList = [
+  { id: "BuyNow", name: "Buy now", icon: false },
+  { id: "AddToBag", name: "Add to bag", icon: false },
+];
 const { showMarketplaceCartBag } = inject<any>("provider");
 const showBuyAndAddToCardButton = ref<boolean>(false);
+const isActiveMenuAction = ref<string>(collectionMenuList[0].id);
+const collectionMenuAction = (option: { id: string }) => {
+  isActiveMenuAction.value = option.id;
+  console.log(`${option.id}`);
+};
 </script>
 <template>
   <div
@@ -47,9 +57,12 @@ const showBuyAndAddToCardButton = ref<boolean>(false);
     }"
     class="w-full h-auto border-solid border-transparent border-x-8 border-t-8 mt-1.5"
   >
-    <li v-on:mouseenter="showBuyAndAddToCardButton = true" v-on:mouseleave="showBuyAndAddToCardButton = false" class="transition-all transform hover:-translate-y-1">
+    <li
+      v-on:mouseenter="showBuyAndAddToCardButton = true"
+      v-on:mouseleave="showBuyAndAddToCardButton = false"
+    >
       <div
-        class="border dark:border-darkTheme-border rounded-xl hover:ring-4 hover:ring-offset-0 hover:ring-gray-100 dark:ring-darkTheme-bg cursor-pointer"
+        class="border transition-all dark:border-darkTheme-border rounded-xl hover:ring-4 hover:ring-offset-0 hover:ring-gray-100 dark:ring-darkTheme-bg cursor-pointer"
       >
         <div class="w-full p-2 flex flex-col gap-1">
           <div class="relative w-full flex justify-center items-end">
@@ -63,8 +76,9 @@ const showBuyAndAddToCardButton = ref<boolean>(false);
                 src="https://assets.raribleuserdata.com/prod/v1/image/t_image_big/aHR0cHM6Ly9jbG9uZXgtYXNzZXRzLnJ0Zmt0LmNvbS9pbWFnZXMvOTg3NS5wbmc="
               />
             </router-link>
-            <div v-show="showBuyAndAddToCardButton"
-              class="absolute flex flex-row justify-around bottom-2 gap-4 z-10 text-white text-xs font-medium"
+            <div
+              v-show="showBuyAndAddToCardButton"
+              class="absolute flex flex-row justify-around bottom-2 gap-4 text-white text-xs font-medium"
             >
               <div
                 class="bg-black dark:bg-white dark:text-black rounded-xl py-2.5 px-3"
@@ -100,12 +114,17 @@ const showBuyAndAddToCardButton = ref<boolean>(false);
                 Clone X #123432
               </router-link>
             </div>
-            <button
+            <button-miscellenous
+              @selection-action="collectionMenuAction"
+              :list-of-options="collectionMenuList"
+              :is-active-option="isActiveMenuAction"
+              :has-list-content="true"
+              :compute-list-content="false"
               v-show="viewOptionSize === 'smallerViewOption'"
-              class="hover:bg-gray-100 hover:text-gray-600 dark:hover:text-darkTheme-text-b dark:hover:bg-darkTheme-hover rounded-full p-1"
+              class="px-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:text-darkTheme-text-b dark:hover:bg-darkTheme-hover rounded-full"
             >
-              <menu-dots-icon />
-            </button>
+              <menu-dots-icon class="m-1" />
+            </button-miscellenous>
           </div>
           <div
             :class="{

@@ -125,24 +125,18 @@ const scrollBarCallback = (direction: string) => {
         class="absolute h-full flex right-0 z-10 items-center"
       >
         <span
-          class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+          class="bg-white border border-white shadow-xl dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
         >
           <chevron-down-icon class="rotate-[270deg]" />
         </span>
-        <div
-          class="bg-gradient-to-l from-white dark:from-darkTheme w-4 h-full"
-        ></div>
       </div>
       <div
         @click="scrollBarCallback('backward')"
         v-show="showTableNavigationButton && scrollByVisibility > 0"
         class="absolute h-full flex left-0 z-10 items-center"
       >
-        <div
-          class="bg-gradient-to-r from-white dark:from-darkTheme w-4 h-full"
-        ></div>
         <span
-          class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+          class="bg-white border border-white shadow-xl dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
         >
           <chevron-down-icon class="rotate-[90deg]" />
         </span>

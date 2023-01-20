@@ -47,7 +47,7 @@ const themeTypes = ref([
       >
         <div class="flex flex-row items-center space-x-8">
           <RouterLink to="/" class="dark:text-white text-xl font-bold"
-            >DencilX</RouterLink
+            >InterestQQ</RouterLink
           >
           <ButtonInput
             class="mf:hidden min-w-[320px] max-w-md"
@@ -113,7 +113,7 @@ const themeTypes = ref([
         <div
           class="relative w-full flex justify-between items-center gap-3 text-gray-500 text-sm dark:text-darkTheme-text py-1"
         >
-          <p>@DencilX NFT 2022</p>
+          <p>InterestQQ 2023</p>
           <ButtonDropdown
             class="bottom-14"
             @selection-action="changeThemeSkinCallback"

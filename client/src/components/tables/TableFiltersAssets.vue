@@ -72,7 +72,7 @@ const viewOptionsSettings = [
 const { teleportModalCallback, isLargeScreen } = inject<any>("provider");
 const hideTableAssetsSideBarFilters = ref<boolean>(false);
 
-const activeViewOption = ref<string>("largerViewOption");
+const activeViewOption = ref<string>(viewOptionsSettings[1].id);
 const isActiveSortType = ref<string>(listOfSortTypes[0].id);
 const changeSortType = (sortType: { id: string }) => {
   isActiveSortType.value = sortType.id;

@@ -13,7 +13,7 @@ const router = createRouter({
       name: "HomePage",
       component: TheHomePageView,
       meta: {
-        title: "Cryptop NFT Marketplace",
+        title: "NFT Marketplace",
         requiresWalletAuth: false,
       },
     },
@@ -129,7 +129,10 @@ router.beforeEach((to) => {
   const wallet = JSON.parse(
     localStorage.getItem("marketPlace:ISCONNECTED") || "[]"
   );
-  console.log("isWalletConnected", wallet);
+  // const cartBagInfo = JSON.parse(
+  //   localStorage.getItem("marketPlace:CART_USER_INFO") || "{}"
+  // );
+  // console.log("cartBagInfo", cartBagInfo);
   
   if (to.meta.requiresWalletAuth && wallet.length == 0) {
     return {
@@ -141,7 +144,7 @@ router.beforeEach((to) => {
   }
 });
 router.afterEach((to) => {
-  document.title = (to.meta.title as string) || "Cryptop NFT";
+  document.title = (to.meta.title as string) || "NFT Marketplace";
 })
 
 export default router;

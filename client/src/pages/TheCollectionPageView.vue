@@ -13,7 +13,7 @@ const collectionDetailLinks = [
   { id: "CollectionActivity", title: "activity" },
 ];
 
-const collectionMenuList = [
+const otherCollectionMenuList = [
   { id: "Claim ownership", name: "Claim ownership", icon: false },
   { id: "Report page", name: "Report page", icon: false },
 ];
@@ -26,7 +26,7 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
   });
 };
 
-const isActiveMenuAction = ref<string>(collectionMenuList[0].id);
+const isActiveMenuAction = ref<string>(otherCollectionMenuList[0].id);
 const collectionMenuAction = (option: { id: string }) => {
   isActiveMenuAction.value = option.id;
   console.log(`${option.id}`);
@@ -131,7 +131,7 @@ const collectionMenuAction = (option: { id: string }) => {
         </button-miscellenous>
         <button-miscellenous
           @selection-action="collectionMenuAction"
-          :list-of-options="collectionMenuList"
+          :list-of-options="otherCollectionMenuList"
           :is-active-option="isActiveMenuAction"
           :has-list-content="true"
           :compute-list-content="false"
