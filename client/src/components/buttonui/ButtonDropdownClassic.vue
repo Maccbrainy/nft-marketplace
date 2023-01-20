@@ -11,7 +11,7 @@ const openDropdown = ref<boolean>(false);
     >
       <slot name="title"></slot>
       <ChevronDownIcon
-        :class="{ 'transition-all transform rotate-180': openDropdown }"
+        :class="{ 'transition-all rotate-180': openDropdown }"
         class="h-5 w-5"
       />
     </button>

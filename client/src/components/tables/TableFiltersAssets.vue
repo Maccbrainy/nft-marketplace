@@ -117,7 +117,7 @@ const hideTableAssetsSideBarFiltersCallback = () => {
         class="inline-flex flex-initial items-center rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-2.5"
         ><ChevronDownIcon
           v-show="!hideTableAssetsSideBarFilters"
-          class="mf:hidden transform rotate-90 -translate-x-1"
+          class="mf:hidden rotate-90 -translate-x-1"
         />
         <FilterIcon
           :class="{
