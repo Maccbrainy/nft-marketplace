@@ -101,7 +101,7 @@ watchEffect(() => {
                       <div
                         class="flex flex-row items-center gap-2 flex-nowrap capitalize"
                       >
-                        <div>{{ wallet[0].networkName }}</div>
+                        <div>{{ wallet[0].blockchain }}</div>
                         <div
                           class="w-1.5 h-1.5 bg-green-500 rounded-full"
                         ></div>

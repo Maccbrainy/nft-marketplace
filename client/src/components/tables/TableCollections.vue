@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 import { ButtonDropdown, ButtonInput, ButtonMiscellenous } from "../buttonui";
 import { AddToCartIcon, ChevronDownIcon, ArrowRightIcon } from "../icons";
 
-const { showMarketplaceCartBag } = inject<any>("provider");
+const { showMarketplaceCartBag, getMarketplaceItemIntoCartBag } = inject<any>("provider");
 
 const blockChainNetworks = [
   {
@@ -305,6 +305,12 @@ const scrollBarCallback = (direction: string) => {
                       class="snap-start animate-pulse relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
                       v-on:mouseenter="showAddToCartButtonCallback(index)"
                       v-on:mouseleave="showAddToCartButton = false"
+                      @click="
+                        getMarketplaceItemIntoCartBag({
+                          token_address: `123ser40ouyrtfhdyub12hw546hbs736re53h`,
+                          token_id: datum,
+                        })
+                      "
                     >
                       <div
                         v-show="

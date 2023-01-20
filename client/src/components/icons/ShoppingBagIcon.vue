@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { inject } from "vue";
 
-const { showMarketplaceCartBagCallback } = inject<any>("provider");
+const { showMarketplaceCartBagCallback, marketplaceCartBagItems } =
+  inject<any>("provider");
 </script>
 <template>
-  <button v-on:click="showMarketplaceCartBagCallback" class="outline-none">
+  <button
+    v-on:click="showMarketplaceCartBagCallback"
+    class="relative outline-none"
+  >
+    <span
+      v-if="marketplaceCartBagItems.length > 0"
+      class="absolute right-0 bg-red-500 px-1.5 rounded-lg py-0.5 text-white text-center text-xs"
+      >{{ marketplaceCartBagItems.length }}</span
+    >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

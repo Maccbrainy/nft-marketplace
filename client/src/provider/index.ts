@@ -5,12 +5,22 @@ import { useMediaQuery } from "@vueuse/core";
 interface WalletSchema {
   name: string,
   is_connected: boolean,
-  is_metamask: boolean,
+  dapp: string,
   selected_address: string,
   current_account: string,
   networkVersion: string,
-  networkName: string
+  blockchain: string
 
+}
+interface CartBagItemScheme {
+  token_address: string,
+  token_id: number
+}
+
+interface CartBagInfo {
+  [x: string]: {
+    ITEMS: Array<CartBagItemScheme>
+  }
 }
 export default {
   install: (app: any, _options: any) => {
@@ -30,6 +40,35 @@ export default {
       wallet.value.length > 0 ? wallet.value[0].current_account : ""
     );
 
+    const showMarketplaceCartBag = ref(false);
+    const marketplaceCartBagInfo = ref<CartBagInfo>(
+      JSON.parse(localStorage.getItem("marketPlace:CART_USER_INFO") || "{}")
+    );
+
+    const extractCartBagInfoDynamicKey = computed<string[]>(() =>
+      Object.keys(marketplaceCartBagInfo.value).length > 0
+        ? Object.keys(marketplaceCartBagInfo.value)
+        : []
+    )
+    const marketplaceCartBagItems = ref<CartBagItemScheme[]>(
+      extractCartBagInfoDynamicKey.value.length > 0
+        ? marketplaceCartBagInfo.value[extractCartBagInfoDynamicKey.value[0]].ITEMS
+        : []
+    );
+    watchEffect(() => {
+      console.log(
+        "extractCartBagInfoDynamicKey:",
+        extractCartBagInfoDynamicKey.value
+      );
+      console.log(
+        "marketplaceCartBagInfo:",
+        marketplaceCartBagInfo.value, Object.keys(marketplaceCartBagInfo.value)[0]
+      );
+      console.log(
+        "marketplaceCartBagItems:",
+        marketplaceCartBagItems.value
+      );
+})
     /**Begins: Change App Theme background and colors */
     const isActiveThemeSkin = ref<string>(localStorage.theme);
     const activateThemeSkin = () => {
@@ -63,26 +102,21 @@ export default {
       blockchainNetwork.value = blockchainId;
     };
 
-    const connectWallet = async (
-      walletModel: string,
-      routeRedirect: string
-    ) => {
+    const connectWallet = async (dappWallet: string, routeRedirect: string) => {
       // const redirectedPath = routeRedirect || router.back()
       try {
-        if (!ethereum && walletModel == "MetaMask")
+        if (!ethereum && dappWallet == "MetaMask")
           return alert("Please install MetaMask");
-        if (walletModel == "WalletConnect") 
+        if (dappWallet == "WalletConnect") 
           return alert("WalletConnect coming soon!")
-        if (walletModel == "Install Phantom")
+        if (dappWallet == "Install Phantom")
           return alert("Phantom coming soon!");
 
-        if (
-          blockchainNetwork.value == "ethereum" &&
-          walletModel == "MetaMask"
-        ) {
+        if (blockchainNetwork.value == "ethereum" && dappWallet == "MetaMask") {
           const account = await ethereum.request({
             method: "eth_requestAccounts",
           });
+          const dappModel = ethereum.isMetaMask ? "MetaMask" : ""
           currentAccount.value = account[0];
           localStorage.setItem(
             "marketPlace:ISCONNECTED",
@@ -90,11 +124,11 @@ export default {
               {
                 name: ethereum.networkVersion,
                 is_connected: true,
-                is_metamask: ethereum.isMetaMask,
+                dapp: dappModel,
                 selected_address: ethereum.selectedAddress,
                 current_account: currentAccount.value,
                 networkVersion: ethereum.networkVersion,
-                networkName: blockchainNetwork.value
+                blockchain: blockchainNetwork.value
               },
             ])
           );
@@ -149,12 +183,33 @@ export default {
       }
     }
 
+    const removeAllItemsFromMarketplaceCartBag = () => {
+      marketplaceCartBagItems.value = [];
+      // marketplaceCartBagInfo.value = {};
+      localStorage.removeItem("marketPlace:CART_USER_INFO");
+    }
 
-    const showMarketplaceCartBag = ref(false);
     const showMarketplaceCartBagCallback = () => {
       showMarketplaceCartBag.value = !showMarketplaceCartBag.value
     }
+    const getMarketplaceItemIntoCartBag = (tokenDetail: {
+      token_address: string;
+      token_id: number;
+    }) => {
+      marketplaceCartBagItems.value.push(tokenDetail)
 
+      const connectionStatus = currentAccount.value || "anonymous";
+
+      marketplaceCartBagInfo.value[connectionStatus] = {
+        ITEMS: marketplaceCartBagItems.value,
+      }
+
+      localStorage.setItem(
+        "marketPlace:CART_USER_INFO",
+        JSON.stringify(marketplaceCartBagInfo.value)
+      )
+      console.log("marketplaceCartBag:", marketplaceCartBagInfo.value);
+    }
     const matchedRoutesComposable = computed<boolean>(
       () =>
         router.currentRoute.value.matched[0].path == "/collection/:id/:slug?" ||
@@ -186,7 +241,10 @@ export default {
       teleportModalOpenProfileMenuBar,
       teleportModalTableAssetsFilters,
       showMarketplaceCartBagCallback,
+      getMarketplaceItemIntoCartBag,
+      marketplaceCartBagItems,
       showMarketplaceCartBag,
+      removeAllItemsFromMarketplaceCartBag,
       matchedRoutesComposable
     });
   },
