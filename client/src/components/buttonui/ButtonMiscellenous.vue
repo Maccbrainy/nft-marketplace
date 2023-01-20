@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type PropType } from "vue";
+import { computed, onMounted, onUnmounted, ref, type PropType } from "vue";
 import type { OptionType } from "@/types";
 const props = defineProps({
   listOfOptions: {
@@ -22,6 +22,8 @@ const props = defineProps({
 const emit = defineEmits(["selectionAction"]);
 
 const openDropDownMenu = ref<Boolean>(false);
+const dropDownMenuRef = ref<any>(null);
+const dropDownButtonRef = ref<any>(null);
 const getActiveOption = computed<OptionType[]>(() => {
   return props.listOfOptions.filter(
     (option) => option.id === props.isActiveOption
@@ -31,6 +33,23 @@ const selectionActionCallback = (option: OptionType) => {
   emit("selectionAction", option);
   openDropDownMenu.value = false;
 };
+const catchOutsideClickAndCloseMenu = (event: { target: any }) => {
+  if (dropDownMenuRef.value && dropDownMenuRef.value.contains(event.target)) {
+    return;
+  }
+  if (dropDownButtonRef.value.contains(event.target)){
+    return;
+  }
+  openDropDownMenu.value = false;
+};
+onMounted(() => {
+  document.addEventListener("mousedown", catchOutsideClickAndCloseMenu);
+  document.addEventListener("touchstart", catchOutsideClickAndCloseMenu);
+});
+onUnmounted(() => {
+  document.removeEventListener("mousedown", catchOutsideClickAndCloseMenu);
+  document.removeEventListener("touchstart", catchOutsideClickAndCloseMenu);
+});
 </script>
 <script lang="ts">
 export default {
@@ -41,6 +60,7 @@ export default {
   <div class="relative">
     <button
       @click="openDropDownMenu = !openDropDownMenu"
+      :ref="(el) => (dropDownButtonRef = el)"
       v-for="(option, index) in getActiveOption"
       :key="computeListContent ? option.id + index : 0"
       v-bind="$attrs"
@@ -66,6 +86,7 @@ export default {
     </button>
     <div
       v-if="openDropDownMenu && hasListContent"
+      ref="dropDownMenuRef"
       class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto right-0 mt-1.5 z-20"
     >
       <div
