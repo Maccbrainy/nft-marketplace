@@ -87,7 +87,7 @@ export default {
     <div
       v-if="openDropDownMenu && hasListContent"
       ref="dropDownMenuRef"
-      class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto right-0 mt-1.5 z-20"
+      class="animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto right-0 mt-1 z-20"
     >
       <div
         tabindex="-1"
