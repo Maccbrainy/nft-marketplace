@@ -5,7 +5,7 @@
     width="24"
     height="24"
     xlmns="http://www.w3.org/2000/svg"
-    class="w-4 h-4 cursor-pointer"
+    class="cursor-pointer"
   >
     <path
       fill-rule="evenodd"

@@ -11,7 +11,7 @@ const { showMarketplaceCartBagCallback, marketplaceCartBagItems } =
   >
     <span
       v-if="marketplaceCartBagItems.length > 0"
-      class="absolute right-0 bg-red-500 px-1.5 rounded-lg py-0.5 text-white text-center text-xs"
+      class="absolute right-0 bg-red-500 px-2 rounded-lg py-0.5 text-white text-center text-xs"
       >{{ marketplaceCartBagItems.length }}</span
     >
     <svg
