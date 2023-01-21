@@ -115,12 +115,11 @@ const themeTypes = ref([
         >
           <p>InterestQQ 2023</p>
           <ButtonDropdown
-            class="bottom-14"
+            class="bottom-14 right-0"
             @selection-action="changeThemeSkinCallback"
             :listOfOptions="themeTypes"
             :isActiveOption="isActiveThemeSkin"
           ></ButtonDropdown>
-          <p>All right reserved</p>
         </div>
       </section>
     </template>

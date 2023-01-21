@@ -5,7 +5,56 @@ import type { ChildrenLinksType } from "@/types";
 import { TableAssetsCard } from "@/components/tables";
 import { TokenPriceDetailCard } from "@/components/tokens";
 import { ChevronDownIcon, ArrowRightIcon } from "@/components/icons";
-
+const NFTTokensInCollection = [
+  {
+    tokenId: 12345,
+    tokenAddress: "0x4exr12309846567386sfdrteg23AW54EDWCAT6WUHSY",
+    tokenName: "Bored Ape Yacht Club",
+    tokenPrice: 0.443,
+  },
+  {
+    tokenId: 2213,
+    tokenAddress: "OjhutsU2X6567386sfdrteg23AW54EDWCAT6WUHSY",
+    tokenName: "LuppyclubOfficial",
+    tokenPrice: 3.123,
+  },
+  {
+    tokenId: 30033,
+    tokenAddress: "040x2ssdrU2X6567386234567drteg23AW54E0oiuydbgjsl",
+    tokenName: "Clone X",
+    tokenPrice: 11.0,
+  },
+  {
+    tokenId: 42213,
+    tokenAddress: "04ex0uyu67drtwe432eg23AW54E0oiuydbgjsl",
+    tokenName: "CryptoPunks",
+    tokenPrice: 1.1,
+  },
+  {
+    tokenId: 662,
+    tokenAddress: "3023erds2eg23AW54E0oiuydbgjsl",
+    tokenName: "PROOF Collective",
+    tokenPrice: 0.122,
+  },
+  {
+    tokenId: 390,
+    tokenAddress: "0903e4r2eg2323ewqszxcvfr4567AW54E0oiuydbgjsl",
+    tokenName: "Azuki",
+    tokenPrice: 0.023,
+  },
+  {
+    tokenId: 91700,
+    tokenAddress: "1w23e4r5t6y7u8i9o0pasderftgyhujikolpgjsl",
+    tokenName: "Light Years by Dmitri Cherniak",
+    tokenPrice: 0.15,
+  },
+  {
+    tokenId: 5414,
+    tokenAddress: "po90iuy6780pasderftgyhujikolpgjsl",
+    tokenName: "CryptoNinja NFT",
+    tokenPrice: 1.12,
+  },
+];
 const router = useRouter();
 const route = useRoute();
 const moreFromThisCollectionRef = ref<any>(null);
@@ -143,46 +192,14 @@ const scrollBarCallback = (direction: string) => {
       </div>
       <ul
         ref="moreFromThisCollectionRef"
-        class="hide-horizontal__scrollbar w-full flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory"
+        class="hide-horizontal__scrollbar w-full flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory pb-1"
       >
         <TableAssetsCard
+          v-for="tokenData in NFTTokensInCollection"
+          :key="tokenData.tokenId + tokenData.tokenAddress"
           :filterIsHidden="false"
           :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
-          class="min-w-[240px] max-w-xs"
-        />
-        <TableAssetsCard
-          :filterIsHidden="false"
-          :viewOptionSize="'largerViewOption'"
+          :assetInfo="tokenData"
           class="min-w-[240px] max-w-xs"
         />
         <div

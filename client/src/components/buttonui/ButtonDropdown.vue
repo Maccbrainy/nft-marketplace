@@ -122,7 +122,7 @@ export default {
             <span
               class="col-span-1 w-full flex justify-end items-center"
               v-show="option.id === isActiveOption"
-              ><TickCheckIcon
+              ><TickCheckIcon class="w-4 h-4"
             /></span>
           </div>
         </div>
