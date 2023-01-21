@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 import { RouterLink } from "vue-router";
+import { isMarketItemFoundInCartBagItems } from "@/utils";
 import { ButtonDropdown, ButtonInput, ButtonMiscellenous } from "../buttonui";
-import { AddToCartIcon, ChevronDownIcon, ArrowRightIcon } from "../icons";
+import {
+  AddToCartIcon,
+  ChevronDownIcon,
+  ArrowRightIcon,
+  TickCheckIcon,
+} from "../icons";
 
-const { showMarketplaceCartBag, getMarketplaceItemIntoCartBag } = inject<any>("provider");
+const {
+  showMarketplaceCartBag,
+  getMarketplaceItemIntoCartBag,
+  marketplaceCartBagItems,
+} = inject<any>("provider");
 
 const blockChainNetworks = [
   {
@@ -61,13 +71,63 @@ const timeDurations = [
     icon: false,
   },
 ];
+const NFTTokensInCollection = [
+  {
+    tokenId: 12345,
+    tokenAddress: "0x4exr12309846567386sfdrteg23AW54EDWCAT6WUHSY",
+    tokenName: "Bored Ape Yacht Club",
+    tokenPrice: 0.443,
+  },
+  {
+    tokenId: 2213,
+    tokenAddress: "OjhutsU2X6567386sfdrteg23AW54EDWCAT6WUHSY",
+    tokenName: "LuppyclubOfficial",
+    tokenPrice: 3.123,
+  },
+  {
+    tokenId: 30033,
+    tokenAddress: "040x2ssdrU2X6567386234567drteg23AW54E0oiuydbgjsl",
+    tokenName: "Clone X",
+    tokenPrice: 11.0,
+  },
+  {
+    tokenId: 42213,
+    tokenAddress: "04ex0uyu67drtwe432eg23AW54E0oiuydbgjsl",
+    tokenName: "CryptoPunks",
+    tokenPrice: 1.1,
+  },
+  {
+    tokenId: 662,
+    tokenAddress: "3023erds2eg23AW54E0oiuydbgjsl",
+    tokenName: "PROOF Collective",
+    tokenPrice: 0.122,
+  },
+  {
+    tokenId: 390,
+    tokenAddress: "0903e4r2eg2323ewqszxcvfr4567AW54E0oiuydbgjsl",
+    tokenName: "Azuki",
+    tokenPrice: 0.023,
+  },
+  {
+    tokenId: 91700,
+    tokenAddress: "1w23e4r5t6y7u8i9o0pasderftgyhujikolpgjsl",
+    tokenName: "Light Years by Dmitri Cherniak",
+    tokenPrice: 0.15,
+  },
+  {
+    tokenId: 5414,
+    tokenAddress: "po90iuy6780pasderftgyhujikolpgjsl",
+    tokenName: "CryptoNinja NFT",
+    tokenPrice: 1.12,
+  },
+];
 const collectionContainerRef = ref<any>(null);
-const showAddToCartButton = ref<boolean>(false);
 const showTableNavigationButton = ref<boolean>(false);
 const scrollByVisibility = ref<number>(0);
 const scrollByVisibilityPercentage = ref<number>(0);
 const isActiveBlockChain = ref<string>("Ethereum");
 const isActiveTime = ref<string>("Day");
+
 const changeBlockChainNetwork = (blockChainNetwork: { id: string }) => {
   isActiveBlockChain.value = blockChainNetwork.id;
   console.log(`Get NFTs on ${isActiveBlockChain.value} blockchain`);
@@ -76,10 +136,19 @@ const changeTimeDuration = (timeDuration: { id: string }) => {
   isActiveTime.value = timeDuration.id;
   console.log(`Time duration in ${isActiveTime.value} ago`);
 };
-const showAddToCartButtonIndex = ref<number>();
-const showAddToCartButtonCallback = (callBackIndex: number) => {
-  showAddToCartButtonIndex.value = callBackIndex;
-  return (showAddToCartButton.value = true);
+const trackMarketplaceItemInfo = ref({
+  id: 0,
+  address: "",
+});
+const showAddToCartButtonCallback = (itemInfo: {
+  tokenId: number;
+  tokenAddress: string;
+}) => {
+  const { tokenId, tokenAddress } = itemInfo;
+  trackMarketplaceItemInfo.value = {
+    id: tokenId,
+    address: tokenAddress,
+  };
 };
 const scrollBarCallback = (direction: string) => {
   const { offsetWidth, scrollWidth, children } = collectionContainerRef.value;
@@ -100,6 +169,7 @@ const scrollBarCallback = (direction: string) => {
   scrollByVisibilityPercentage.value =
     (progressiveScrollWidthTrackingLength * 100) / scrollWidth;
 };
+
 </script>
 <style scoped>
 .hide-horizontal__scrollbar::-webkit-scrollbar {
@@ -196,18 +266,18 @@ const scrollBarCallback = (direction: string) => {
                   }"
                   class="w-3/12 lmax:w-full flex lmax:justify-between items-center dark:text-darkTheme-text-b"
                 >
-                <div class="w-full sm:w-[90%] flex items-center gap-4">
-                  <div
-                    class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200 dark:bg-darkTheme-bg-0.08"
-                    title="Contract address"
-                  ></div>
-                  <div
-                    class="text-lg font-semibold truncate"
-                    title="Art BLocks x Pace"
-                  >
-                    Art BLocks x Pace
+                  <div class="w-full sm:w-[90%] flex items-center gap-4">
+                    <div
+                      class="animate-pulse h-14 w-14 min-w-[56px] rounded-xl bg-gray-200 dark:bg-darkTheme-bg-0.08"
+                      title="Contract address"
+                    ></div>
+                    <div
+                      class="text-lg font-semibold truncate"
+                      title="Art BLocks x Pace"
+                    >
+                      Art BLocks x Pace
+                    </div>
                   </div>
-                </div>
                   <ArrowRightIcon class="lg:hidden" />
                 </router-link>
                 <div
@@ -297,27 +367,60 @@ const scrollBarCallback = (direction: string) => {
                     class="hide-horizontal__scrollbar relative w-full h-auto flex flex-row space-x-4 items-center lmax:ml-1 lg:p-1 overflow-x-auto snap-x snap-mandatory"
                   >
                     <div
-                      v-for="(datum, index) in [
-                        0.122, 2.234, 3, 0.44, 8, 1.11, 11, 0.11, 0.9,
-                      ]"
-                      :key="datum"
+                      v-for="token in NFTTokensInCollection"
+                      :key="token.tokenId"
                       :title="'Add NFT to your cart bag'"
-                      class="snap-start animate-pulse relative w-[100px] h-[100px] min-w-[100px] rounded-xl bg-gray-100 dark:bg-darkTheme-bg-0.08 hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200 hover:transition-all lmax:my-1"
-                      v-on:mouseenter="showAddToCartButtonCallback(index)"
-                      v-on:mouseleave="showAddToCartButton = false"
+                      :class="{
+                        'hover:ring hover:ring-offset-0 hover:ring-gray-200 dark:hover:ring-darkTheme-200':
+                          !isMarketItemFoundInCartBagItems(
+                            token,
+                            marketplaceCartBagItems
+                          ),
+                        'ring ring-white ring-offset-0':
+                          isMarketItemFoundInCartBagItems(
+                            token,
+                            marketplaceCartBagItems
+                          ),
+                      }"
+                      class="snap-start animate-pulse relative w-[100px] h-[100px] min-w-[100px] bg-gray-100 dark:bg-darkTheme-bg-0.08 rounded-xl hover:transition-all lmax:my-1"
+                      v-on:mouseenter="showAddToCartButtonCallback(token)"
+                      v-on:mouseleave="
+                        showAddToCartButtonCallback({
+                          tokenId: 0,
+                          tokenAddress: '',
+                        })
+                      "
                       @click="
                         getMarketplaceItemIntoCartBag({
-                          token_address: `123ser40ouyrtfhdyub12hw546hbs736re53h`,
-                          token_id: datum,
+                          token_address: token.tokenAddress,
+                          token_id: token.tokenId,
+                          token_price: token.tokenPrice,
+                          token_name: token.tokenName,
                         })
                       "
                     >
                       <div
                         v-show="
-                          showAddToCartButton &&
-                          showAddToCartButtonIndex == index
+                          isMarketItemFoundInCartBagItems(
+                            token,
+                            marketplaceCartBagItems
+                          )
                         "
-                        class="absolute border dark:border-darkTheme-border rounded-full bg-gray-200 dark:bg-darkTheme-bg p-1 right-0 m-1"
+                        class="absolute rounded-full bg-darkTheme dark:bg-white text-white dark:text-black p-1.5 right-0 m-1 z-10"
+                      >
+                        <TickCheckIcon class="w-5 h-5" />
+                      </div>
+                      <div
+                        v-show="
+                          trackMarketplaceItemInfo.id == token.tokenId &&
+                          trackMarketplaceItemInfo.address ==
+                            token.tokenAddress &&
+                          !isMarketItemFoundInCartBagItems(
+                            token,
+                            marketplaceCartBagItems
+                          )
+                        "
+                        class="absolute border dark:border-darkTheme-border rounded-full bg-gray-200 text-white dark:bg-darkTheme-hover p-1 right-0 m-1"
                       >
                         <add-to-cart-icon />
                       </div>
@@ -325,7 +428,7 @@ const scrollBarCallback = (direction: string) => {
                         class="absolute bg-darkTheme-bgx rounded-xl w-[95%] mx-0.5 h-auto text-gray-100 text-xs p-1 bottom-1.5 whitespace-nowrap text-center space-x-1"
                       >
                         <span>ico</span>
-                        <span>{{ datum }} ETH</span>
+                        <span>{{ token.tokenPrice }} ETH</span>
                       </div>
                     </div>
                     <div

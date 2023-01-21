@@ -8,12 +8,22 @@ const {
   matchedRoutesComposable,
   marketplaceCartBagItems,
   removeAllItemsFromMarketplaceCartBag,
+  getMarketplaceItemIntoCartBag,
 } = inject<any>("provider");
-const showCartItemRemoveButton = ref<boolean>(false);
-const marketplaceCartBagItem = ref<number>(0);
-const cartItemRemoveButtonVisibilityFn = (item: number) => {
-  marketplaceCartBagItem.value = item
-}
+const marketplaceCartBagItem = ref({
+  id: 0,
+  address: "",
+});
+const showCartItemRemoveButton = (item: {
+  token_id: number;
+  token_address: string;
+}) => {
+  const { token_id, token_address } = item;
+  marketplaceCartBagItem.value = {
+    id: token_id,
+    address: token_address,
+  };
+};
 </script>
 <template>
   <div
@@ -53,14 +63,14 @@ const cartItemRemoveButtonVisibilityFn = (item: number) => {
       >
         <div class="relative w-full flex flex-col">
           <header
-            class="w-full h-full sticky top-0 pl-6 pr-4 py-4 bg-[#ffffffb1] backdrop-blur-lg dark:bg-darkTheme flex flex-row justify-between items-center text-black dark:text-white"
+            class="w-full h-full sticky top-0 pl-6 pr-4 py-4 bg-[#ffffffb1] backdrop-blur-lg dark:bg-darkTheme flex flex-row justify-between items-center text-black dark:text-white z-20"
           >
             <div
               class="flex flex-row justify-center items-center gap-3 flex-nowrap font-semibold"
             >
               <span class="text-xl">Bag</span>
               <span
-                class="bg-red-500 rounded-lg py-1 px-2 text-xs text-white"
+                class="bg-red-500 rounded-md py-0.5 px-2 text-xs text-white"
                 >{{ marketplaceCartBagItems.length }}</span
               >
               <button-miscellenous
@@ -74,54 +84,81 @@ const cartItemRemoveButtonVisibilityFn = (item: number) => {
           </header>
           <main class="relative w-full flex flex-col px-3">
             <div
-              v-for="item in [2345, 12345, 213432]"
-              :key="item"
-              v-on:mouseenter="cartItemRemoveButtonVisibilityFn(item)"
-              v-on:mouseleave="cartItemRemoveButtonVisibilityFn(0)"
-              class="relative w-full h-full flex flex-row justify-between items-center text-base font-medium hover:bg-gray-50 dark:hover:bg-darkTheme-200 p-3 rounded-xl cursor-pointer transition-all"
+              v-for="item in marketplaceCartBagItems"
+              :key="item.token_id + item.token_address"
+              v-on:mouseenter="showCartItemRemoveButton(item)"
+              v-on:mouseleave="
+                showCartItemRemoveButton({ token_id: 0, token_address: '' })
+              "
+              class="relative w-full h-full flex flex-row justify-between items-center text-base font-medium hover:bg-gray-50 dark:hover:bg-darkTheme-200 p-3 rounded-xl cursor-pointer transition-all active:scale-95"
             >
               <div class="relative w-8/12 flex flex-row gap-2.5 items-center">
                 <div
                   class="relative w-14 h-14 bg-gray-100 dark:bg-darkTheme-bg-0.08 rounded-xl"
                 >
                   <div
+                    @click="
+                      getMarketplaceItemIntoCartBag({
+                        token_address: item.token_address,
+                        token_id: item.token_id,
+                        token_price: item.token_price,
+                        token_name: item.token_name,
+                      })
+                    "
                     class="lmin:hidden bg-white text-black rounded-full absolute -top-1 -right-1 z-10 p-1"
                   >
-                    <cancel-icon />
+                    <cancel-icon class="w-4 h-4" />
                   </div>
                 </div>
                 <div class="w-8/12 flex flex-col gap-1.5">
-                  <span class="truncate">{{ `Apapeg Monkey #${item}` }}</span>
+                  <span class="truncate">{{
+                    `${item.token_name} #${item.token_id}`
+                  }}</span>
                   <span
                     class="flex flex-row flex-nowrap items-center text-xs space-x-1 font-normal"
                   >
                     <span class="dark:text-darkTheme-text">OpenSea</span>
                     <span
                       class="bg-gray-100 dark:bg-darkTheme-bg dark:text-darkTheme-text rounded-lg py-0.5 px-1.5"
-                      >{{ `#${item}` }}</span
+                      >{{ `#${item.token_id}` }}</span
                     >
                   </span>
                 </div>
               </div>
               <div
-                :class="{'lmin:hidden': marketplaceCartBagItem == item}"
+                :class="{
+                  'lmin:hidden':
+                    marketplaceCartBagItem.id == item.token_id &&
+                    marketplaceCartBagItem.address == item.token_address,
+                }"
                 class="flex flex-row flex-nowrap space-x-1"
               >
-                <span>0.872</span>
+                <span>{{ item.token_price }}</span>
                 <span>ETH</span>
               </div>
               <button
-                v-show="marketplaceCartBagItem == item"
+                v-show="
+                  marketplaceCartBagItem.id == item.token_id &&
+                  marketplaceCartBagItem.address == item.token_address
+                "
+                @click="
+                  getMarketplaceItemIntoCartBag({
+                    token_address: item.token_address,
+                    token_id: item.token_id,
+                    token_price: item.token_price,
+                    token_name: item.token_name,
+                  })
+                "
                 class="mf:hidden absolute flex gap-1 items-center justifty-center bg-gray-100 hover:bg-gray-200 py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover rounded-xl px-3 text-xs right-2 transition-all active:scale-95 dark:shadow-2xl"
               >
-                <cancel-icon/>
+                <cancel-icon class="w-4 h-4" />
                 <span>Remove</span>
               </button>
             </div>
           </main>
         </div>
         <footer
-          class="bg-[#ffffffb1] backdrop-blur-lg dark:bg-darkTheme w-full flex flex-col gap-3 sticky bottom-0 px-6 py-4"
+          class="bg-[#ffffffb1] backdrop-blur-lg dark:bg-darkTheme w-full flex flex-col gap-3 sticky bottom-0 px-6 py-4 z-10"
         >
           <div
             class="flex flex-nowrap justify-between items-center bg-gray-100 dark:bg-darkTheme-bg rounded-xl px-4 py-3 font-semibold text-lg"

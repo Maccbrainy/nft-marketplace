@@ -1,21 +1,45 @@
 <script setup lang="ts">
 import { inject, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { AddToCartIcon, MenuDotsIcon } from "../icons";
+import { isMarketItemFoundInCartBagItems } from "@/utils";
+import {
+  AddToCartIcon,
+  MenuDotsIcon,
+  CancelIcon,
+  TickCheckIcon,
+} from "../icons";
 import { ButtonMiscellenous } from "../buttonui";
-defineProps({
+const props = defineProps({
   filterIsHidden: Boolean,
   viewOptionSize: String,
+  assetInfo: {
+    type: Object,
+    required: true,
+  },
 });
 const collectionMenuList = [
   { id: "BuyNow", name: "Buy now", icon: false },
   { id: "AddToBag", name: "Add to bag", icon: false },
 ];
-const { showMarketplaceCartBag } = inject<any>("provider");
+const {
+  showMarketplaceCartBag,
+  getMarketplaceItemIntoCartBag,
+  marketplaceCartBagItems,
+} = inject<any>("provider");
+
 const showBuyAndAddToCardButton = ref<boolean>(false);
 const isActiveMenuAction = ref<string>(collectionMenuList[0].id);
+
 const collectionMenuAction = (option: { id: string }) => {
   isActiveMenuAction.value = option.id;
+  if (isActiveMenuAction.value == collectionMenuList[1].id) {
+    getMarketplaceItemIntoCartBag({
+      token_address: props.assetInfo.tokenAddress,
+      token_id: props.assetInfo.tokenId,
+      token_price: props.assetInfo.tokenPrice,
+      token_name: props.assetInfo.tokenName,
+    });
+  }
   console.log(`${option.id}`);
 };
 </script>
@@ -66,9 +90,23 @@ const collectionMenuAction = (option: { id: string }) => {
       >
         <div class="w-full p-2 flex flex-col gap-1">
           <div class="relative w-full flex justify-center items-end">
+            <div
+              v-show="
+                isMarketItemFoundInCartBagItems(
+                  {
+                    tokenId: assetInfo.tokenId,
+                    tokenAddress: assetInfo.tokenAddress,
+                  },
+                  marketplaceCartBagItems
+                )
+              "
+              class="absolute rounded-full bg-darkTheme dark:bg-white text-white dark:text-black p-1.5 top-0 right-0 m-1"
+            >
+              <TickCheckIcon class="w-5 h-5" />
+            </div>
             <router-link
               :to="{
-                path: '/token/0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b:9875',
+                path: `/token/${assetInfo.tokenAddress}:${assetInfo.tokenId}`,
               }"
             >
               <img
@@ -81,14 +119,34 @@ const collectionMenuAction = (option: { id: string }) => {
               class="absolute flex flex-row justify-around bottom-2 gap-4 text-white text-xs font-medium"
             >
               <div
-                class="bg-black dark:bg-white dark:text-black rounded-xl py-2.5 px-3"
+                class="bg-black dark:bg-white dark:text-black rounded-xl py-2.5 px-3 transition-all active:scale-95"
               >
                 Buy Now
               </div>
               <div
-                class="flex justify-center items-center bg-black dark:bg-white dark:text-black rounded-xl py-1 px-2"
+                @click="
+                  getMarketplaceItemIntoCartBag({
+                    token_address: assetInfo.tokenAddress,
+                    token_id: assetInfo.tokenId,
+                    token_price: assetInfo.tokenPrice,
+                    token_name: assetInfo.tokenName,
+                  })
+                "
+                class="flex justify-center items-center bg-black dark:bg-white dark:text-black rounded-xl py-1 px-2 transition-all active:scale-95"
               >
-                <add-to-cart-icon class="dark:text-black" />
+                <CancelIcon
+                  v-if="
+                    isMarketItemFoundInCartBagItems(
+                      {
+                        tokenId: assetInfo.tokenId,
+                        tokenAddress: assetInfo.tokenAddress,
+                      },
+                      marketplaceCartBagItems
+                    )
+                  "
+                  class="w-5 h-5"
+                />
+                <add-to-cart-icon class="dark:text-black" v-else />
               </div>
             </div>
           </div>
@@ -101,17 +159,17 @@ const collectionMenuAction = (option: { id: string }) => {
             >
               <h2
                 v-show="viewOptionSize === 'largerViewOption'"
-                class="text-sm"
+                class="text-sm truncate"
               >
-                Clone X
+                {{ assetInfo.tokenName }}
               </h2>
               <router-link
                 class="text-base font-semibold text-gray-700 dark:text-darkTheme-text-b truncate"
                 :to="{
-                  path: '/token/0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b:9875',
+                  path: `/token/${assetInfo.tokenAddress}:${assetInfo.tokenId}`,
                 }"
               >
-                Clone X #123432
+                {{ `${assetInfo.tokenName} #${assetInfo.tokenId}` }}
               </router-link>
             </div>
             <button-miscellenous
@@ -152,7 +210,7 @@ const collectionMenuAction = (option: { id: string }) => {
                 }"
                 class="text-gray-700 font-semibold"
                 title="7.99 ETH"
-                >7.99 ETH</span
+                >{{ assetInfo.tokenPrice }} ETH</span
               >
             </div>
             <div
