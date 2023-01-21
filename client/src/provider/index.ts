@@ -1,6 +1,7 @@
 import { ref, watchEffect, computed } from "vue";
 import router from "../router";
 import { useMediaQuery } from "@vueuse/core";
+import type { MarketplaceCartBagItemType } from "@/types";
 
 interface WalletSchema {
   name: string,

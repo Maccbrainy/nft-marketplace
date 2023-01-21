@@ -4,6 +4,13 @@ export type ProviderInjects = {
   teleportModalTableAssetsFilters: boolean;
   chooseHowToConnectWallet: (routeRedirect: string) => void;
 }
+export interface MarketplaceCartBagItemType {
+  token_address: string;
+  token_id: number;
+  token_price: number;
+  token_name: string;
+}
+
 export interface OptionType {
   id: string;
   name: string;
