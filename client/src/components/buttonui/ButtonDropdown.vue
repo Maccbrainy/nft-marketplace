@@ -35,7 +35,10 @@ watchEffect(() => {
     if (dropDownMenuRef.value && dropDownMenuRef.value.contains(event.target)) {
       return;
     }
-    if (dropDownButtonRef.value.contains(event.target)) {
+    if (
+      dropDownButtonRef.value &&
+      dropDownButtonRef.value.contains(event.target)
+    ) {
       return;
     }
     document.removeEventListener("mousedown", catchOutsideClickAndCloseMenu);
