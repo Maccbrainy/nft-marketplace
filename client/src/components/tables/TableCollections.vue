@@ -340,7 +340,7 @@ const scrollBarCallback = (direction: string) => {
                     class="absolute h-full flex right-3 z-10 items-center"
                   >
                     <span
-                      class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+                      class="bg-white border border-white shadow-3xl dark:shadow-3xl-dark dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
                     >
                       <chevron-down-icon class="rotate-[270deg]" />
                     </span>
@@ -351,7 +351,7 @@ const scrollBarCallback = (direction: string) => {
                     class="absolute h-full flex left-3 z-10 items-center"
                   >
                     <span
-                      class="bg-white border border-white dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
+                      class="bg-white border border-white -shadow-3xl dark:-shadow-3xl-dark dark:border-darkTheme-border dark:bg-darkTheme rounded-2xl p-2 m-auto transition-all hover:scale-110 active:scale-100"
                     >
                       <chevron-down-icon class="rotate-[90deg]" />
                     </span>
