@@ -55,6 +55,12 @@ module.exports = {
           bgx: "rgba(31,34,38,0.85)",
         },
       },
+      boxShadow: {
+        "3xl": "41px 0px 24px 30px rgba(255, 255, 255, 1)",
+        "3xl-dark": "41px 0px 24px 30px rgba(25, 28, 31, 1)",
+        "-3xl": "-41px 0px 24px 30px rgba(255, 255, 255, 1)",
+        "-3xl-dark": "-41px 0px 24px 30px rgba(25, 28, 31, 1)",
+      },
     },
   },
   plugins: [],
