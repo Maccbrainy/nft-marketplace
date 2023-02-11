@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { CloseIcon, CancelIcon } from "./icons";
 import { ButtonMiscellenous } from "./buttonui";
 const {
@@ -24,6 +24,13 @@ const showCartItemRemoveButton = (item: {
     address: token_address,
   };
 };
+const sumTotalValueOfMarketplaceItems = computed<number>(() => {
+  let totalValueOfMarkplaceItems: number = 0;
+  marketplaceCartBagItems.value.map(
+    (item: any) => (totalValueOfMarkplaceItems += parseFloat(item.token_price))
+  );
+  return totalValueOfMarkplaceItems;
+})
 </script>
 <template>
   <div
@@ -90,7 +97,7 @@ const showCartItemRemoveButton = (item: {
               v-on:mouseleave="
                 showCartItemRemoveButton({ token_id: 0, token_address: '' })
               "
-              class="relative w-full h-full flex flex-row justify-between items-center text-base font-medium hover:bg-gray-50 dark:hover:bg-darkTheme-200 p-3 rounded-xl cursor-pointer transition-all active:scale-95"
+              class="relative w-full h-full flex flex-row justify-between items-center text-base font-medium hover:bg-gray-50 dark:hover:bg-darkTheme-200 p-3 rounded-xl cursor-pointer transition-all duration-700 active:scale-95"
             >
               <div class="relative w-8/12 flex flex-row gap-2.5 items-center">
                 <div
@@ -164,7 +171,7 @@ const showCartItemRemoveButton = (item: {
             class="flex flex-nowrap justify-between items-center bg-gray-100 dark:bg-darkTheme-bg rounded-xl px-4 py-3 font-semibold text-lg"
           >
             <span>Total</span>
-            <span>123.55 ETH</span>
+            <span>{{ sumTotalValueOfMarketplaceItems.toFixed(3) }} ETH</span>
           </div>
           <button-miscellenous
             :has-list-content="false"
