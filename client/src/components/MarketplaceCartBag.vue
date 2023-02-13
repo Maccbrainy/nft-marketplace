@@ -38,7 +38,7 @@ const sumTotalValueOfMarketplaceItems = computed<number>(() => {
       'sticky top-20 sf:top-0 mb-5 border dark:border-darkTheme-border lf:fixed lf:z-30 lf:right-0 lf:border-none':
         showMarketplaceCartBag && matchedRoutesComposable,
       hidden: !showMarketplaceCartBag,
-      'fixed z-30 dark:border-darkTheme-border right-0':
+      'fixed z-30 border dark:border-darkTheme-border lf:border-none sf:top-0 right-0':
         showMarketplaceCartBag && !matchedRoutesComposable,
     }"
     class="w-full h-full bg-white dark:bg-darkTheme sm:w-[29%] sm:min-w-[360px] sm:h-[85vh] lf:shadow-2xl sm:rounded-2xl overflow-y-auto dark:text-white animate-slide-in-right"
