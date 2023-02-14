@@ -27,24 +27,19 @@ const modalName = computed<string>(() =>
 const modalMenuRef = ref<any>(null);
 watchEffect(() => {
   if (isTabletToLargeScreenMinWidth640px.value) {
-  teleportModalOpenProfileMenuBar.value;
-  teleportModalOpenMenuBar.value;
-  teleportModalTableAssetsFilters.value;
-  console.log(
-    "teleportModalOpenProfileMenuBar.value",
-    teleportModalOpenProfileMenuBar.value
-  );
-
-  const closeTeleportModal = (event: { target: any }) => {
-    if (modalMenuRef.value && modalMenuRef.value.contains(event.target)) {
-      return;
-    }
-    document.removeEventListener("mousedown", closeTeleportModal);
-    document.removeEventListener("touchstart", closeTeleportModal);
-    teleportModalCallback({ name: modalName.value, open_modal: false });
-  };
-  document.addEventListener("mousedown", closeTeleportModal);
-  document.addEventListener("touchstart", closeTeleportModal);
+    teleportModalOpenProfileMenuBar.value;
+    teleportModalOpenMenuBar.value;
+    teleportModalTableAssetsFilters.value;
+    const closeTeleportModal = (event: { target: any }) => {
+      if (modalMenuRef.value && modalMenuRef.value.contains(event.target)) {
+        return;
+      }
+      document.removeEventListener("mousedown", closeTeleportModal);
+      document.removeEventListener("touchstart", closeTeleportModal);
+      teleportModalCallback({ name: modalName.value, open_modal: false });
+    };
+    document.addEventListener("mousedown", closeTeleportModal);
+    document.addEventListener("touchstart", closeTeleportModal);
   }
 });
 </script>
@@ -130,7 +125,7 @@ watchEffect(() => {
         </div>
         <close-icon
           @click="teleportModalCallback({ name: modalName, open_modal: false })"
-          class="absolute mx-4 mt-5 sm:mx-8 sm:mt-10 dark:text-darkTheme-text-b"
+          class="absolute mx-4 mt-5 sm:mx-8 sm:mt-12 dark:text-darkTheme-text-b"
         />
       </div>
     </section>
