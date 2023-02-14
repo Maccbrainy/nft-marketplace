@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject, watchEffect, computed, ref } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 import { shortenAddress } from "@/utils";
 import { CloseIcon, LogOutIcon } from "./icons";
 import { ButtonMiscellenous } from "./buttonui";
@@ -13,6 +14,7 @@ const {
   isLargeScreen,
   wallet,
 } = inject<any>("provider");
+const isTabletToLargeScreenMinWidth640px = useMediaQuery("(min-width: 640px)");
 const modalName = computed<string>(() =>
   teleportModalOpenMenuBar.value
     ? "isMenuBar"
@@ -24,6 +26,7 @@ const modalName = computed<string>(() =>
 );
 const modalMenuRef = ref<any>(null);
 watchEffect(() => {
+  if (isTabletToLargeScreenMinWidth640px.value) {
   teleportModalOpenProfileMenuBar.value;
   teleportModalOpenMenuBar.value;
   teleportModalTableAssetsFilters.value;
@@ -42,6 +45,7 @@ watchEffect(() => {
   };
   document.addEventListener("mousedown", closeTeleportModal);
   document.addEventListener("touchstart", closeTeleportModal);
+  }
 });
 </script>
 <template>
