@@ -9,8 +9,9 @@ const router = useRouter();
 const route = useRoute();
 
 const collectionDetailLinks = [
-  { id: "TableCollectionAssets", title: "items" },
-  { id: "CollectionActivity", title: "activity" },
+  //id: configured route path names in the router/index.ts file
+  { id: "TableCollectionAssets", title: "items", slug: "items" },
+  { id: "CollectionActivity", title: "activity", slug: "activity" },
 ];
 
 const otherCollectionMenuList = [
