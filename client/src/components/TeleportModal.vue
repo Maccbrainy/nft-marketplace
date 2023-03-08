@@ -5,6 +5,23 @@ import { shortenAddress } from "@/utils";
 import { CloseIcon, LogOutIcon } from "./icons";
 import { ButtonMiscellenous } from "./buttonui";
 import { TableAssetsSideBar } from "./tables";
+const profileMenuLinks = [
+{
+    id: "my_nfts",
+    title: "My NFTs",
+    slug: "#"
+  },
+  {
+    id: "create_nft",
+    title: "Create NFT",
+    slug: "create"
+  },
+  {
+    id: "settings",
+    title: "Settings",
+    slug: "settings"
+  },
+]
 const {
   teleportModalCallback,
   teleportModalOpenMenuBar,
@@ -82,9 +99,16 @@ watchEffect(() => {
               class="w-full h-full flex flex-col gap-5"
             >
               <ul class="flex flex-col text-2xl font-semibold gap-2">
-                <li><RouterLink to="/">My NFTs</RouterLink></li>
-                <li><RouterLink to="/create">Create NFT</RouterLink></li>
-                <li><RouterLink to="/">Settings</RouterLink></li>
+                <li
+                  v-for="(profileMenuLink, index) in profileMenuLinks"
+                  :key="profileMenuLink.id + index"
+                >
+                  <RouterLink
+                    :to="`/${profileMenuLink.slug}`"
+                    :title="profileMenuLink.title"
+                    >{{ profileMenuLink.title }}</RouterLink
+                  >
+                </li>
               </ul>
               <div
                 class="flex flex-col gap-2 text-sm text-gray-400 font-normal"
