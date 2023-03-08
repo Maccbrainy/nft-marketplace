@@ -27,4 +27,5 @@ export interface OptionTypeMiscellenous {
 export interface ChildrenLinksType {
   id: string;
   title: string;
+  slug: string
 }
