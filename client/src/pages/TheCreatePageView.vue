@@ -3,9 +3,10 @@ import { markRaw, ref, computed, watchEffect, watch, inject } from "vue";
 import { useRoute } from "vue-router";
 import { useCryptoCurrencyVsUSDCurrentPrice } from "@/api/useCryptoCurrencyVsUSDCurrentPrice";
 import { shortenAddress } from "@/utils";
+import WidgetButtonToggle from "@/components/WidgetButtonToggle.vue";
+
 import {
   ButtonMiscellenous,
-  ButtonToggle,
   ButtonInput,
   ButtonDropdown,
 } from "@/components/buttonui";
@@ -228,20 +229,12 @@ const freeMintingHandler = (payload: boolean) => {
           </div>
         </div>
         <div class="relative w-full flex flex-col space-y-6">
-          <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-col">
-              <span class="text-gray-800 dark:text-white"
-                >Put on marketplace</span
-              >
-              <span class="text-xs"
-                >Enter price to allow users instantly purchase your NFT</span
-              >
-            </div>
-            <button-toggle
-              v-on:toggle-handler="putOnMarketplaceHandler"
-              :switchChangeProvide="showMarketPriceSettings"
-            ></button-toggle>
-          </div>
+          <widget-button-toggle
+            title="Put on marketplace"
+            description="Enter price to allow users instantly purchase your NFT"
+            v-on:on-toggle-handler="putOnMarketplaceHandler"
+            :switch-provider="showMarketPriceSettings"
+          />
           <div
             v-if="showMarketPriceSettings"
             class="relative flex flex-col gap-8"
@@ -389,22 +382,12 @@ const freeMintingHandler = (payload: boolean) => {
             </div>
           </div>
         </div>
-        <div class="relative w-full flex flex-col space-y-4">
-          <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-col">
-              <span class="text-gray-800 dark:text-white"
-                >Unlock once purchased</span
-              >
-              <span class="text-xs"
-                >Content will be unlocked after successful transaction</span
-              >
-            </div>
-            <button-toggle
-              v-on:toggle-handler="unlockOncePurchasedHandler"
-              :switchChangeProvide="false"
-            ></button-toggle>
-          </div>
-        </div>
+        <widget-button-toggle
+          title="Unlock once purchased"
+          description="Content will be unlocked after successful transaction"
+          v-on:on-toggle-handler="unlockOncePurchasedHandler"
+          :switch-provider="false"
+        />
 
         <div class="relative w-full flex flex-col space-y-4">
           <span class="text-gray-800 dark:text-white">Choose collection</span>
@@ -426,19 +409,12 @@ const freeMintingHandler = (payload: boolean) => {
           </div>
         </div>
 
-        <div class="relative w-full flex flex-col space-y-4">
-          <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-col">
-              <span class="text-gray-800 dark:text-white">Free minting</span>
-              <span class="text-xs">Buyer will pay gas fees for minting</span>
-            </div>
-            <button-toggle
-              v-on:toggle-handler="freeMintingHandler"
-              :switchChangeProvide="false"
-            ></button-toggle>
-          </div>
-        </div>
-
+        <widget-button-toggle
+          title="Free minting"
+          description="Buyer will pay gas fees for minting"
+          v-on:on-toggle-handler="freeMintingHandler"
+          :switch-provider="false"
+        />
         <div class="relative w-full flex flex-col space-y-1">
           <span class="text-gray-800 dark:text-white">Name</span>
           <button-input
@@ -447,6 +423,7 @@ const freeMintingHandler = (payload: boolean) => {
             placeHoldertext="'e.g. T-shirt with logo'"
           ></button-input>
         </div>
+
         <div class="relative w-full flex flex-col space-y-1">
           <div class="flex flex-row items-center gap-2">
             <span class="text-gray-800 dark:text-white">Description</span>
