@@ -15,7 +15,7 @@ import {
   PolygonIcon,
   WethIcon,
 } from "@/components/icons";
-const { name } = useRoute();
+const { name: routeName } = useRoute();
 const { blockchainNetwork, wallet } = inject<any>("provider");
 
 const pricingSettingsData = [
@@ -92,7 +92,9 @@ const isActiveTokenCurrencyName = ref<string>(tokenCurrencies[0].name);
 const putOnMarketplaceHandler = (payload: boolean) => {
   showMarketPriceSettings.value = payload;
 };
-const isERC1155 = computed(() => (name == "CreatePageERC1155" ? true : false));
+const isERC1155 = computed(() =>
+  routeName == "CreatePageERC1155" ? true : false
+);
 const pricingSettings = (priceSettingDataId: string) => {
   if (isERC1155.value && priceSettingDataId == pricingSettingsData[1].id)
     return;
@@ -168,7 +170,7 @@ const freeMintingHandler = (payload: boolean) => {
     </h1>
     <h4 class="text-base capitalize">
       {{
-        name === "CreatePageERC1155"
+        routeName === "CreatePageERC1155"
           ? `Multiple Edition on ${blockchainNetwork}`
           : `Single Edition on ${blockchainNetwork}`
       }}
