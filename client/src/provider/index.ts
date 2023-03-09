@@ -22,6 +22,12 @@ export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
 
+    const isLoadingInformation = ref({
+      isLoading: false,
+      wallet: "",
+      blockchain: ""
+      
+    });
     const teleportModalOpenProfileMenuBar = ref<boolean>(false);
     const teleportModalOpenMenuBar = ref<boolean>(false);
     const teleportModalTableAssetsFilters = ref<boolean>(false);
@@ -99,6 +105,12 @@ export default {
           return alert("Phantom coming soon!");
 
         if (blockchainNetwork.value == "ethereum" && dappWallet == "MetaMask") {
+          //show processing status
+          isLoadingInformation.value = {
+            isLoading: true,
+            wallet: dappWallet,
+            blockchain: "ethereum",
+          };
           const account = await ethereum.request({
             method: "eth_requestAccounts",
           });
@@ -248,6 +260,7 @@ export default {
     });
 
     app.provide("provider", {
+      isLoadingInformation,
       isLargeScreen,
       changeThemeSkinCallback,
       isActiveThemeSkin,

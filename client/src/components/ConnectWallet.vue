@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
+import isProcessingTemplate from "@/components/IsProcessingStatus.vue";
 const blockchainOptions = [
   {
     id: "ethereum",
@@ -20,8 +21,12 @@ const blockchainOptions = [
     wallets: ["MetaMask", "WalletConnect"],
   },
 ];
-const { selectBlockchain, blockchainNetwork, connectWallet } =
-  inject<any>("provider");
+const {
+  selectBlockchain,
+  blockchainNetwork,
+  connectWallet,
+  isLoadingInformation: { isLoading, wallet, blockchain },
+} = inject<any>("provider");
 
 const listOfBlockchainWallets = computed(() => {
   let wallets;
@@ -93,7 +98,14 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
                 v-for="dappWallet in listOfBlockchainWallets"
                 :key="dappWallet"
               >
-                {{ dappWallet}}
+                <is-processing-template
+                  v-show="
+                    isLoading &&
+                    dappWallet === wallet &&
+                    blockchainNetwork === blockchain
+                  "
+                />
+                <span>{{ dappWallet }}</span>
               </div>
             </div>
           </div>
