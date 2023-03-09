@@ -188,10 +188,10 @@ const freeMintingHandler = (payload: boolean) => {
           >
             <div class="flex justify-start items-center gap-4 py-3">
               <div>
-                <span v-if="wallet[0].networkName == blockchainNetworks[0]"
+                <span v-if="wallet[0].blockchain == blockchainNetworks[0]"
                   ><ethereum-icon class="w-10 h-10"
                 /></span>
-                <span v-if="wallet[0].networkName == blockchainNetworks[1]"
+                <span v-if="wallet[0].blockchain == blockchainNetworks[1]"
                   ><polygon-icon class="w-10 h-10"
                 /></span>
               </div>
@@ -200,7 +200,7 @@ const freeMintingHandler = (payload: boolean) => {
                   shortenAddress(wallet[0].current_account)
                 }}</span>
                 <span class="text-xs capitalize">{{
-                  wallet[0].networkName
+                  wallet[0].blockchain
                 }}</span>
               </div>
             </div>
