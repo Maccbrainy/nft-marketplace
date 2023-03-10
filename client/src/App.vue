@@ -60,7 +60,7 @@ const themeTypes = ref([
           <li class="cursor-pointer">Explore</li>
           <li><RouterLink to="/create">Create</RouterLink></li>
         </ul>
-        <div class="flex justify-center items-center gap-5">
+        <div class="flex justify-center items-center gap-5 xs:gap-2.5">
           <div
             v-if="currentAccount"
             @click="
