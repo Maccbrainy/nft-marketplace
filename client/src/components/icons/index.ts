@@ -1,3 +1,5 @@
+export { default as CopyToClipBoardIcon } from "@/components/icons/CopyToClipBoardIcon.vue";
+export { default as TwitterIcon } from "@/components/icons/TwitterIcon.vue";
 export { default as DarkThemeIcon } from "@/components/icons/DarkThemeIcon.vue";
 export { default as ArrowRightIcon } from "@/components/icons/ArrowRightIcon.vue";
 export { default as MenuBarIcon } from "@/components/icons/MenuBarIcon.vue";
