@@ -45,7 +45,7 @@ const themeTypes = ref([
         v-show="$route.name != 'ConnectWalletPage'"
         class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-black dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
-        <div class="flex flex-row items-center space-x-8">
+        <div class="flex flex-row items-center space-x-8 xs:space-x-2">
           <RouterLink to="/" class="dark:text-white text-xl font-bold"
             >InterestQQ</RouterLink
           >
