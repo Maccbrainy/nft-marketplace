@@ -21,7 +21,19 @@ const profileMenuLinks = [
     title: "Settings",
     slug: "settings"
   },
-]
+];
+const menuNavigationLinks = [
+  {
+    id: "explore",
+    title: "Explore",
+    slug: "",
+  },
+  {
+    id: "create",
+    title: "Create",
+    slug: "create",
+  },
+];
 const {
   teleportModalCallback,
   teleportModalOpenMenuBar,
@@ -81,8 +93,23 @@ watchEffect(() => {
           >
             <div v-show="teleportModalOpenMenuBar" class="flex flex-col gap-6">
               <ul class="flex flex-col text-2xl font-semibold gap-2">
-                <li>Explore</li>
-                <li><RouterLink to="/create">Create</RouterLink></li>
+                <li
+                  @click="
+                    (_$event) =>
+                      teleportModalCallback({
+                        name: modalName,
+                        open_modal: false,
+                      })
+                  "
+                  v-for="(menuLink, index) in menuNavigationLinks"
+                  :key="menuLink.id + index"
+                >
+                  <RouterLink
+                    :to="`/${menuLink.slug}`"
+                    :title="menuLink.title"
+                    >{{ menuLink.title }}</RouterLink
+                  >
+                </li>
               </ul>
               <button-miscellenous
                 v-if="wallet.length == 0"
@@ -100,6 +127,13 @@ watchEffect(() => {
             >
               <ul class="flex flex-col text-2xl font-semibold gap-2">
                 <li
+                  @click="
+                    (_$event) =>
+                      teleportModalCallback({
+                        name: modalName,
+                        open_modal: false,
+                      })
+                  "
                   v-for="(profileMenuLink, index) in profileMenuLinks"
                   :key="profileMenuLink.id + index"
                 >
