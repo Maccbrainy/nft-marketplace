@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { ref, markRaw, inject } from "vue";
-import BaseLayout from "./layouts/BaseLayout.vue";
+import { BaseLayout } from "./layouts";
 import MarketplaceCartBag from "./components/MarketplaceCartBag.vue";
 import {
   ModalProfileMenuBar,
@@ -45,7 +45,7 @@ const themeTypes = ref([
 <template>
   <BaseLayout class="bg-white dark:bg-darkTheme w-full min-h-screen">
     <template #header>
-      <nav 
+      <nav
         v-show="$route.name != 'ConnectWalletPage'"
         class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-black dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
@@ -53,10 +53,11 @@ const themeTypes = ref([
           <RouterLink to="/" class="dark:text-white text-xl font-bold"
             >InterestQQ</RouterLink
           >
-          <ButtonInput
+          <button-input
             class="mf:hidden min-w-[320px] max-w-md"
             input-type="search"
             place-holdertext="Search Web3"
+            :is-text-area="false"
           />
           <search-icon />
         </div>

@@ -17,7 +17,7 @@ module.exports = {
           },
           "100%": {
             transform: "translateY(0)",
-            opacity: "1"
+            opacity: "1",
           },
         },
         slideInX: {
@@ -36,7 +36,7 @@ module.exports = {
         lmax: { max: "1023px" },
         lmin: { min: "991px" },
         mf: { max: "990px" },
-        mmf: { max: "768px"},
+        mmf: { max: "768px" },
         sf: { max: "639px" },
         xs: { max: "511px" },
         // xxs: { max: "410px" },
