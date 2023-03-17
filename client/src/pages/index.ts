@@ -2,4 +2,5 @@ export { default as TheCollectionPageView } from "@/pages/TheCollectionPageView.
 export { default as TheCreatePageView } from "@/pages/TheCreatePageView.vue"
 export { default as TheHomePageView } from "@/pages/TheHomePageView.vue"
 export { default as TheTokenPageView } from "@/pages/TheTokenPageView.vue"
+export { default as TheSettingsProfilePageView } from "@/pages/TheSettingsProfilePageView.vue"
 export { default as TheBlockchainOptionsAndErcTypesPageView } from "@/pages/TheBlockchainOptionsAndErcTypesPageView.vue"
