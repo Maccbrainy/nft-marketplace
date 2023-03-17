@@ -4,6 +4,11 @@ import { TableFiltersAssets, TableActivity } from "../components/tables";
 import { TokenOverView, TokenBids, TokenHistory } from "../components/tokens";
 import ConnectWallet from "@/components/ConnectWallet.vue";
 import StatusMessages from "@/components/StatusMessages.vue";
+import {
+  SettingsProfileAccount,
+  SettingsProfileNotifications,
+  SettingsProfileWallets,
+} from "@/components/settings-profile";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -93,6 +98,32 @@ const router = createRouter({
           name: "CreatePageERC1155",
           component: () => import("../pages/TheCreatePageView.vue"),
           meta: { requiresWalletAuth: true },
+        },
+      ],
+    },
+    {
+      path: "/settings/:settingSlug?",
+      // name: "SettingsPage",
+      // route level code-splitting
+      // this generates a separate chunk (TheSettingsPageView.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import("../pages/TheSettingsProfilePageView.vue"),
+      meta: { title: "Edit Profile", requiresWalletAuth: true },
+      children: [
+        {
+          path: "",
+          name: "SettingsProfileAccount",
+          component: SettingsProfileAccount,
+        },
+        {
+          path: "wallets",
+          name: "SettingsProfileWallets",
+          component: SettingsProfileWallets,
+        },
+        {
+          path: "notifications",
+          name: "SettingsProfileNotifications",
+          component: SettingsProfileNotifications,
         },
       ],
     },
