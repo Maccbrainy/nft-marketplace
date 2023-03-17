@@ -19,7 +19,7 @@ const props = defineProps({
     required: false,
   },
 });
-const emit = defineEmits(["selectionAction"]);
+const emit = defineEmits(["selectionAction", "callToAction"]);
 
 const openDropDownMenu = ref<Boolean>(false);
 const dropDownMenuRef = ref<any>(null);
@@ -29,6 +29,10 @@ const getActiveOption = computed<OptionType[]>(() => {
     (option) => option.id === props.isActiveOption
   );
 });
+const callToActionHandler = () => {
+  emit("callToAction");
+  openDropDownMenu.value = !openDropDownMenu.value
+}
 const selectionActionCallback = (option: OptionType) => {
   emit("selectionAction", option);
   openDropDownMenu.value = false;
@@ -59,7 +63,7 @@ export default {
 <template>
   <div class="relative">
     <button
-      @click="openDropDownMenu = !openDropDownMenu"
+      @click="callToActionHandler"
       :ref="(el) => (dropDownButtonRef = el)"
       v-for="(option, index) in getActiveOption"
       :key="computeListContent ? option.id + index : 0"
