@@ -5,6 +5,7 @@ defineProps({
   description: String,
   switchProvider: Boolean,
 });
+defineEmits(["onToggleHandler"]);
 </script>
 
 <template>
