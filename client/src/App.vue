@@ -4,6 +4,11 @@ import { ref, markRaw, inject } from "vue";
 import BaseLayout from "./layouts/BaseLayout.vue";
 import MarketplaceCartBag from "./components/MarketplaceCartBag.vue";
 import {
+  ModalProfileMenuBar,
+  ModalSideBarMenuBar,
+  ModalAssetFilters,
+} from "./components/teleport-modal";
+import {
   DarkThemeIcon,
   LightThemeIcon,
   MenuBarIcon,
@@ -15,7 +20,6 @@ import {
   ButtonInput,
   ButtonMiscellenous,
 } from "@/components/buttonui";
-import TeleportModal from "./components/TeleportModal.vue";
 const {
   isActiveThemeSkin,
   changeThemeSkinCallback,
@@ -99,10 +103,12 @@ const themeTypes = ref([
           }"
         >
           <RouterView />
+          <modal-profile-menu-bar />
+          <modal-side-bar-menu-bar />
+          <modal-asset-filters />
         </div>
         <marketplace-cart-bag />
       </section>
-      <teleport-modal />
     </template>
     <template #footer>
       <section
