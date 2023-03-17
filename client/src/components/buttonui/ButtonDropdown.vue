@@ -88,7 +88,7 @@ export default {
         'dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover':
           !isCreateNftPage,
       }"
-      class="transition-all w-full h-full outline-none py-3 whitespace-nowrap flex justify-center space-x-2 items-center hover:text-black dark:hover:text-white rounded-xl px-2 active:scale-95"
+      class="transition-all w-full outline-none h-11 whitespace-nowrap flex justify-center space-x-2 items-center hover:text-black dark:hover:text-white rounded-2xl px-2 active:scale-95"
     >
       <span v-if="option.icon"><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
