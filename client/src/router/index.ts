@@ -9,6 +9,7 @@ import {
   SettingsProfileNotifications,
   SettingsProfileWallets,
 } from "@/components/settings-profile";
+import { ItemsOwnedCollections } from "@/components/items-owned-profile";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -124,6 +125,57 @@ const router = createRouter({
           path: "notifications",
           name: "SettingsProfileNotifications",
           component: SettingsProfileNotifications,
+        },
+      ],
+    },
+    {
+      path: "/items/:itemsSlug?",
+      // name: "itemsPage",
+      // route level code-splitting
+      // this generates a separate chunk (TheCollectionPageView.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import("../pages/TheCollectionPageView.vue"),
+      meta: { title: "Profile", requiresWalletAuth: true },
+      children: [
+        {
+          path: "",
+          name: "ItemsOwned",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "sale",
+          name: "ItemsOwnedOnSale",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "activity",
+          name: "ItemsOwnedActivity",
+          component: TableActivity,
+        },
+        {
+          path: "collections",
+          name: "ItemsOwnedCollections",
+          component: ItemsOwnedCollections,
+        },
+        {
+          path: "created",
+          name: "ItemsOwnedCreated",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "sold",
+          name: "ItemsOwnedSold",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "liked",
+          name: "ItemsOwnedLiked",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "hidden",
+          name: "ItemsOwnedHidden",
+          component: TableFiltersAssets,
         },
       ],
     },
