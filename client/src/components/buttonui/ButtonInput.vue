@@ -41,8 +41,8 @@ const inputFocused = ref<boolean>(false);
     >
     <div
       :class="{
-        'bg-white border-gray-300': inputFocused && !isRequired,
-        'bg-gray-100 hover:border-gray-300': !inputFocused && !isRequired,
+        ' border-gray-300 dark:border-darkTheme-border dark:bg-darkTheme': inputFocused && !isRequired,
+        ' bg-gray-100 dark:bg-darkTheme-bg hover:border-gray-300 hover:dark:border-darkTheme-hover': !inputFocused && !isRequired,
         'border-red-600': isRequired,
         'h-11': !isTextArea,
         'h-auto overflow-hidden': isTextArea,
@@ -61,7 +61,7 @@ const inputFocused = ref<boolean>(false);
         @input="
           $emit('update:inputValue', ($event.target as HTMLInputElement).value)
         "
-        class="w-full h-full outline-none bg-transparent py-3 px-2"
+        class="w-full h-full outline-none bg-transparent py-3 px-2 dark:text-darkTheme-text-b"
         :type="inputType"
         :step="stepValue"
         :placeholder="placeHoldertext"
@@ -73,7 +73,7 @@ const inputFocused = ref<boolean>(false);
         @input="
           $emit('update:inputValue', ($event.target as HTMLInputElement).value)
         "
-        class="w-full h-full outline-none bg-transparent px-2"
+        class="w-full h-full outline-none bg-transparent px-2 dark:text-darkTheme-text-b"
         :type="inputType"
         :step="stepValue"
         :placeholder="placeHoldertext"
