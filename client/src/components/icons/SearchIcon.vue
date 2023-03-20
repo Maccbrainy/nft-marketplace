@@ -31,6 +31,7 @@ const showSearchBar = ref(false);
         class="w-full"
         input-type="search"
         place-holdertext="Search Web3"
+        :is-text-area="false"
       />
       <button><close-icon @click="showSearchBar = false"></close-icon></button>
     </div>
