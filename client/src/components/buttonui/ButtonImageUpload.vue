@@ -23,7 +23,7 @@ defineEmits(["onChangeImageAction"]);
       hidden
       accept="image/*"
       type="file"
-      @change="$emit('onChangeImageAction', $event)"
+      @change="$emit('onChangeFileUpload', $event)"
     />
   </label>
 </template>
