@@ -23,11 +23,11 @@ const profileMenuLinks = [
     slug: "settings",
   },
 ];
-const { wallet } = inject<any>("provider");
+const { wallet, activateModalSidebar } = inject<any>("provider");
 </script>
 <template>
-  <teleport-modal>
-    <template #default>
+  <teleport-modal v-if="activateModalSidebar.name == 'isProfileMenuBar'">
+    <template #sidebar>
       <side-bar-layout>
         <template #default>
           <div class="w-full h-full flex flex-col py-6 px-6 gap-5">

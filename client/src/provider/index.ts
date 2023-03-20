@@ -25,12 +25,12 @@ export default {
     const isLoadingInformation = ref({
       isLoading: false,
       wallet: "",
-      blockchain: ""
-      
+      blockchain: "",
     });
-    const teleportModalOpenProfileMenuBar = ref<boolean>(false);
-    const teleportModalOpenMenuBar = ref<boolean>(false);
-    const teleportModalTableAssetsFilters = ref<boolean>(false);
+    const activateModalSidebar = ref<{ name: string; active: boolean }>({
+      name: "",
+      active: false,
+    });
     const openingMarketplaceCartBagIndex = ref<number>(1);
 
     const isLargeScreen = useMediaQuery("(min-width: 991px)");
@@ -150,7 +150,12 @@ export default {
     const disconnectWallet = async () => {
       try {
         currentAccount.value = "";
-        teleportModalOpenProfileMenuBar.value = false;
+        activateModalSidebar.value = {
+          name: "isProfileMenuBar",
+          active: false
+        }
+        // teleportModalOpenProfileMenuBar.value = false;
+
         localStorage.removeItem("marketPlace:ISCONNECTED");
         router.push({
           name: router.currentRoute.value.name || undefined,
@@ -166,18 +171,11 @@ export default {
       open_modal: boolean;
     }) => {
       const { name, open_modal } = modal;
-      if (name == "isMenuBar") {
-        teleportModalOpenMenuBar.value = open_modal;
-        console.log("Teleport:", name, teleportModalOpenMenuBar.value);
+      activateModalSidebar.value = {
+        name: name,
+        active: open_modal
       }
-      if (name == "isTableAssetFilters") {
-        teleportModalTableAssetsFilters.value = open_modal;
-        console.log("Teleport:", name, teleportModalTableAssetsFilters.value);
-      }
-      if (name == "isProfileMenuBar") {
-        teleportModalOpenProfileMenuBar.value = open_modal;
-        console.log("Teleport:", name, teleportModalOpenProfileMenuBar.value);
-      }
+      console.log("activateModalSidebar:", activateModalSidebar.value)
     };
 
     const removeAllItemsFromMarketplaceCartBag = () => {
@@ -241,7 +239,7 @@ export default {
         showMarketplaceCartBag.value &&
         marketplaceCartBagItems.value.length > 0
       ) {
-        openingMarketplaceCartBagIndex.value = 0
+        openingMarketplaceCartBagIndex.value = 0;
       }
       showMarketplaceCartBag.value = !showMarketplaceCartBag.value;
     };
@@ -272,9 +270,7 @@ export default {
       wallet,
       chooseHowToConnectWallet,
       teleportModalCallback,
-      teleportModalOpenMenuBar,
-      teleportModalOpenProfileMenuBar,
-      teleportModalTableAssetsFilters,
+      activateModalSidebar,
       showMarketplaceCartBagCallback,
       getMarketplaceItemIntoCartBag,
       marketplaceCartBagItems,

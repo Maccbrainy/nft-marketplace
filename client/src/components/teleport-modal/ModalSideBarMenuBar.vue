@@ -17,12 +17,12 @@ const menuNavigationLinks = [
     slug: "create",
   },
 ];
-const { teleportModalOpenMenuBar, wallet, chooseHowToConnectWallet } =
+const { wallet, activateModalSidebar, chooseHowToConnectWallet } =
   inject<any>("provider");
 </script>
 <template>
-  <teleport-modal v-if="teleportModalOpenMenuBar">
-    <template #default>
+  <teleport-modal v-if="activateModalSidebar.name == 'isMenuBar'">
+    <template #sidebar>
       <side-bar-layout>
         <template #default>
           <div class="w-full h-full flex flex-col py-6 px-6 gap-5">

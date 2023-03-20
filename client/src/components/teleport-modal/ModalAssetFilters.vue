@@ -4,12 +4,11 @@ import { SideBarLayout } from "@/layouts";
 import { TeleportModal } from "../teleport-modal";
 import { TableAssetsSideBar } from "../tables";
 
-const { teleportModalTableAssetsFilters, isLargeScreen } =
-  inject<any>("provider");
+const { isLargeScreen, activateModalSidebar } = inject<any>("provider");
 </script>
 <template>
-  <teleport-modal v-if="teleportModalTableAssetsFilters">
-    <template #default>
+  <teleport-modal v-if="activateModalSidebar.name == 'isTableAssetFilters'">
+    <template #sidebar>
       <side-bar-layout>
         <template #default>
           <TableAssetsSideBar
