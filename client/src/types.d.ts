@@ -29,3 +29,13 @@ export interface ChildrenLinksType {
   title: string;
   slug: string
 }
+export interface ToastSettingsInformation {
+  title?: string;
+  description?: string;
+  icon?: Object;
+  isCoverImage?: boolean;
+  isAvatarImage?: boolean;
+  isVerifyUser?: boolean;
+  isSaveUserSetting?: boolean;
+  closeButtonTitle: string;
+}
