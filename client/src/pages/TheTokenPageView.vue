@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
 import type { ChildrenLinksType } from "@/types";
-import { TableAssetsCard } from "@/components/tables";
+import { AssetsTableCard } from "@/components/assets-tokens";
 import { TokenPriceDetailCard } from "@/components/tokens";
 import { ChevronDownIcon, ArrowRightIcon } from "@/components/icons";
 const NFTTokensInCollection = [
@@ -65,6 +65,7 @@ const tokenDetailTabLinks = [
   {
     id: "TokenOverView",
     title: "overview",
+    slug: "overview"
   },
   // {
   //   id: "PropertiesToken",
@@ -73,11 +74,13 @@ const tokenDetailTabLinks = [
   {
     id: "TokenBids",
     title: "bids",
+    slug: "bids"
   },
 
   {
     id: "TokenHistory",
     title: "history",
+    slug: "history"
   },
 ];
 const routerLinkActive = ref(route.name);
@@ -194,7 +197,7 @@ const scrollBarCallback = (direction: string) => {
         ref="moreFromThisCollectionRef"
         class="hide-horizontal__scrollbar w-full flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory pb-1"
       >
-        <TableAssetsCard
+        <AssetsTableCard
           v-for="tokenData in NFTTokensInCollection"
           :key="tokenData.tokenId + tokenData.tokenAddress"
           :filterIsHidden="false"
