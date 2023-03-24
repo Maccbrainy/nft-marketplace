@@ -1,7 +1,10 @@
 import { ref, watchEffect, computed } from "vue";
 import router from "../router";
 import { useMediaQuery } from "@vueuse/core";
-import type { MarketplaceCartBagItemType } from "@/types";
+import type {
+  MarketplaceCartBagItemType,
+  AppToastInformationBus,
+} from "@/types";
 
 interface WalletType {
   name: string;
@@ -21,11 +24,20 @@ interface MarketplaceCartBagInfo {
 export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
-
-    const isLoadingInformation = ref({
-      isLoading: false,
+    const appToastInformationBus = ref<AppToastInformationBus>({
+      title: "",
+      description: "",
+      icon: undefined,
+      isCoverImage: false,
+      isAvatarImage: false,
+      isVerifyUser: false,
+      saveUserProfileSettings: false,
+      closeButtonTitle: "",
+      isProcessing: false,
       wallet: "",
       blockchain: "",
+      coverImageUrl: "",
+      avatarImageUrl: "",
     });
     const activateModalSidebar = ref<{ name: string; active: boolean }>({
       name: "",
@@ -104,10 +116,13 @@ export default {
         if (dappWallet == "Install Phantom")
           return alert("Phantom coming soon!");
 
-        if (blockchainNetwork.value == "ethereum" && dappWallet == "MetaMask") {
+        if (
+          blockchainNetwork.value === "ethereum" &&
+          dappWallet === "MetaMask"
+        ) {
           //show processing status
-          isLoadingInformation.value = {
-            isLoading: true,
+          appToastInformationBus.value = {
+            isProcessing: true,
             wallet: dappWallet,
             blockchain: "ethereum",
           };
@@ -130,6 +145,11 @@ export default {
               },
             ])
           );
+          appToastInformationBus.value = {
+            isProcessing: false,
+            wallet: "",
+            blockchain: "",
+          };
         }
         wallet.value = JSON.parse(
           localStorage.getItem("marketPlace:ISCONNECTED") || "[]"
@@ -152,8 +172,8 @@ export default {
         currentAccount.value = "";
         activateModalSidebar.value = {
           name: "isProfileMenuBar",
-          active: false
-        }
+          active: false,
+        };
         // teleportModalOpenProfileMenuBar.value = false;
 
         localStorage.removeItem("marketPlace:ISCONNECTED");
@@ -173,9 +193,9 @@ export default {
       const { name, open_modal } = modal;
       activateModalSidebar.value = {
         name: name,
-        active: open_modal
-      }
-      console.log("activateModalSidebar:", activateModalSidebar.value)
+        active: open_modal,
+      };
+      console.log("activateModalSidebar:", activateModalSidebar.value);
     };
 
     const removeAllItemsFromMarketplaceCartBag = () => {
@@ -248,7 +268,41 @@ export default {
         router.currentRoute.value.matched[0].path == "/collection/:id/:slug?" ||
         router.currentRoute.value.name == "HomePage"
     );
+    const teleportModalToastInfoHandler = (
+      toastInfo: AppToastInformationBus
+    ) => {
+      const {
+        title,
+        description,
+        icon,
+        isCoverImage,
+        isAvatarImage,
+        isVerifyUser,
+        saveUserProfileSettings,
+        closeButtonTitle,
+        isProcessing,
+        wallet,
+        blockchain,
+        coverImageUrl,
+        avatarImageUrl,
+      } = toastInfo;
 
+      appToastInformationBus.value = {
+        title: title,
+        description: description,
+        icon: icon,
+        isCoverImage: isCoverImage,
+        isAvatarImage: isAvatarImage,
+        isVerifyUser: isVerifyUser,
+        saveUserProfileSettings: saveUserProfileSettings,
+        closeButtonTitle: closeButtonTitle,
+        isProcessing: isProcessing,
+        wallet: wallet,
+        blockchain: blockchain,
+        coverImageUrl: coverImageUrl,
+        avatarImageUrl: avatarImageUrl,
+      };
+    };
     watchEffect(() => {
       if (!localStorage.theme) {
         localStorage.theme = "lightTheme";
@@ -256,9 +310,8 @@ export default {
       isActiveThemeSkin.value = localStorage.theme;
       activateThemeSkin();
     });
-
     app.provide("provider", {
-      isLoadingInformation,
+      appToastInformationBus,
       isLargeScreen,
       changeThemeSkinCallback,
       isActiveThemeSkin,
@@ -270,6 +323,7 @@ export default {
       wallet,
       chooseHowToConnectWallet,
       teleportModalCallback,
+      teleportModalToastInfoHandler,
       activateModalSidebar,
       showMarketplaceCartBagCallback,
       getMarketplaceItemIntoCartBag,

@@ -18,7 +18,7 @@ export const isMarketItemFoundInCartBagItems = (
   return isTruthy;
 };
 
-export const useHandleImageChange = async (event: {
+export const useImageFileReader = async (event: {
   target: { files: any[] };
 }) => {
   const file = event.target.files[0];

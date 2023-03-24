@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { useHandleImageChange } from "@/utils";
-import {
-  ButtonInput,
-  ButtonMiscellenous,
-  ButtonImageUpload,
-} from "../buttonui";
-import { TwitterIcon, UploadImageIcon } from "../icons";
+import { reactive, ref, inject, markRaw } from "vue";
+import { useRouter } from "vue-router";
+import { ButtonInput, ButtonMiscellenous } from "../buttonui";
+import { SuccessIcon, TwitterIcon } from "../icons";
+import WidgetHeroImageSettings from "../WidgetHeroImageSettings.vue";
 
-interface ProfileAccountSettings {
+interface UserProfileAccountSettings {
   fullName: string;
   username: string;
   shortBio: string;
@@ -16,8 +13,13 @@ interface ProfileAccountSettings {
   websiteURL: string;
   twitterUsername: string;
 }
+
+const router = useRouter();
+
+const { teleportModalCallback, teleportModalToastInfoHandler } =
+  inject<any>("provider");
 const isInputWarning = ref<boolean>(false);
-const userProfileAccountSettings = reactive<ProfileAccountSettings>({
+const userProfileAccountSettings = reactive<UserProfileAccountSettings>({
   fullName: "",
   username: "",
   shortBio: "",
@@ -25,44 +27,42 @@ const userProfileAccountSettings = reactive<ProfileAccountSettings>({
   websiteURL: "",
   twitterUsername: "",
 });
-const showEditProfileCoverImage = ref<boolean>(false);
-const showEditProfileAvatar = ref<boolean>(false);
-const profileImagesSettings = reactive({
-  coverImageName: "",
-  coverImageUrl: "",
-  avatarImageName: "",
-  avatarImageUrl: "",
-});
 
-const profileCoverImageHandler = async (file: any) => {
-  const { fileurl, fileName } = await useHandleImageChange(file);
-  profileImagesSettings.coverImageUrl = fileurl;
-  profileImagesSettings.coverImageName = fileName;
-};
-const uploadProfileAvatar = async (file: any) => {
-  const { fileurl, fileName } = await useHandleImageChange(file);
-  profileImagesSettings.avatarImageUrl = fileurl;
-  profileImagesSettings.avatarImageName = fileName;
-};
 const confirmEmailHandler = () => {
   const { email } = userProfileAccountSettings;
-  if (!email) return (isInputWarning.value = true);
+  if (!email) return;
   console.log("User Email:", email);
 };
 const linkTwitterHandler = () => {
   const { twitterUsername } = userProfileAccountSettings;
-  if (!twitterUsername) return (isInputWarning.value = true);
+  if (!twitterUsername) return;
   console.log("Linking Twitter action");
 };
 const saveUserProfileSettings = () => {
-  // const { fullName, username, shortBio, email, websiteURL, twitterUsername } =
-  //   userProfileAccountSettings;
+  teleportModalToastInfoHandler({
+    isProcessing: true,
+    description: "Your profile is updating...",
+    saveUserProfileSettings: false,
+    closeButtonTitle: "Cancel",
+  });
+  teleportModalCallback({
+    name: "isSettingsUpdateToast",
+    open_modal: true,
+  });
   const userProfileSettings: any = {};
   Object.keys(userProfileAccountSettings).forEach((key: string) => {
     if ((userProfileAccountSettings as any)[key])
       userProfileSettings[key] = (userProfileAccountSettings as any)[key];
   });
-  console.log("userProfileSettings", userProfileSettings);
+  teleportModalToastInfoHandler({
+    title: "Success",
+    isProcessing: false,
+    saveUserProfileSettings: true,
+    icon: markRaw(SuccessIcon),
+    description:
+      "Your profile was successfully updated. The updates are now visible for everyone!",
+    closeButtonTitle: "Close",
+  });
 };
 const verifyUserHandler = () => {
   const { fullName, username, shortBio, email, websiteURL, twitterUsername } =
@@ -82,49 +82,7 @@ const verifyUserHandler = () => {
 </script>
 <template>
   <div class="relative flex flex-col">
-    <div
-      @mouseover="showEditProfileCoverImage = true"
-      @mouseout="showEditProfileCoverImage = false"
-      class="relative rounded-2xl bg-gray-100 dark:bg-darkTheme-bg w-full h-72 max-h-72 cursor-pointer"
-    >
-      <button-image-upload
-        v-show="showEditProfileCoverImage"
-        class="animate-slide-up"
-        @on-change-image-action="profileCoverImageHandler"
-        label-name="Edit cover"
-      />
-      <img
-        v-show="profileImagesSettings.coverImageUrl"
-        class="absolute w-full h-full object-center object-cover min-h-full min-w-full rounded-2xl"
-        :src="profileImagesSettings.coverImageUrl"
-      />
-
-      <div
-        @mouseover="showEditProfileAvatar = true"
-        @mouseout="showEditProfileAvatar = false"
-        class="absolute flex justify-center items-center -bottom-5 bg-gray-400 h-28 w-28 rounded-full z-10 left-8 ring-4 ring-offset-0 ring-white dark:ring-darkTheme overflow-hidden"
-      >
-        <img
-          v-show="profileImagesSettings.avatarImageUrl"
-          class="w-full h-full object-center object-contain min-h-full min-w-full"
-          :src="profileImagesSettings.avatarImageUrl"
-        />
-        <button-image-upload
-          v-show="showEditProfileAvatar"
-          @on-change-image-action="uploadProfileAvatar"
-          label-name="Edit Avatar"
-          :label-icon="UploadImageIcon"
-        />
-        <!-- <button-miscellenous
-          @selection-action="uploadProfileAvatar"
-          v-show="showEditProfileAvatar"
-          :has-list-content="false"
-          class="rounded-2xl py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-darkTheme-bg dark:text-darkTheme-text dark:hover:bg-darkTheme-hover dark:hover:text-darkTheme-text-b"
-        >
-          <upload-image-icon />
-        </button-miscellenous> -->
-      </div>
-    </div>
+    <widget-hero-image-settings />
     <div
       class="relative w-full flex flex-row gap-4 items-start pt-10 font-normal"
     >

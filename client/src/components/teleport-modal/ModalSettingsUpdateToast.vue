@@ -1,45 +1,133 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useImageFileReader } from "@/utils";
 import { TeleportModal } from ".";
-import { ButtonMiscellenous } from "../buttonui";
-defineProps({
-  informationBus: Object,
+import { ButtonMiscellenous, ButtonImageUpload } from "../buttonui";
+import IsProcessingStatus from "../IsProcessingStatus.vue";
+
+const router = useRouter();
+const profileImagesSettings = reactive({
+  coverImageName: "",
+  coverImageUrl: "",
+  avatarImageName: "",
+  avatarImageUrl: "",
 });
-const { activateModalSidebar, teleportModalCallback } = inject<any>("provider");
+const {
+  activateModalSidebar,
+  teleportModalCallback,
+  teleportModalToastInfoHandler,
+  appToastInformationBus,
+} = inject<any>("provider");
+
+const uploadProfileCoverImage = async (file: any) => {
+  teleportModalToastInfoHandler({
+    isProcessing: true,
+    description: "Your cover image is uploading...",
+    closeButtonTitle: "Cancel",
+  });
+  const { fileurl, fileName } = await useImageFileReader(file);
+
+  profileImagesSettings.coverImageUrl = fileurl;
+  profileImagesSettings.coverImageName = fileName;
+  teleportModalToastInfoHandler({
+    isProcessing: false,
+    coverImageUrl: fileurl,
+    isCoverImage: false,
+    description: "Your profile cover image successfully uploaded",
+    closeButtonTitle: "Close",
+  });
+};
+
+const uploadProfileAvatar = async (file: any) => {
+  teleportModalToastInfoHandler({
+    isProcessing: true,
+    description: "Your avatar image is uploading...",
+    closeButtonTitle: "Cancel",
+  });
+
+  const { fileurl, fileName } = await useImageFileReader(file);
+  profileImagesSettings.avatarImageUrl = fileurl;
+  profileImagesSettings.avatarImageName = fileName;
+
+  teleportModalToastInfoHandler({
+    isProcessing: false,
+    avatarImageUrl: fileurl,
+    isAvatarImage: false,
+    description: "Your profile avatar image successfully uploaded",
+    closeButtonTitle: "Close",
+  });
+};
+const goToMyItemsOwned = () => {
+  teleportModalCallback({
+    name: "isSettingsUpdateToast",
+    open_modal: false,
+  });
+  router.push({
+    path: "/items",
+  });
+};
 </script>
 <template>
-  <teleport-modal
-    v-if="
-      activateModalSidebar.name == 'isSettingsUpdateToast' && informationBus
-    "
-  >
+  <teleport-modal v-if="activateModalSidebar.name == 'isSettingsUpdateToast'">
     <template #sidebar>
       <div
         class="sf:absolute sf:bottom-0 flex flex-col w-full sm:w-[380px] p-8 rounded-t-3xl sm:rounded-2xl bg-white m-auto text-gray-500 font-normal text-base space-y-3"
       >
-        <span class="place-self-center" v-if="informationBus.icon"
-          ><component :is="informationBus.icon"></component
+        <IsProcessingStatus
+          v-show="appToastInformationBus.isProcessing"
+          class="w-12 place-self-center"
+        />
+        <span class="place-self-center" v-if="appToastInformationBus.icon"
+          ><component :is="appToastInformationBus.icon"></component
         ></span>
         <h1
-          v-show="informationBus.title"
+          v-show="appToastInformationBus.title"
           :class="{
-            'text-center text-3xl': informationBus.icon,
-            'text-start text-xl': !informationBus.icon,
+            'text-center text-3xl': appToastInformationBus.icon,
+            'text-start text-xl': !appToastInformationBus.icon,
           }"
           class="text-gray-900 font-semibold"
         >
-          {{ informationBus.title }}
+          {{ appToastInformationBus.title }}
         </h1>
         <p
           :class="{
-            'text-center text-sm': informationBus.icon,
-            'text-start': !informationBus.icon,
+            'text-center text-sm': appToastInformationBus.icon,
+            'text-start': !appToastInformationBus.icon,
           }"
-          v-show="informationBus.description"
+          v-show="appToastInformationBus.description"
         >
-          {{ informationBus.description }}
+          {{ appToastInformationBus.description }}
         </p>
-        <slot name="action-handlers"></slot>
+
+        <button-image-upload
+          v-show="
+            appToastInformationBus.isCoverImage &&
+            !appToastInformationBus.coverImageUrl
+          "
+          @on-change-file-upload="uploadProfileCoverImage"
+          label-name="Select file"
+        />
+        <button-image-upload
+          v-show="
+            appToastInformationBus.isAvatarImage &&
+            !appToastInformationBus.avatarImageUrl
+          "
+          @on-change-file-upload="uploadProfileAvatar"
+          label-name="Select file"
+        />
+        <button-miscellenous
+          v-show="
+            appToastInformationBus.saveUserProfileSettings &&
+            !appToastInformationBus.isProcessing
+          "
+          @call-to-action="goToMyItemsOwned"
+          type="button"
+          class="bg-black text-white rounded-xl py-3 dark:bg-white dark:text-black mt-2 text-sm"
+          :has-list-content="false"
+          >Continue</button-miscellenous
+        >
         <button-miscellenous
           @call-to-action="
             teleportModalCallback({
@@ -49,7 +137,7 @@ const { activateModalSidebar, teleportModalCallback } = inject<any>("provider");
           "
           class="border rounded-2xl mt-1 py-2 w-full"
           :has-list-content="false"
-          >{{ informationBus.closeButtonTitle }}</button-miscellenous
+          >{{ appToastInformationBus.closeButtonTitle }}</button-miscellenous
         >
       </div>
     </template>
