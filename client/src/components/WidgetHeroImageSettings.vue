@@ -1,73 +1,41 @@
 <script setup lang="ts">
-import { ref, markRaw, reactive, inject } from "vue";
-import type { ToastSettingsInformation } from "@/types";
+import { ref, markRaw, inject } from "vue";
 import { UploadImageIcon } from "./icons";
-import { useImageFileReader } from "@/utils";
-import IsProcessingStatus from "./IsProcessingStatus.vue";
-import { ButtonMiscellenous, ButtonImageUpload } from "./buttonui";
-import { ModalSettingsUpdateToast } from "./teleport-modal";
+import { ButtonMiscellenous } from "./buttonui";
 
-const isProcessing = ref<boolean>(false);
-const { teleportModalCallback } = inject<any>("provider");
+const {
+  teleportModalCallback,
+  teleportModalToastInfoHandler,
+  appToastInformationBus,
+} = inject<any>("provider");
 const showEditProfileCoverImage = ref<boolean>(false);
 const showEditProfileAvatar = ref<boolean>(false);
-const profileImagesSettings = reactive({
-  coverImageName: "",
-  coverImageUrl: "",
-  avatarImageName: "",
-  avatarImageUrl: "",
-});
-const toastSettingsInformation = ref<ToastSettingsInformation>({
-  title: "",
-  description: "",
-  icon: undefined,
-  isCoverImage: false,
-  isAvatarImage: false,
-  isVerifyUser: false,
-  isSaveUserSetting: false,
-  closeButtonTitle: "Close",
-});
 
-const uploadProfileCoverImage = async (file: any) => {
-  isProcessing.value = true;
-  const { fileurl, fileName } = await useImageFileReader(file);
-  profileImagesSettings.coverImageUrl = fileurl;
-  profileImagesSettings.coverImageName = fileName;
-  isProcessing.value = false;
-};
-
-const uploadProfileAvatar = async (file: any) => {
-  isProcessing.value = true;
-  const { fileurl, fileName } = await useImageFileReader(file);
-  profileImagesSettings.avatarImageUrl = fileurl;
-  profileImagesSettings.avatarImageName = fileName;
-  isProcessing.value = false;
-};
 const openProfileCoverModal = () => {
   teleportModalCallback({
     name: "isSettingsUpdateToast",
     open_modal: true,
   });
-  toastSettingsInformation.value = {
+  teleportModalToastInfoHandler({
     title: "Update cover",
     description:
       "Upload new cover. We recommend to upload images in 1440x640 resolution. Max 15 MB in JPEG format",
     isCoverImage: true,
     closeButtonTitle: "Cancel",
-  };
+  });
 };
 const openProfileAvatarModal = () => {
   teleportModalCallback({
     name: "isSettingsUpdateToast",
     open_modal: true,
   });
-  toastSettingsInformation.value = {
+  teleportModalToastInfoHandler({
     title: "Update avatar",
     description:
       "Upload new avatar. We recommend to upload images in 640x640 resolution. Max 5 MB in JPEG format",
     isAvatarImage: true,
     closeButtonTitle: "Cancel",
-  };
+  });
 };
 </script>
 <template>
@@ -84,9 +52,9 @@ const openProfileAvatarModal = () => {
       >Edit cover</button-miscellenous
     >
     <img
-      v-show="profileImagesSettings.coverImageUrl"
+      v-if="appToastInformationBus.coverImageUrl"
       class="absolute w-full h-full object-center object-cover min-h-full min-w-full rounded-2xl"
-      :src="profileImagesSettings.coverImageUrl"
+      :src="appToastInformationBus.coverImageUrl"
     />
 
     <div
@@ -99,9 +67,9 @@ const openProfileAvatarModal = () => {
       class="absolute flex justify-center items-center -bottom-5 bg-gray-400 h-28 w-28 z-10 left-8 ring-4 ring-offset-0 ring-white dark:ring-darkTheme overflow-hidden"
     >
       <img
-        v-show="profileImagesSettings.avatarImageUrl"
+        v-if="appToastInformationBus.avatarImageUrl"
         class="w-full h-full object-top object-cover min-h-full min-w-full"
-        :src="profileImagesSettings.avatarImageUrl"
+        :src="appToastInformationBus.avatarImageUrl"
       />
       <button-miscellenous
         v-show="showEditProfileAvatar"
@@ -112,27 +80,4 @@ const openProfileAvatarModal = () => {
       ></button-miscellenous>
     </div>
   </div>
-  <modal-settings-update-toast :informationBus="toastSettingsInformation"
-    ><template #action-handlers>
-      <IsProcessingStatus
-        v-show="isProcessing"
-        class="w-12 place-self-center"
-      />
-      <button-image-upload
-        v-show="
-          toastSettingsInformation.isCoverImage &&
-          !profileImagesSettings.coverImageUrl
-        "
-        @on-change-file-upload="uploadProfileCoverImage"
-        label-name="Select file"
-      />
-      <button-image-upload
-        v-show="
-          toastSettingsInformation.isAvatarImage &&
-          !profileImagesSettings.avatarImageUrl
-        "
-        @on-change-file-upload="uploadProfileAvatar"
-        label-name="Select file"
-      /> </template
-  ></modal-settings-update-toast>
 </template>
