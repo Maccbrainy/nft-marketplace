@@ -1,3 +1,4 @@
+export { default as TheExploreBlockchainPageView } from "@/pages/TheExploreBlockchainPageView.vue"
 export { default as TheItemsOwnedPageView } from "@/pages/TheItemsOwnedPageView.vue"
 export { default as TheCollectionPageView } from "@/pages/TheCollectionPageView.vue"
 export { default as TheCreatePageView } from "@/pages/TheCreatePageView.vue"
