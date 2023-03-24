@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import { AssetsTables } from "@/components/assets-tokens";
 import { AssetsDetailedLayout } from "@/layouts";
-
-const route = useRoute();
+const props = defineProps({
+  // name: String,
+  activeBlockchainId: String,
+  slug: String
+})
 
 const exploreDetailLinks = [
-  //ids is configured route path names in the router/index.ts file
+  /*ids is configured route path names in the router/index.ts file*/
   { id: "TableCollections", title: "collections", slug: "collections" },
   { id: "TableCollectionNFTs", title: "NFTs", slug: "items" },
   { id: "TableCollectionUsers", title: "users", slug: "users" },
 ];
-const routePath = `/explore/${route.params.activeBlockchainId}`;
+const routePath: string = `/explore/${props.activeBlockchainId}`;
 </script>
 <template>
   <assets-detailed-layout>
