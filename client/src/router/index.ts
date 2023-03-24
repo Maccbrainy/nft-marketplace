@@ -18,6 +18,9 @@ const router = createRouter({
       path: "/",
       name: "HomePage",
       component: TheHomePageView,
+      props: (route) => ({
+        name: route.name
+      }),
       meta: {
         title: "NFT Marketplace",
         requiresWalletAuth: false,
@@ -60,6 +63,36 @@ const router = createRouter({
           path: "activity",
           name: "CollectionActivity",
           component: TableActivity,
+        },
+      ],
+    },
+    {
+      path: "/explore/:activeBlockchainId/:slug?",
+      component: () => import("../pages/TheExploreBlockchainPageView.vue"),
+      props: (route) => ({
+        // name: route.meta.name,
+        activeBlockchainId: route.params.activeBlockchainId,
+        slug: route.params.slug,
+      }),
+      meta: {
+        requiresWalletAuth: false,
+        name: "ExploreBlockchainNFTS",
+      },
+      children: [
+        {
+          path: "", //collections
+          name: "TableCollections",
+          component: TableCollections,
+        },
+        {
+          path: "items",
+          name: "TableCollectionNFTs",
+          component: TableFiltersAssets,
+        },
+        {
+          path: "users",
+          name: "TableCollectionUsers",
+          component: TableFiltersAssets,
         },
       ],
     },
