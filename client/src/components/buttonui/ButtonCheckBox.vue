@@ -44,11 +44,11 @@ const check = (propertyOptionId: string, checked: boolean) => {
         v-bind:fieldId="propertyOption.id"
         v-bind:label="propertyOption.id"
       >
-        <span 
-          class="transition-all text-sm text-gray-400 dark:text-darkTheme-text dark:hover:text-darkTheme-text-b font-medium">
-        {{
-          propertyOption.name
-        }}</span>
+        <span
+          class="transition-all text-sm text-gray-400 dark:text-darkTheme-text dark:hover:text-darkTheme-text-b font-medium"
+        >
+          {{ propertyOption.name }}</span
+        >
       </ButtonCheckBoxInput>
     </li>
   </ul>
