@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import { ref, markRaw, inject } from "vue";
+import { RouterLink, RouterView, useRoute } from "vue-router";
+import { ref, markRaw, inject, computed } from "vue";
 import { BaseLayout } from "./layouts";
 import MarketplaceCartBag from "./components/MarketplaceCartBag.vue";
 import {
   ModalProfileMenuBar,
   ModalSideBarMenuBar,
   ModalAssetFilters,
+  ModalSettingsUpdateToast,
 } from "./components/teleport-modal";
 import {
   DarkThemeIcon,
@@ -20,14 +21,15 @@ import {
   ButtonInput,
   ButtonMiscellenous,
 } from "@/components/buttonui";
+const route = useRoute();
 const {
   isActiveThemeSkin,
   changeThemeSkinCallback,
   chooseHowToConnectWallet,
   showMarketplaceCartBag,
-  matchedRoutesComposable,
   currentAccount,
   teleportModalCallback,
+  appToastInformationBus,
 } = inject<any>("provider");
 const themeTypes = ref([
   {
@@ -41,13 +43,20 @@ const themeTypes = ref([
     icon: markRaw(DarkThemeIcon),
   },
 ]);
+const matchedRoutesComposable = computed<boolean>(
+  () => 
+    route.meta.name === "CollectionPage" ||
+    route.name === "HomePage" ||
+    route.meta.name === "ExploreBlockchainNFTS" ||
+    route.meta.name === "itemsOwnedPage"
+);
 </script>
 <template>
   <BaseLayout class="bg-white dark:bg-darkTheme w-full min-h-screen">
     <template #header>
       <nav
         v-show="$route.name != 'ConnectWalletPage'"
-        class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-black dark:text-darkTheme-text bg-[#ffffffb1] dark:bg-darkTheme backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
+        class="fixed w-full top-0 inset-x-0 bottom-auto max-w-screen-2xl h-20 flex justify-between items-center gap-4 flex-nowrap text-black dark:text-darkTheme-text bg-[rgba(255,255,255,0.69)] dark:bg-[rgba(25,28,31,0.95)] backdrop-blur-lg font-medium text-base px-4 sm:px-6 md:px-7 lg:px-8 mx-auto z-20"
       >
         <div class="flex flex-row items-center space-x-8 xs:space-x-2">
           <RouterLink to="/" class="dark:text-white text-xl font-bold"
@@ -74,8 +83,14 @@ const themeTypes = ref([
                 open_modal: true,
               })
             "
-            class="w-10 h-10 rounded-full bg-gray-200 cursor-pointer"
-          ></div>
+            class="w-10 h-10 rounded-full bg-gray-200 cursor-pointer overflow-hidden"
+          >
+            <img
+              v-if="appToastInformationBus.avatarImageUrl"
+              class="w-full h-full object-top object-cover min-h-full min-w-full"
+              :src="appToastInformationBus.avatarImageUrl"
+            />
+          </div>
           <ButtonMiscellenous
             v-on:click="chooseHowToConnectWallet($route.redirectedFrom?.path)"
             :has-list-content="false"
@@ -107,6 +122,7 @@ const themeTypes = ref([
           <modal-profile-menu-bar />
           <modal-side-bar-menu-bar />
           <modal-asset-filters />
+          <modal-settings-update-toast />
         </div>
         <marketplace-cart-bag />
       </section>

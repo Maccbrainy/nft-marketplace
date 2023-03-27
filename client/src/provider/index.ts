@@ -263,11 +263,7 @@ export default {
       }
       showMarketplaceCartBag.value = !showMarketplaceCartBag.value;
     };
-    const matchedRoutesComposable = computed<boolean>(
-      () =>
-        router.currentRoute.value.matched[0].path == "/collection/:id/:slug?" ||
-        router.currentRoute.value.name == "HomePage"
-    );
+
     const teleportModalToastInfoHandler = (
       toastInfo: AppToastInformationBus
     ) => {
@@ -330,7 +326,6 @@ export default {
       marketplaceCartBagItems,
       showMarketplaceCartBag,
       removeAllItemsFromMarketplaceCartBag,
-      matchedRoutesComposable,
     });
   },
 };
