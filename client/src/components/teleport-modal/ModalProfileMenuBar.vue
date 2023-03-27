@@ -10,7 +10,7 @@ const profileMenuLinks = [
   {
     id: "my_nfts",
     title: "My NFTs",
-    slug: "#",
+    slug: "items",
   },
   {
     id: "create_nft",
@@ -23,14 +23,45 @@ const profileMenuLinks = [
     slug: "settings",
   },
 ];
-const { wallet, activateModalSidebar } = inject<any>("provider");
+const {
+  wallet,
+  activateModalSidebar,
+  teleportModalCallback,
+  appToastInformationBus,
+} = inject<any>("provider");
 </script>
 <template>
   <teleport-modal v-if="activateModalSidebar.name == 'isProfileMenuBar'">
     <template #sidebar>
       <side-bar-layout>
+        <template #header>
+          <router-link
+            @click="
+              teleportModalCallback({
+                name: activateModalSidebar.name,
+                open_modal: false,
+              })
+            "
+            to="/items"
+            class="flex flex-row items-center gap-3"
+          >
+            <div class="bg-gray-200 rounded-full h-10 w-10 overflow-hidden">
+              <img
+                v-if="appToastInformationBus.avatarImageUrl"
+                class="w-full h-full object-top object-cover min-h-full min-w-full"
+                :src="appToastInformationBus.avatarImageUrl"
+              />
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-xl">Brainy Michael</span>
+              <span class="font-normal text-xs dark:text-darkTheme-text"
+                >View profile</span
+              >
+            </div>
+          </router-link>
+        </template>
         <template #default>
-          <div class="w-full h-full flex flex-col py-6 px-6 gap-5">
+          <div class="relative flex flex-col py-6 px-6 gap-5">
             <widget-side-bar-links
               side-bar-name="isProfileMenuBar"
               :link-options="profileMenuLinks"

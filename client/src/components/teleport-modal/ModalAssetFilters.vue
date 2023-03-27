@@ -2,19 +2,19 @@
 import { inject } from "vue";
 import { SideBarLayout } from "@/layouts";
 import { TeleportModal } from "../teleport-modal";
-import { TableAssetsSideBar } from "../tables";
+import { AssetsTableSideBar } from "../assets-tokens";
 
-const { isLargeScreen, activateModalSidebar } = inject<any>("provider");
+const { activateModalSidebar } = inject<any>("provider");
 </script>
 <template>
   <teleport-modal v-if="activateModalSidebar.name == 'isTableAssetFilters'">
     <template #sidebar>
       <side-bar-layout>
+        <template #header>
+          <span class="font-semibold text-xl">Filter</span>
+        </template>
         <template #default>
-          <TableAssetsSideBar
-            v-if="!isLargeScreen"
-            class="pt-12 px-6 xs:px-7"
-          />
+          <AssetsTableSideBar class="pt-4 px-6 xs:px-7" />
         </template>
       </side-bar-layout>
     </template>
