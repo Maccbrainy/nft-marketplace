@@ -17,9 +17,12 @@ const props = defineProps({
     required: true,
   },
 });
-const collectionMenuList = [
+const assetsTableCardMenuLists = [
   { id: "BuyNow", name: "Buy now", icon: false },
   { id: "AddToBag", name: "Add to bag", icon: false },
+  // { id: "RefreshMetaData", name: "Refresh metadata", icon: false },
+  { id: "Share", name: "Share", icon: false },
+  // { id: "Report", name: "Report", icon: false },
 ];
 const {
   showMarketplaceCartBag,
@@ -28,11 +31,11 @@ const {
 } = inject<any>("provider");
 
 const showBuyAndAddToCardButton = ref<boolean>(false);
-const isActiveMenuAction = ref<string>(collectionMenuList[0].id);
+const isActiveMenuAction = ref<string>(assetsTableCardMenuLists[0].id);
 
-const collectionMenuAction = (option: { id: string }) => {
+const assetsTableCardCallback = (option: { id: string }) => {
   isActiveMenuAction.value = option.id;
-  if (isActiveMenuAction.value == collectionMenuList[1].id) {
+  if (isActiveMenuAction.value == assetsTableCardMenuLists[1].id) {
     getMarketplaceItemIntoCartBag({
       token_address: props.assetInfo.tokenAddress,
       token_id: props.assetInfo.tokenId,
@@ -173,8 +176,8 @@ const collectionMenuAction = (option: { id: string }) => {
               </router-link>
             </div>
             <button-miscellenous
-              @selection-action="collectionMenuAction"
-              :list-of-options="collectionMenuList"
+              @selection-action="assetsTableCardCallback"
+              :list-of-options="assetsTableCardMenuLists"
               :is-active-option="isActiveMenuAction"
               :has-list-content="true"
               :compute-list-content="false"
