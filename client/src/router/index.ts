@@ -163,12 +163,16 @@ const router = createRouter({
     },
     {
       path: "/items/:itemsSlug?",
-      // name: "itemsPage",
+      // name: "itemsOwnedPage",
       // route level code-splitting
       // this generates a separate chunk (TheCollectionPageView.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import("../pages/TheCollectionPageView.vue"),
-      meta: { title: "Profile", requiresWalletAuth: true },
+      component: () => import("../pages/TheItemsOwnedPageView.vue"),
+      meta: {
+        title: "Profile | InterestQQ",
+        requiresWalletAuth: true,
+        name: "itemsOwnedPage",
+      },
       children: [
         {
           path: "",
