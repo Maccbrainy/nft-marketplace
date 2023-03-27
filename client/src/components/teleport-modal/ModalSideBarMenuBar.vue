@@ -25,7 +25,7 @@ const { wallet, activateModalSidebar, chooseHowToConnectWallet } =
     <template #sidebar>
       <side-bar-layout>
         <template #default>
-          <div class="w-full h-full flex flex-col py-6 px-6 gap-5">
+          <div class="flex flex-col px-6 gap-5">
             <widget-side-bar-links
               side-bar-name="isMenuBar"
               :link-options="menuNavigationLinks"

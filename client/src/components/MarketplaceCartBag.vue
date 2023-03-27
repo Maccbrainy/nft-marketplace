@@ -30,7 +30,7 @@ const sumTotalValueOfMarketplaceItems = computed<number>(() => {
     (item: any) => (totalValueOfMarkplaceItems += parseFloat(item.token_price))
   );
   return totalValueOfMarkplaceItems;
-})
+});
 </script>
 <template>
   <div
@@ -58,11 +58,13 @@ const sumTotalValueOfMarketplaceItems = computed<number>(() => {
             Add NFTs to your bag to check out and get hold of them.
           </p>
         </div>
-        <button-miscellenous
-          :has-list-content="false"
-          class="w-full flex justify-center bg-gray-100 hover:bg-gray-200 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover items-center h-12 text-base text-gray-800 dark:text-white font-semibold rounded-2xl py-3"
-          >Explore Ethereum NFTs</button-miscellenous
-        >
+        <router-link to="/explore/ethereum/items">
+          <button-miscellenous
+            :has-list-content="false"
+            class="w-full flex justify-center bg-gray-100 hover:bg-gray-200 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover items-center h-12 text-base text-gray-800 dark:text-white font-semibold rounded-2xl py-3"
+            >Explore Ethereum NFTs</button-miscellenous
+          >
+        </router-link>
       </div>
       <div
         v-show="marketplaceCartBagItems.length > 0"
