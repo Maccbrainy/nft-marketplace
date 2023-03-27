@@ -25,20 +25,20 @@ const {
   selectBlockchain,
   blockchainNetwork,
   connectWallet,
-  isLoadingInformation: { isLoading, wallet, blockchain },
+  appToastInformationBus,
 } = inject<any>("provider");
 
 const listOfBlockchainWallets = computed(() => {
   let wallets;
   switch (blockchainNetwork.value) {
     case blockchainOptions[0].id:
-      wallets = blockchainOptions[0].wallets
+      wallets = blockchainOptions[0].wallets;
       break;
     case blockchainOptions[1].id:
-      wallets = blockchainOptions[1].wallets
+      wallets = blockchainOptions[1].wallets;
       break;
     default:
-      wallets = blockchainOptions[2].wallets
+      wallets = blockchainOptions[2].wallets;
       break;
   }
   return wallets;
@@ -52,7 +52,9 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
     >
       <div class="relative sm:w-[30%]">
         <div class="absolute left-5 pt-8 sm:pt-10">
-          <RouterLink to="/" class="text-white text-xl font-bold">InterestQQ</RouterLink>
+          <RouterLink to="/" class="text-white text-xl font-bold"
+            >InterestQQ</RouterLink
+          >
         </div>
         <div class="sf:hidden h-screen max-w-[380px]">
           <img
@@ -79,30 +81,32 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
                 :key="blockchain.id"
                 v-on:click="selectBlockchain(blockchain.id)"
                 :class="{
-                  'text-gray-800 dark:text-white': blockchain.id == blockchainNetwork,
-                  'text-gray-500 dark:text-darkTheme-text': blockchain.id != blockchainNetwork,
+                  'text-gray-800 dark:text-white':
+                    blockchain.id == blockchainNetwork,
+                  'text-gray-500 dark:text-darkTheme-text':
+                    blockchain.id != blockchainNetwork,
                 }"
                 class="text-base font-medium hover:text-gray-800 dark:hover:text-white cursor-pointer"
               >
                 {{ blockchain.name }}
               </div>
-              <div
-                class="hidden absolute w-16 h-0.5 rounded-t-xl bg-gray-800 bottom-0 transition-all delay-75 duration-300"
-              ></div>
             </div>
             <div class="relative flex flex-col gap-2">
-              <h1 class="text-xs text-gray-500 dark:text-darkTheme-text">Popular</h1>
+              <h1 class="text-xs text-gray-500 dark:text-darkTheme-text">
+                Popular
+              </h1>
               <div
                 v-on:click="connectWallet(dappWallet, $route.query.redirect)"
-                class="w-full transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer transform active:scale-95"
+                class="w-full flex items-center space-x-2 transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer transform active:scale-95 active:bg-gray-200 active:border-none"
                 v-for="dappWallet in listOfBlockchainWallets"
                 :key="dappWallet"
               >
                 <is-processing-template
-                  v-show="
-                    isLoading &&
-                    dappWallet === wallet &&
-                    blockchainNetwork === blockchain
+                  class="w-5 h-5"
+                  v-if="
+                    appToastInformationBus.isProcessing &&
+                    dappWallet === appToastInformationBus.wallet &&
+                    blockchainNetwork === appToastInformationBus.blockchain
                   "
                 />
                 <span>{{ dappWallet }}</span>
