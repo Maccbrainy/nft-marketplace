@@ -179,7 +179,7 @@ const collectionMenuAction = (option: { id: string }) => {
               :has-list-content="true"
               :compute-list-content="false"
               v-show="viewOptionSize === 'smallerViewOption'"
-              class="px-0 hover:bg-gray-100 hover:text-gray-600 dark:hover:text-darkTheme-text-b dark:hover:bg-darkTheme-hover rounded-full"
+              class="px-0 hover:bg-gray-100 hover:text-gray-600 dark:text-darkTheme-text dark:hover:text-darkTheme-text-b dark:hover:bg-darkTheme-hover rounded-full"
             >
               <menu-dots-icon class="m-1" />
             </button-miscellenous>
