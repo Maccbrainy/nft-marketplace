@@ -72,6 +72,7 @@ const openProfileAvatarModal = () => {
         :src="appToastInformationBus.avatarImageUrl"
       />
       <button-miscellenous
+        id-attr="absolute"
         v-show="showEditProfileAvatar"
         @call-to-action="openProfileAvatarModal"
         class="z-10 bg-black text-white rounded-full py-3 dark:bg-white dark:text-black text-sm"
