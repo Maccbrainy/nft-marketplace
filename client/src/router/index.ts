@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { TheHomePageView } from "../pages";
-import { TableFiltersAssets, TableActivity } from "../components/tables";
+import {
+  TableFiltersAssets,
+  TableActivity,
+  TableCollections,
+} from "../components/tables";
 import { TokenOverView, TokenBids, TokenHistory } from "../components/tokens";
 import ConnectWallet from "@/components/ConnectWallet.vue";
 import StatusMessages from "@/components/StatusMessages.vue";
@@ -51,17 +55,17 @@ const router = createRouter({
       // this generates a separate chunk (TheCollectionPageView.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../pages/TheCollectionPageView.vue"),
-      meta: { requiresWalletAuth: false },
+      meta: { requiresWalletAuth: false, name: "CollectionPage" },
       props: true,
       children: [
         {
-          path: "",
+          path: "", //items
           name: "TableCollectionAssets",
           component: TableFiltersAssets,
         },
         {
           path: "activity",
-          name: "CollectionActivity",
+          name: "TableCollectionActivity",
           component: TableActivity,
         },
       ],
@@ -111,7 +115,7 @@ const router = createRouter({
           meta: { requiresWalletAuth: false },
         },
         {
-          path: "start/:startSlug",
+          path: "start/:blockchainId",
           name: "ChooseERCTypesPage",
           component: () =>
             import("../pages/TheBlockchainOptionsAndErcTypesPageView.vue"),
@@ -145,7 +149,7 @@ const router = createRouter({
       meta: { title: "Edit Profile", requiresWalletAuth: true },
       children: [
         {
-          path: "",
+          path: "", //account
           name: "SettingsProfileAccount",
           component: SettingsProfileAccount,
         },
@@ -175,7 +179,7 @@ const router = createRouter({
       },
       children: [
         {
-          path: "",
+          path: "", //owned
           name: "ItemsOwned",
           component: TableFiltersAssets,
         },
@@ -226,7 +230,7 @@ const router = createRouter({
       meta: { requiresWalletAuth: false },
       children: [
         {
-          path: "",
+          path: "", //overview
           name: "TokenOverView",
           component: TokenOverView,
         },
@@ -253,7 +257,7 @@ router.beforeEach((to) => {
   //   localStorage.getItem("marketPlace:CART_USER_INFO") || "{}"
   // );
   // console.log("cartBagInfo", cartBagInfo);
-  
+
   if (to.meta.requiresWalletAuth && wallet.length == 0) {
     return {
       name: "StatusMessagePage",
@@ -265,6 +269,6 @@ router.beforeEach((to) => {
 });
 router.afterEach((to) => {
   document.title = (to.meta.title as string) || "NFT Marketplace";
-})
+});
 
 export default router;

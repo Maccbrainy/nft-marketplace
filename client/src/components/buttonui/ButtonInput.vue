@@ -11,7 +11,6 @@ defineProps({
   stepValue: [String, Number],
   labelSymbol: String,
   callToActionName: String,
-  isCreateNftPage: Boolean,
   inputValue: [String, Number],
   descriptionEnd: String,
   isRequired: Boolean,

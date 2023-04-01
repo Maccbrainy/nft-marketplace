@@ -3,7 +3,11 @@ import { inject } from "vue";
 const { disconnectWallet } = inject<any>("provider");
 </script>
 <template>
-  <button @click="disconnectWallet" class="bg-gray-100 rounded-2xl p-3">
+  <button
+    @click="disconnectWallet"
+    class="bg-gray-100 hover:bg-gray-200 rounded-2xl p-3 transition-all"
+    title="Logout"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"

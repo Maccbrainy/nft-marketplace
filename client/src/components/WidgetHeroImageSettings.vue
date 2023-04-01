@@ -68,7 +68,7 @@ const openProfileAvatarModal = () => {
     >
       <img
         v-if="appToastInformationBus.avatarImageUrl"
-        class="w-full h-full object-top object-cover min-h-full min-w-full"
+        class="w-full h-full object-top object-cover"
         :src="appToastInformationBus.avatarImageUrl"
       />
       <button-miscellenous

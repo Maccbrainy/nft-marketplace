@@ -27,7 +27,7 @@ const activateAndUpdateRouter = (link: ChildrenLinksType) => {
           'text-gray-800 dark:text-darkTheme-text-b after:absolute after:w-full after:h-0.5 after:-bottom-2 after:rounded-t-2xl after:bg-black after:dark:bg-white after:block':
             routerLinkActive === link.id,
         }"
-        class="relative capitalize font-semibold text-lg hover:text-gray-700 hover:dark:text-darkTheme-text-b cursor-pointer"
+        class="relative capitalize font-medium text-base hover:text-gray-700 hover:dark:text-darkTheme-text-b cursor-pointer"
         v-for="(link, index) in tableLinkLists"
         :key="link.id + index"
         @click="activateAndUpdateRouter(link)"

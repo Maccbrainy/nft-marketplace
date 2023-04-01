@@ -12,7 +12,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  isCreateNftPage: Boolean,
 });
 const emit = defineEmits(["selectionAction"]);
 
@@ -83,12 +82,10 @@ export default {
       @click="openDropDownMenu = !openDropDownMenu"
       :class="{
         'text-black bg-gray-200 dark:text-white dark:bg-darkTheme-hover':
-          openDropDownMenu && !isCreateNftPage,
-        'bg-gray-100': !openDropDownMenu && !isCreateNftPage,
-        'dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover':
-          !isCreateNftPage,
+          openDropDownMenu,
+        'bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover': !openDropDownMenu,
       }"
-      class="transition-all w-full outline-none h-11 whitespace-nowrap flex justify-center space-x-2 items-center hover:text-black dark:hover:text-white rounded-2xl px-2 active:scale-95"
+      class="capitalize transition-all w-full outline-none h-11 whitespace-nowrap flex justify-center space-x-2 items-center hover:text-black dark:hover:text-white rounded-2xl px-2 active:scale-95"
     >
       <span v-if="option.icon"><component :is="option.icon"></component></span>
       <span>{{ option.name }}</span>
@@ -98,7 +95,7 @@ export default {
       v-show="openDropDownMenu"
       v-bind="$attrs"
       ref="dropDownMenuRef"
-      class="hide-horizontal__scrollbar animate-slide-up absolute w-max min-w-[11rem] max-w-xl overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-30"
+      class="hide-horizontal__scrollbar animate-slide-up absolute w-full min-w-[11rem] overflow-y-auto h-auto max-h-80 border rounded-xl shadow-md dark:border-darkTheme-border left-auto mt-1.5 z-30"
     >
       <div
         tabindex="-1"
@@ -119,7 +116,7 @@ export default {
                 'col-span-4 justify-start': !option.icon,
                 'col-span-3 justify-start': option.icon,
               }"
-              class="w-full flex whitespace-nowrap"
+              class="w-full flex whitespace-nowrap capitalize"
               >{{ option.name }}</span
             >
             <span

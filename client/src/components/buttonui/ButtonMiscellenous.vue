@@ -32,8 +32,8 @@ const getActiveOption = computed<OptionType[]>(() => {
 });
 const callToActionHandler = () => {
   emit("callToAction");
-  openDropDownMenu.value = !openDropDownMenu.value
-}
+  openDropDownMenu.value = !openDropDownMenu.value;
+};
 const selectionActionCallback = (option: OptionType) => {
   emit("selectionAction", option);
   openDropDownMenu.value = false;
@@ -42,7 +42,7 @@ const catchOutsideClickAndCloseMenu = (event: { target: any }) => {
   if (dropDownMenuRef.value && dropDownMenuRef.value.contains(event.target)) {
     return;
   }
-  if (dropDownButtonRef.value.contains(event.target)){
+  if (dropDownButtonRef.value.contains(event.target)) {
     return;
   }
   openDropDownMenu.value = false;
@@ -62,7 +62,7 @@ export default {
 };
 </script>
 <template>
-  <div class="relative">
+  <div :class="{ absolute: idAttr, relative: !idAttr }">
     <button
       @click="callToActionHandler"
       :ref="(el) => (dropDownButtonRef = el)"
@@ -103,7 +103,7 @@ export default {
             v-for="(option, index) in listOfOptions"
             :key="option.id + index"
             @click="selectionActionCallback(option)"
-            class="text-black dark:text-white hover:bg-gray-100 text-sm font-semibold dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
+            class="text-black dark:text-white hover:bg-gray-100 text-sm font-medium dark:hover:bg-darkTheme-hover rounded-xl w-full grid grid-flow-col grid-cols-5 mx-auto py-3 px-3 cursor-pointer"
           >
             <span v-show="option.icon" class="col-span-1"
               ><component :is="option.icon"></component
