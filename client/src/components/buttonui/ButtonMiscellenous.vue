@@ -18,6 +18,7 @@ const props = defineProps({
     type: Boolean,
     required: false,
   },
+  idAttr: String,
 });
 const emit = defineEmits(["selectionAction", "callToAction"]);
 
