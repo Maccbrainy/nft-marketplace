@@ -97,7 +97,7 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
               </h1>
               <div
                 v-on:click="connectWallet(dappWallet, $route.query.redirect)"
-                class="w-full flex items-center space-x-2 transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer transform active:scale-95 active:bg-gray-200 active:border-none"
+                class="w-full flex items-center space-x-2 transition-all duration-300 border dark:border-darkTheme-border dark:hover:border-darkTheme-hover-b rounded-xl p-3 text-lg font-medium cursor-pointer transform active:scale-95 active:bg-gray-200 dark:active:bg-transparent "
                 v-for="dappWallet in listOfBlockchainWallets"
                 :key="dappWallet"
               >
