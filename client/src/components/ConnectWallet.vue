@@ -25,7 +25,7 @@ const {
   selectBlockchain,
   blockchainNetwork,
   connectWallet,
-  appToastInformationBus,
+  serviceDiscoveryAndDelivery,
 } = inject<any>("provider");
 
 const listOfBlockchainWallets = computed(() => {
@@ -104,9 +104,9 @@ const imageSrc = `https://assets.raribleuserdata.com/prod/v1/image/t_image_big/a
                 <is-processing-template
                   class="w-5 h-5"
                   v-if="
-                    appToastInformationBus.isProcessing &&
-                    dappWallet === appToastInformationBus.wallet &&
-                    blockchainNetwork === appToastInformationBus.blockchain
+                    serviceDiscoveryAndDelivery.isProcessing &&
+                    dappWallet === serviceDiscoveryAndDelivery.wallet &&
+                    blockchainNetwork === serviceDiscoveryAndDelivery.blockchain
                   "
                 />
                 <span>{{ dappWallet }}</span>

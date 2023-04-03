@@ -27,7 +27,7 @@ const {
   wallet,
   activateModalSidebar,
   teleportModalCallback,
-  appToastInformationBus,
+  serviceDiscoveryAndDelivery,
 } = inject<any>("provider");
 </script>
 <template>
@@ -47,9 +47,9 @@ const {
           >
             <div class="bg-gray-200 rounded-full h-10 w-10 overflow-hidden">
               <img
-                v-if="appToastInformationBus.avatarImageUrl"
+                v-if="serviceDiscoveryAndDelivery.avatarImageUrl"
                 class="w-full h-full object-top object-cover min-h-full min-w-full"
-                :src="appToastInformationBus.avatarImageUrl"
+                :src="serviceDiscoveryAndDelivery.avatarImageUrl"
               />
             </div>
             <div class="flex flex-col">

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive, ref, inject, markRaw } from "vue";
-import { useRouter } from "vue-router";
 import { ButtonInput, ButtonMiscellenous } from "../buttonui";
 import { SuccessIcon, TwitterIcon } from "../icons";
 import WidgetHeroImageSettings from "../WidgetHeroImageSettings.vue";
@@ -14,9 +13,7 @@ interface UserProfileAccountSettings {
   twitterUsername: string;
 }
 
-const router = useRouter();
-
-const { teleportModalCallback, teleportModalToastInfoHandler } =
+const { teleportModalCallback, serviceDiscoveryAndDeliveryHandler } =
   inject<any>("provider");
 const isInputWarning = ref<boolean>(false);
 const userProfileAccountSettings = reactive<UserProfileAccountSettings>({
@@ -39,25 +36,25 @@ const linkTwitterHandler = () => {
   console.log("Linking Twitter action");
 };
 const saveUserProfileSettings = () => {
-  teleportModalToastInfoHandler({
-    isProcessing: true,
-    description: "Your profile is updating...",
-    saveUserProfileSettings: false,
-    closeButtonTitle: "Cancel",
-  });
   teleportModalCallback({
     name: "isSettingsUpdateToast",
     open_modal: true,
+  });
+  serviceDiscoveryAndDeliveryHandler({
+    isProcessing: true,
+    description: "Your profile is updating...",
+    saveUserProfileSettingsMethod: false,
+    closeButtonTitle: "Cancel",
   });
   const userProfileSettings: any = {};
   Object.keys(userProfileAccountSettings).forEach((key: string) => {
     if ((userProfileAccountSettings as any)[key])
       userProfileSettings[key] = (userProfileAccountSettings as any)[key];
   });
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     title: "Success",
     isProcessing: false,
-    saveUserProfileSettings: true,
+    saveUserProfileSettingsMethod: true,
     icon: markRaw(SuccessIcon),
     description:
       "Your profile was successfully updated. The updates are now visible for everyone!",

@@ -3,7 +3,7 @@ import router from "../router";
 import { useMediaQuery } from "@vueuse/core";
 import type {
   MarketplaceCartBagItemType,
-  AppToastInformationBus,
+  ServiceDiscoveryAndDelivery,
 } from "@/types";
 
 interface WalletType {
@@ -24,14 +24,14 @@ interface MarketplaceCartBagInfo {
 export default {
   install: (app: any, _options: any) => {
     const { ethereum } = window;
-    const appToastInformationBus = ref<AppToastInformationBus>({
+    const serviceDiscoveryAndDelivery = ref<ServiceDiscoveryAndDelivery>({
       title: "",
       description: "",
       icon: undefined,
       isCoverImage: false,
       isAvatarImage: false,
       isVerifyUser: false,
-      saveUserProfileSettings: false,
+      saveUserProfileSettingsMethod: false,
       closeButtonTitle: "",
       isProcessing: false,
       wallet: "",
@@ -121,7 +121,7 @@ export default {
           dappWallet === "MetaMask"
         ) {
           //show processing status
-          appToastInformationBus.value = {
+          serviceDiscoveryAndDelivery.value = {
             isProcessing: true,
             wallet: dappWallet,
             blockchain: "ethereum",
@@ -131,6 +131,9 @@ export default {
           });
           const dappModel = ethereum.isMetaMask ? "MetaMask" : "";
           currentAccount.value = account[0];
+
+
+
           localStorage.setItem(
             "marketPlace:ISCONNECTED",
             JSON.stringify([
@@ -145,7 +148,7 @@ export default {
               },
             ])
           );
-          appToastInformationBus.value = {
+          serviceDiscoveryAndDelivery.value = {
             isProcessing: false,
             wallet: "",
             blockchain: "",
@@ -264,8 +267,8 @@ export default {
       showMarketplaceCartBag.value = !showMarketplaceCartBag.value;
     };
 
-    const teleportModalToastInfoHandler = (
-      toastInfo: AppToastInformationBus
+    const serviceDiscoveryAndDeliveryHandler = (
+      serviceDiscovery: ServiceDiscoveryAndDelivery
     ) => {
       const {
         title,
@@ -274,23 +277,23 @@ export default {
         isCoverImage,
         isAvatarImage,
         isVerifyUser,
-        saveUserProfileSettings,
+        saveUserProfileSettingsMethod,
         closeButtonTitle,
         isProcessing,
         wallet,
         blockchain,
         coverImageUrl,
         avatarImageUrl,
-      } = toastInfo;
+      } = serviceDiscovery;
 
-      appToastInformationBus.value = {
+      serviceDiscoveryAndDelivery.value = {
         title: title,
         description: description,
         icon: icon,
         isCoverImage: isCoverImage,
         isAvatarImage: isAvatarImage,
         isVerifyUser: isVerifyUser,
-        saveUserProfileSettings: saveUserProfileSettings,
+        saveUserProfileSettingsMethod: saveUserProfileSettingsMethod,
         closeButtonTitle: closeButtonTitle,
         isProcessing: isProcessing,
         wallet: wallet,
@@ -307,7 +310,7 @@ export default {
       activateThemeSkin();
     });
     app.provide("provider", {
-      appToastInformationBus,
+      serviceDiscoveryAndDelivery,
       isLargeScreen,
       changeThemeSkinCallback,
       isActiveThemeSkin,
@@ -319,7 +322,7 @@ export default {
       wallet,
       chooseHowToConnectWallet,
       teleportModalCallback,
-      teleportModalToastInfoHandler,
+      serviceDiscoveryAndDeliveryHandler,
       activateModalSidebar,
       showMarketplaceCartBagCallback,
       getMarketplaceItemIntoCartBag,

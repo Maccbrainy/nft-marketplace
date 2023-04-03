@@ -5,8 +5,8 @@ import { ButtonMiscellenous } from "./buttonui";
 
 const {
   teleportModalCallback,
-  teleportModalToastInfoHandler,
-  appToastInformationBus,
+  serviceDiscoveryAndDeliveryHandler,
+  serviceDiscoveryAndDelivery,
 } = inject<any>("provider");
 const showEditProfileCoverImage = ref<boolean>(false);
 const showEditProfileAvatar = ref<boolean>(false);
@@ -16,7 +16,7 @@ const openProfileCoverModal = () => {
     name: "isSettingsUpdateToast",
     open_modal: true,
   });
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     title: "Update cover",
     description:
       "Upload new cover. We recommend to upload images in 1440x640 resolution. Max 15 MB in JPEG format",
@@ -29,7 +29,7 @@ const openProfileAvatarModal = () => {
     name: "isSettingsUpdateToast",
     open_modal: true,
   });
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     title: "Update avatar",
     description:
       "Upload new avatar. We recommend to upload images in 640x640 resolution. Max 5 MB in JPEG format",
@@ -52,9 +52,9 @@ const openProfileAvatarModal = () => {
       >Edit cover</button-miscellenous
     >
     <img
-      v-if="appToastInformationBus.coverImageUrl"
+      v-if="serviceDiscoveryAndDelivery.coverImageUrl"
       class="absolute w-full h-full object-center object-cover min-h-full min-w-full rounded-2xl"
-      :src="appToastInformationBus.coverImageUrl"
+      :src="serviceDiscoveryAndDelivery.coverImageUrl"
     />
 
     <div
@@ -67,9 +67,9 @@ const openProfileAvatarModal = () => {
       class="absolute flex justify-center items-center -bottom-5 bg-gray-400 h-28 w-28 z-10 left-8 ring-4 ring-offset-0 ring-white dark:ring-darkTheme overflow-hidden"
     >
       <img
-        v-if="appToastInformationBus.avatarImageUrl"
+        v-if="serviceDiscoveryAndDelivery.avatarImageUrl"
         class="w-full h-full object-top object-cover"
-        :src="appToastInformationBus.avatarImageUrl"
+        :src="serviceDiscoveryAndDelivery.avatarImageUrl"
       />
       <button-miscellenous
         id-attr="absolute"

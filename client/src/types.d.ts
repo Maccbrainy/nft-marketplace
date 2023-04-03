@@ -3,7 +3,7 @@ export type ProviderInjects = {
   teleportModalOpenMenuBar: boolean;
   teleportModalTableAssetsFilters: boolean;
   chooseHowToConnectWallet: (routeRedirect: string) => void;
-}
+};
 export interface MarketplaceCartBagItemType {
   token_address: string;
   token_id: number;
@@ -21,21 +21,26 @@ export interface OptionTypeMiscellenous {
   id: string;
   name: string;
   icon?: any;
-  urlLink?: string
+  urlLink?: string;
 }
 
 export interface ChildrenLinksType {
   id: string;
   title: string;
-  slug: string
+  slug: string;
 }
-export interface ToastSettingsInformation {
+export interface ServiceDiscoveryAndDelivery {
   title?: string;
   description?: string;
   icon?: Object;
   isCoverImage?: boolean;
   isAvatarImage?: boolean;
   isVerifyUser?: boolean;
-  isSaveUserSetting?: boolean;
-  closeButtonTitle: string;
+  saveUserProfileSettingsMethod?: boolean;
+  closeButtonTitle?: string;
+  isProcessing?: boolean;
+  wallet?: string;
+  blockchain?: string;
+  coverImageUrl?: string,
+  avatarImageUrl?: string,
 }

@@ -16,12 +16,12 @@ const profileImagesSettings = reactive({
 const {
   activateModalSidebar,
   teleportModalCallback,
-  teleportModalToastInfoHandler,
-  appToastInformationBus,
+  serviceDiscoveryAndDeliveryHandler,
+  serviceDiscoveryAndDelivery,
 } = inject<any>("provider");
 
 const uploadProfileCoverImage = async (file: any) => {
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     isProcessing: true,
     description: "Your cover image is uploading...",
     closeButtonTitle: "Cancel",
@@ -30,17 +30,17 @@ const uploadProfileCoverImage = async (file: any) => {
 
   profileImagesSettings.coverImageUrl = fileurl;
   profileImagesSettings.coverImageName = fileName;
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     isProcessing: false,
     coverImageUrl: fileurl,
     isCoverImage: false,
-    description: "Your profile cover image successfully uploaded",
+    description: "Cover image successfully uploaded",
     closeButtonTitle: "Close",
   });
 };
 
 const uploadProfileAvatar = async (file: any) => {
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     isProcessing: true,
     description: "Your avatar image is uploading...",
     closeButtonTitle: "Cancel",
@@ -50,11 +50,11 @@ const uploadProfileAvatar = async (file: any) => {
   profileImagesSettings.avatarImageUrl = fileurl;
   profileImagesSettings.avatarImageName = fileName;
 
-  teleportModalToastInfoHandler({
+  serviceDiscoveryAndDeliveryHandler({
     isProcessing: false,
     avatarImageUrl: fileurl,
     isAvatarImage: false,
-    description: "Your profile avatar image successfully uploaded",
+    description: "Avatar image successfully uploaded",
     closeButtonTitle: "Close",
   });
 };
@@ -75,52 +75,52 @@ const goToMyItemsOwned = () => {
         class="sf:absolute sf:bottom-0 flex flex-col w-full sm:w-[380px] p-8 rounded-t-3xl sm:rounded-2xl bg-white m-auto text-gray-500 font-normal text-base space-y-3"
       >
         <IsProcessingStatus
-          v-show="appToastInformationBus.isProcessing"
+          v-show="serviceDiscoveryAndDelivery.isProcessing"
           class="w-12 place-self-center"
         />
-        <span class="place-self-center" v-if="appToastInformationBus.icon"
-          ><component :is="appToastInformationBus.icon"></component
+        <span class="place-self-center" v-if="serviceDiscoveryAndDelivery.icon"
+          ><component :is="serviceDiscoveryAndDelivery.icon"></component
         ></span>
         <h1
-          v-show="appToastInformationBus.title"
+          v-show="serviceDiscoveryAndDelivery.title"
           :class="{
-            'text-center text-3xl': appToastInformationBus.icon,
-            'text-start text-xl': !appToastInformationBus.icon,
+            'text-3xl': serviceDiscoveryAndDelivery.icon,
+            'text-xl': !serviceDiscoveryAndDelivery.icon,
           }"
-          class="text-gray-900 font-semibold"
+          class="text-center text-gray-900 font-semibold"
         >
-          {{ appToastInformationBus.title }}
+          {{ serviceDiscoveryAndDelivery.title }}
         </h1>
         <p
           :class="{
-            'text-center text-sm': appToastInformationBus.icon,
-            'text-start': !appToastInformationBus.icon,
+            'text-center text-sm': serviceDiscoveryAndDelivery.icon,
+            'text-center': !serviceDiscoveryAndDelivery.icon,
           }"
-          v-show="appToastInformationBus.description"
+          v-show="serviceDiscoveryAndDelivery.description"
         >
-          {{ appToastInformationBus.description }}
+          {{ serviceDiscoveryAndDelivery.description }}
         </p>
 
         <button-image-upload
           v-show="
-            appToastInformationBus.isCoverImage &&
-            !appToastInformationBus.coverImageUrl
+            serviceDiscoveryAndDelivery.isCoverImage &&
+            !serviceDiscoveryAndDelivery.coverImageUrl
           "
           @on-change-file-upload="uploadProfileCoverImage"
           label-name="Select file"
         />
         <button-image-upload
           v-show="
-            appToastInformationBus.isAvatarImage &&
-            !appToastInformationBus.avatarImageUrl
+            serviceDiscoveryAndDelivery.isAvatarImage &&
+            !serviceDiscoveryAndDelivery.avatarImageUrl
           "
           @on-change-file-upload="uploadProfileAvatar"
           label-name="Select file"
         />
         <button-miscellenous
           v-show="
-            appToastInformationBus.saveUserProfileSettings &&
-            !appToastInformationBus.isProcessing
+            serviceDiscoveryAndDelivery.saveUserProfileSettingsMethod &&
+            !serviceDiscoveryAndDelivery.isProcessing
           "
           @call-to-action="goToMyItemsOwned"
           type="button"
@@ -137,7 +137,9 @@ const goToMyItemsOwned = () => {
           "
           class="border rounded-2xl mt-1 py-2 w-full"
           :has-list-content="false"
-          >{{ appToastInformationBus.closeButtonTitle }}</button-miscellenous
+          >{{
+            serviceDiscoveryAndDelivery.closeButtonTitle
+          }}</button-miscellenous
         >
       </div>
     </template>

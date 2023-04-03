@@ -29,7 +29,7 @@ const {
   showMarketplaceCartBag,
   currentAccount,
   teleportModalCallback,
-  appToastInformationBus,
+  serviceDiscoveryAndDelivery,
 } = inject<any>("provider");
 const themeTypes = ref([
   {
@@ -86,9 +86,9 @@ const matchedRoutesComposable = computed<boolean>(
             class="w-10 h-10 rounded-full bg-gray-200 cursor-pointer overflow-hidden"
           >
             <img
-              v-if="appToastInformationBus.avatarImageUrl"
+              v-if="serviceDiscoveryAndDelivery.avatarImageUrl"
               class="w-full h-full object-top object-cover min-h-full min-w-full"
-              :src="appToastInformationBus.avatarImageUrl"
+              :src="serviceDiscoveryAndDelivery.avatarImageUrl"
             />
           </div>
           <ButtonMiscellenous
