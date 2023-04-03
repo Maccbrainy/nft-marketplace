@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import { inject, watchEffect, ref } from "vue";
+import { inject, watchEffect, ref, computed } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { CloseIcon } from "../icons";
 const { teleportModalCallback, activateModalSidebar } = inject<any>("provider");
 const isTabletToLargeScreenMinWidth640px = useMediaQuery("(min-width: 640px)");
 
 const modalMenuRef = ref<any>(null);
+const isSettingModalNames = computed<boolean>(() => {
+  const { name } = activateModalSidebar.value as { name: string };
+  const settingModalNames: string[] = [
+    "isSettingsUpdateToast",
+    "nonExistingUserForm",
+  ];
+  return settingModalNames.includes(name);
+});
 watchEffect(() => {
-  const { name, active } = activateModalSidebar.value;
+  const { name, active } = activateModalSidebar.value as {
+    name: string;
+    active: boolean;
+  };
   if (isTabletToLargeScreenMinWidth640px.value && active) {
     const closeTeleportModal = (event: { target: any }) => {
       if (modalMenuRef.value && modalMenuRef.value.contains(event.target)) {
@@ -28,18 +39,15 @@ watchEffect(() => {
     <section
       v-if="activateModalSidebar.active"
       :class="{
-        'sm:backdrop-blur-lg':
-          activateModalSidebar.active &&
-          activateModalSidebar.name !== 'isSettingsUpdateToast',
-        'bg-[#000000de]': activateModalSidebar.name === 'isSettingsUpdateToast',
+        'sm:backdrop-blur-lg': !isSettingModalNames,
+        'bg-[#000000de]': isSettingModalNames,
       }"
       class="fixed w-full h-screen top-0 right-0 left-0 z-30"
     >
       <div
         :class="{
-          'sm:justify-center':
-            activateModalSidebar.name === 'isSettingsUpdateToast',
-          'justify-end': activateModalSidebar.name !== 'isSettingsUpdateToast',
+          'sm:justify-center': isSettingModalNames,
+          'justify-end': !isSettingModalNames,
         }"
         class="flex relative w-full h-full"
       >
@@ -55,10 +63,9 @@ watchEffect(() => {
           })
         "
         :class="{
-          'sm:mt-12 dark:text-darkTheme-text-b':
-            activateModalSidebar.name !== 'isSettingsUpdateToast',
+          'sm:mt-12 dark:text-darkTheme-text-b': !isSettingModalNames,
           'border border-darkTheme-border text-white hover:bg-transparent hover:border-darkTheme-hover-b':
-            activateModalSidebar.name === 'isSettingsUpdateToast',
+            isSettingModalNames,
         }"
         class="absolute top-0 right-0 mx-4 mt-5 sm:mx-8"
       />
