@@ -30,12 +30,14 @@ defineEmits(["update:checked"]);
           "
           class="hidden"
         />
-        <div class="w-full flex justify-start items-center gap-3">
-          <CheckedBoxIcon
-            class="w-6 h-6 fill-black dark:fill-darkTheme-text-b"
-            v-if="checked"
-          />
-          <check-icon class="w-6 h-6" v-else />
+        <div class="w-full flex flex-row justify-start items-center gap-3">
+          <span>
+            <CheckedBoxIcon
+              class="w-6 h-6 fill-black dark:fill-darkTheme-text-b"
+              v-if="checked"
+            />
+            <check-icon class="w-6 h-6" v-else />
+          </span>
           <slot></slot>
         </div>
       </div>

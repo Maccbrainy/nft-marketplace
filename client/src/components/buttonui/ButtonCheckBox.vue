@@ -34,7 +34,7 @@ const check = (propertyOptionId: string, checked: boolean) => {
 <template>
   <ul class="py-1">
     <li
-      class="px-2 py-2.5 block hover:bg-gray-100 dark:hover:bg-transparent rounded-xl"
+      class="px-2 py-2.5 block rounded-xl"
       v-for="propertyOption in propertyOptions"
       v-bind:key="propertyOption.id"
     >

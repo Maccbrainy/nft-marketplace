@@ -13,7 +13,7 @@ defineEmits(["onChangeFileUpload"]);
 <template>
   <label
     :class="{ 'right-4 mt-4': !labelIcon }"
-    class="flex items-center justify-center bg-black text-white rounded-2xl p-3 dark:bg-white dark:text-black text-sm cursor-pointer transition-all active:scale-95"
+    class="flex items-center justify-center bg-black text-white border rounded-2xl p-3 dark:bg-white dark:text-black text-sm cursor-pointer transition-all active:scale-95"
   >
     <span v-if="labelIcon"
       ><component :is="markRaw(labelIcon)"></component
