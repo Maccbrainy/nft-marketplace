@@ -45,6 +45,11 @@ const themeTypes = ref([
 ]);
 const matchedRoutesComposable = computed<boolean>(
   () => 
+    /**
+     * These are configured route names at router/index.ts;
+     * route.meta.name => parent route name with children routes;
+     * route.name => route name without children routes;
+     */
     route.meta.name === "CollectionPage" ||
     route.name === "HomePage" ||
     route.meta.name === "ExploreBlockchainNFTS" ||
