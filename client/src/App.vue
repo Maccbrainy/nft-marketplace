@@ -8,6 +8,7 @@ import {
   ModalSideBarMenuBar,
   ModalAssetFilters,
   ModalSettingsUpdateToast,
+  ModalNonExistingUser,
 } from "./components/teleport-modal";
 import {
   DarkThemeIcon,
@@ -44,7 +45,7 @@ const themeTypes = ref([
   },
 ]);
 const matchedRoutesComposable = computed<boolean>(
-  () => 
+  () =>
     /**
      * These are configured route names at router/index.ts;
      * route.meta.name => parent route name with children routes;
@@ -128,6 +129,7 @@ const matchedRoutesComposable = computed<boolean>(
           <modal-side-bar-menu-bar />
           <modal-asset-filters />
           <modal-settings-update-toast />
+          <modal-non-existing-user />
         </div>
         <marketplace-cart-bag />
       </section>
