@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter, useRoute } from "vue-router";
 import { isMarketItemFoundInCartBagItems } from "@/utils";
 import { ButtonDropdown, ButtonInput, ButtonMiscellenous } from "../buttonui";
 import {
@@ -9,7 +9,11 @@ import {
   ArrowRightIcon,
   TickCheckIcon,
 } from "../icons";
-
+const props = defineProps({
+  routeName: String,
+});
+const router = useRouter();
+const route = useRoute();
 const {
   showMarketplaceCartBag,
   getMarketplaceItemIntoCartBag,
@@ -18,18 +22,18 @@ const {
 
 const blockChainNetworks = [
   {
-    id: "Ethereum",
-    name: "Ethereum",
+    id: "ethereum",
+    name: "ethereum",
     icon: false,
   },
   {
-    id: "Solana",
-    name: "Solana",
+    id: "solana",
+    name: "solana",
     icon: false,
   },
   {
-    id: "Polygon",
-    name: "Polygon",
+    id: "polygon",
+    name: "polygon",
     icon: false,
   },
 ];
@@ -121,16 +125,22 @@ const NFTTokensInCollection = [
     tokenPrice: 1.12,
   },
 ];
-const collectionContainerRef = ref<any>(null);
-const showTableNavigationButton = ref<boolean>(false);
+const sliderContainerRef = ref<any>(null);
+const showSliderNavButton = ref<boolean>(false);
 const scrollByVisibility = ref<number>(0);
 const scrollByVisibilityPercentage = ref<number>(0);
-const isActiveBlockChain = ref<string>("Ethereum");
+const isActiveBlockChain = ref<any>(
+  route.params.activeBlockchainId || blockChainNetworks[0].id
+);
 const isActiveTime = ref<string>("Day");
 
 const changeBlockChainNetwork = (blockChainNetwork: { id: string }) => {
   isActiveBlockChain.value = blockChainNetwork.id;
   console.log(`Get NFTs on ${isActiveBlockChain.value} blockchain`);
+  if (props.routeName !== "HomePage")
+    router.replace({
+      path: `/explore/${isActiveBlockChain.value}/${route.params.slug}`,
+    });
 };
 const changeTimeDuration = (timeDuration: { id: string }) => {
   isActiveTime.value = timeDuration.id;
@@ -151,12 +161,12 @@ const showAddToCartButtonCallback = (itemInfo: {
   };
 };
 const scrollBarCallback = (direction: string) => {
-  const { offsetWidth, scrollWidth, children } = collectionContainerRef.value;
+  const { offsetWidth, scrollWidth, children } = sliderContainerRef.value;
   const collectionItemWidth = children[0].offsetWidth;
 
   const scrollByIndex =
     direction == "forward" ? collectionItemWidth : -collectionItemWidth;
-  collectionContainerRef.value.scrollBy({
+  sliderContainerRef.value.scrollBy({
     top: 0,
     left: scrollByIndex,
     behavior: "smooth",
@@ -169,7 +179,6 @@ const scrollBarCallback = (direction: string) => {
   scrollByVisibilityPercentage.value =
     (progressiveScrollWidthTrackingLength * 100) / scrollWidth;
 };
-
 </script>
 <style scoped>
 .hide-horizontal__scrollbar::-webkit-scrollbar {
@@ -181,16 +190,21 @@ const scrollBarCallback = (direction: string) => {
 }
 </style>
 <template>
-  <div class="relative w-full py-10 text-gray-700 dark:text-darkTheme-text">
+  <div class="relative w-full py-7 text-gray-700 dark:text-darkTheme-text">
     <div class="flex flex-col">
       <div
         :class="{
           'lg:grid-rows-none lg:grid-flow-row lg:grid-cols-8':
             !showMarketplaceCartBag,
+          'xs:grid-cols-1 xs:grid-flow-row grid-cols-3 md:grid-rows-2 lg:items-end':
+            routeName === 'HomePage',
+          'grid-flow-row grid-rows-2 md:flex md:flex-row items-end':
+            routeName !== 'HomePage',
         }"
-        class="grid xs:grid-cols-1 xs:grid-flow-row grid-cols-3 md:grid-rows-2 gap-4 pb-4"
+        class="grid gap-4 pb-4"
       >
         <div
+          v-show="routeName === 'HomePage'"
           :class="{ 'lg:col-span-3': !showMarketplaceCartBag }"
           class="col-span-2"
         >
@@ -206,36 +220,44 @@ const scrollBarCallback = (direction: string) => {
           >
           </ButtonDropdown>
         </div>
-        <span
-          :class="{ 'lg:col-auto': !showMarketplaceCartBag }"
-          class="xs:col-span-2 col-auto inline-grid"
-        >
+        <button-input
+          v-show="routeName !== 'HomePage'"
+          input-type="search"
+          place-holdertext="Search by Collections"
+          class="w-full xs:col-span-2 rounded-2xl"
+          :is-text-area="false"
+        ></button-input>
+        <span class="xs:col-span-2 col-auto inline-grid">
           <ButtonDropdown
             @selection-action="changeBlockChainNetwork"
             :listOfOptions="blockChainNetworks"
             :isActiveOption="isActiveBlockChain"
+            :class="{ 'right-0': routeName !== 'HomePage' }"
           >
           </ButtonDropdown>
         </span>
         <div
+          v-show="routeName === 'HomePage'"
           :class="{ 'lg:col-span-3': !showMarketplaceCartBag }"
           class="col-span-2 inline-grid"
         >
           <div class="flex flex-row items-center justify-start">
             <span class="whitespace-nowrap mx-2 text-sm">Floor price</span>
             <div class="w-full flex flex-shrink max-w-full items-center">
-              <ButtonInput
+              <button-input
                 input-type="number"
                 place-holdertext="Min"
                 class="flex-auto"
+                :is-text-area="false"
               />
               <div
                 class="bg-gray-300 dark:bg-darkTheme-text mx-3 h-1 w-10 block"
               ></div>
-              <ButtonInput
+              <button-input
                 input-type="number"
                 place-holdertext="Max"
                 class="flex-auto"
+                :is-text-area="false"
               />
             </div>
           </div>
@@ -328,14 +350,13 @@ const scrollBarCallback = (direction: string) => {
                 </router-link>
                 <div
                   class="relative w-5/12 lmax:w-full overflow-hidden"
-                  v-on:mouseover="showTableNavigationButton = true"
-                  v-on:mouseout="showTableNavigationButton = false"
+                  v-on:mouseover="showSliderNavButton = true"
+                  v-on:mouseout="showSliderNavButton = false"
                 >
                   <div
                     @click="scrollBarCallback('forward')"
                     v-show="
-                      showTableNavigationButton &&
-                      scrollByVisibilityPercentage < 90
+                      showSliderNavButton && scrollByVisibilityPercentage < 90
                     "
                     class="absolute h-full flex right-3 z-10 items-center"
                   >
@@ -347,7 +368,7 @@ const scrollBarCallback = (direction: string) => {
                   </div>
                   <div
                     @click="scrollBarCallback('backward')"
-                    v-show="showTableNavigationButton && scrollByVisibility > 0"
+                    v-show="showSliderNavButton && scrollByVisibility > 0"
                     class="absolute h-full flex left-3 z-10 items-center"
                   >
                     <span
@@ -357,7 +378,7 @@ const scrollBarCallback = (direction: string) => {
                     </span>
                   </div>
                   <div
-                    ref="collectionContainerRef"
+                    ref="sliderContainerRef"
                     class="hide-horizontal__scrollbar relative w-full h-auto flex flex-row space-x-4 items-center lmax:ml-1 lg:p-1 overflow-x-auto snap-x snap-mandatory"
                   >
                     <div
@@ -440,11 +461,16 @@ const scrollBarCallback = (direction: string) => {
               </div>
             </div>
           </div>
-          <ButtonMiscellenous
-            :has-list-content="false"
-            class="bg-gray-100 rounded-2xl hover:bg-gray-200 py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover mt-3"
-            >View All Collections</ButtonMiscellenous
+          <RouterLink
+            v-show="routeName === 'HomePage'"
+            :to="`/explore/${isActiveBlockChain}`"
           >
+            <button-miscellenous
+              :has-list-content="false"
+              class="bg-gray-100 rounded-2xl hover:bg-gray-200 py-3 dark:bg-darkTheme-bg dark:hover:bg-darkTheme-hover mt-3"
+              >View All Collections</button-miscellenous
+            >
+          </RouterLink>
         </div>
       </div>
     </div>
