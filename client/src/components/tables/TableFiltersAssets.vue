@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, markRaw, ref, watchEffect } from "vue";
-import { TableAssetsCard, TableAssetsSideBar } from "../tables";
+import { AssetsTableCard, AssetsTableSideBar } from "../assets-tokens";
 import { ButtonDropdown, ButtonInput, ButtonMiscellenous } from "../buttonui";
 import {
   RefreshIcon,
@@ -161,7 +161,7 @@ const hideTableAssetsSideBarFiltersCallback = () => {
     >
       <button-miscellenous
         title="Filters"
-        v-on:click="hideTableAssetsSideBarFiltersCallback"
+        v-on:callToAction="hideTableAssetsSideBarFiltersCallback"
         :has-list-content="false"
         class="inline-flex flex-initial items-center rounded-2xl dark:border-darkTheme-border bg-gray-100 dark:bg-darkTheme-bg hover:bg-gray-200 dark:hover:bg-darkTheme-hover dark:text-darkTheme-text-b py-2.5"
         ><ChevronDownIcon
@@ -185,7 +185,9 @@ const hideTableAssetsSideBarFiltersCallback = () => {
       <button-input
         input-type="search"
         place-holdertext="Search by NFTs"
+        :class="{ invisible: $route.meta.name === 'itemsOwnedPage' }"
         class="flex-auto rounded-2xl"
+        :is-text-area="false"
       ></button-input>
       <div class="flex-initial">
         <button-dropdown
@@ -222,9 +224,9 @@ const hideTableAssetsSideBarFiltersCallback = () => {
         :class="{
           'lmin:hidden': hideTableAssetsSideBarFilters,
         }"
-        class="sticky top-20 mf:hidden w-3/12 h-[85vh] overflow-x-auto hide-horizontal__scrollbar min-w-[288px] border dark:border-darkTheme-border rounded-xl py-2 px-6 mt-3.5"
+        class="sticky top-20 mf:hidden w-3/12 h-[85vh] overflow-x-auto hide-horizontal__scrollbar min-w-[288px] border dark:border-darkTheme-border rounded-xl py-2 px-3.5 mt-3.5"
       >
-        <TableAssetsSideBar />
+        <AssetsTableSideBar />
       </div>
       <div
         :class="{
@@ -233,7 +235,7 @@ const hideTableAssetsSideBarFiltersCallback = () => {
         }"
       >
         <ul class="flex flex-wrap">
-          <TableAssetsCard
+          <AssetsTableCard
             v-for="tokenData in NFTTokensInCollection"
             :key="tokenData.tokenId + tokenData.tokenAddress"
             :filterIsHidden="hideTableAssetsSideBarFilters"
