@@ -23,7 +23,7 @@ const router = createRouter({
       name: "HomePage",
       component: TheHomePageView,
       props: (route) => ({
-        name: route.name
+        name: route.name,
       }),
       meta: {
         title: "NFT Marketplace",
@@ -247,6 +247,15 @@ const router = createRouter({
       ],
     },
   ],
+  scrollBehavior(_to, _from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        top: 0,
+      };
+    }
+  },
 });
 
 router.beforeEach((to) => {
